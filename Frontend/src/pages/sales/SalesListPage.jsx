@@ -35,8 +35,7 @@ const SalesListPage = () => {
         return;
       }
       console.log("Sales data : ", res.data)
-      setSales(res.data.reverse());
-      // toast.success("Data refreshed")
+      setSales(res.data);
     } catch (err) {
       if (err.response?.status === 404) {
         setSales([]);
@@ -61,8 +60,7 @@ const SalesListPage = () => {
         setPurchases([]);
         return;
       }
-      setPurchases(res.data.reverse());
-      // toast.success("Data refreshed")
+      setPurchases(res.data);
     } catch (err) {
       if (err.response?.status === 404) {
         setSales([]);

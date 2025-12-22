@@ -54,7 +54,7 @@ const Navbar = ({ toggleSidebar }) => {
                                 </span>
                             </div>
                             <div
-                                onClick={role === 'admin' ? () => navigate('/profile') : () => navigate('/adminprofile')}
+                                onClick={role === 'admin' ? () => navigate('/adminprofile') : () => navigate('/profile')}
                                 className="cursor-pointer h-9 w-9 rounded-full bg-[var(--color-primary)]/10 border-2 border-[var(--color-primary)]/20 flex items-center justify-center text-[var(--color-primary)] font-bold text-sm shadow-sm hover:scale-105 transition-transform">
                                 {(user?.name?.[0] || 'U').toUpperCase()}
                             </div>

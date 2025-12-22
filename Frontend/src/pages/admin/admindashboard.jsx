@@ -61,9 +61,9 @@ const Admindashboard = () => {
     const statusBadge = (status) => {
         const base = "px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border";
         if (status === "active")
-            return <span className={`${base} border-green-200 bg-green-50 text-green-700 dark:bg-green-900/20 dark:border-green-800 dark:text-green-300`}>● Active</span>;
+            return <span className={`${base} border-green-200 bg-green-50 !text-green-600 dark:bg-green-900/20 dark:border-green-800`}>● Active</span>;
         if (status === "suspended")
-            return <span className={`${base} border-rose-200 bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:border-rose-800 dark:text-rose-300`}>● Suspended</span>;
+            return <span className={`${base} border-rose-200 bg-rose-50 !text-rose-600 dark:bg-rose-900/20 dark:border-rose-800`}>● Suspended</span>;
     };
 
     const handleDelete = async (e) => {
@@ -100,7 +100,9 @@ const Admindashboard = () => {
             <div className="sticky top-0 z-30 bg-[var(--color-background)]/80 backdrop-blur-md border-b border-[var(--color-border)]">
                 <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                        <div
+                            onClick={() => navigate("/adminprofile")}
+                            className="p-2 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
                             <Shield className="w-6 h-6" />
                         </div>
                         <div>
