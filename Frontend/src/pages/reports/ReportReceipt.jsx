@@ -31,7 +31,7 @@ const ReportReceipt = ({ report, period }) => {
             <div className="w-full max-w-sm font-mono bg-[var(--color-background)] text-[var(--color-foreground)] border-y-2 border-dashed border-[var(--color-border)] shadow-lg p-6 print:shadow-none print:w-auto dark:bg-[var(--color-surface)] rounded-sm">
 
                 <div className="text-center flex flex-col justify-center pb-4 border-b border-dashed border-[var(--color-border)] mb-4 print:border-solid">
-                    <img className='h-15 mb-4 mx-auto' src={Dukaan_Digital} alt="Dukaan_Digital" />
+                    <img className='h-15 mb-4 mx-auto invert-logo' src={Dukaan_Digital} alt="Dukaan_Digital" />
                     <div className="border-t border-dashed border-[var(--color-border)] py-2 print:border-solid"></div>
                     <h4 className="text-[var(--color-foreground)] mx-auto mb-2 font-bold">{JSON.parse(sessionStorage.getItem("user"))?.shopname}</h4>
                     <div className="border-t border-dashed border-[var(--color-border)] py-2 print:border-solid"></div>
