@@ -66,9 +66,9 @@ const reportSchema = new mongoose.Schema({
     timestamps: true
 });
 
-reportSchema.index({ createdAt: -1 });
-reportSchema.index({ userId: 1 });
-reportSchema.index({ type: 1, period: 1 });   // daily/monthly report fast fetch
+// reportSchema.index({ createdAt: -1 });
+// reportSchema.index({ userId: 1 });
+// reportSchema.index({ type: 1, period: 1 });   // daily/monthly report fast fetch
 
 
 const Report = mongoose.model("Report", reportSchema);

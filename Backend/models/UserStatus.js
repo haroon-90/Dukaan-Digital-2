@@ -14,8 +14,8 @@ const userStatusSchema = new mongoose.Schema({
     timestamps: true
 });
 
-userStatusSchema.index({ userId: 1 });
-userStatusSchema.index({ status: 1 })
+// userStatusSchema.index({ userId: 1 });
+// userStatusSchema.index({ status: 1 })
 
 
 const UserStatus = mongoose.model('UserStatus', userStatusSchema);
