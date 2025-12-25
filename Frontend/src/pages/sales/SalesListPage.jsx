@@ -68,7 +68,7 @@ const SalesListPage = () => {
         setPurchases([]);
         return;
       }
-      setPurchases(res.data);
+      setPurchases(res.data.reverse());
     } catch (err) {
       if (err.response?.status === 404) {
         setSales([]);
