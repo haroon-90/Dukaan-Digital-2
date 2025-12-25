@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { getReport } from "../../services/reportServices.js";
 import ReportReceipt from "./ReportReceipt.jsx";
 import toast from "react-hot-toast";

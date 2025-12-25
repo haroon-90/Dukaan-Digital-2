@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { addPurchase } from '../../services/purchaseServices.js';
 import { getProducts } from '../../services/productServices.js';
-import Dukaan_Digital from '../../assets/Dukaan_Digital.svg'
+import Dukaan_Digital from '../../assets/Dukaan_Digital_icon.svg'
 import { useNavigate } from 'react-router-dom';
 import { Package, Tag, CheckCircle, Trash2, Store, Weight, ArrowLeft, Loader2, Plus, ShoppingBag } from 'lucide-react';
 
@@ -363,64 +363,85 @@ const PurchaseFormPage = () => {
         </div>
 
         {purchaseDetails.items.length > 0 && (
-          <div className="mb-8 border-t border-[var(--color-border)] pt-8 animate-fade-in">
-            <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6 shadow-sm font-mono text-sm relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent opacity-50"></div>
-              <div className="flex flex-col items-center text-center">
-                <div className="h-12 w-12 bg-[var(--color-background)] rounded-full flex items-center justify-center mb-2 border border-[var(--color-border)]">
-                  <ShoppingBag size={20} className="text-[var(--color-primary)]" />
+          <div className=" w-full max-w-3xl bg-[var(--color-surface)] rounded-2xl shadow-2xl overflow-hidden">
+
+            <div className="h-1 bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent" />
+
+            <div className="px-8 py-6 text-center border-b border-[var(--color-border)]">
+              <div className="flex justify-center mb-3">
+                <div className="w-14 h-14 rounded-full bg-[var(--color-background)] border flex items-center justify-center">
+                  <img src={Dukaan_Digital} alt="Logo" className="w-7 h-7" />
                 </div>
-                <h2 className="text-[var(--color-foreground)] mb-1 text-lg font-bold">{JSON.parse(sessionStorage.getItem("user"))?.shopname}</h2>
-                <div className="border-t border-dashed w-full border-[var(--color-border)] py-2"></div>
               </div>
-              <div className="mb-4 text-[var(--color-muted-foreground)]">
-                <h2 className="text-xl font-bold text-center text-[var(--color-foreground)] tracking-wide mb-2">Purchase Receipt</h2>
-                <div className="flex justify-between items-center text-xs text-[var(--color-muted-foreground)] mb-2">
-                  <span>Date: {new Date().toLocaleDateString()}</span>
-                  <span>Time: {new Date().toLocaleTimeString()}</span>
-                </div>
-                <div className="border-t border-dashed w-full border-[var(--color-border)] py-2"></div>
-                <p className="pb-2 tracking-wide text-sm font-semibold text-[var(--color-foreground)]">Supplier: <span className="font-normal text-[var(--color-muted-foreground)]">{purchaseDetails.suppliername}</span></p>
-                <div className="border-t border-dashed w-full border-[var(--color-border)] py-2"></div>
+
+              <h2 className="text-xl font-bold text-[var(--color-foreground)] tracking-wide">
+                {JSON.parse(sessionStorage.getItem("user"))?.shopname}
+              </h2>
+
+              <p className="text-sm text-[var(--color-muted-foreground)] mt-1">
+                Purchase Receipt
+              </p>
+            </div>
+
+            <div className="px-6 py-4 border-b border-dashed border-[var(--color-border)] text-sm">
+              <div className="flex justify-around">
+                <span className="text-[var(--color-muted-foreground)]">Supplier</span>
+                <span className="font-medium text-[var(--color-foreground)]">
+                  {purchaseDetails.suppliername}
+                </span>
               </div>
+
+              <div className="flex justify-around mt-2">
+                <span className="text-[var(--color-muted-foreground)]">Date</span>
+                <span className="text-[var(--color-foreground)]">
+                  {new Date().toLocaleDateString()}
+                </span>
+              </div>
+            </div>
+
+            <div className="px-6 py-4 space-y-4">
               {purchaseDetails.items.map((item, index) => (
-                <div key={index} className="flex items-start justify-between border-b border-dashed border-[var(--color-border)] py-3 last:border-b-0 last:pb-0">
-                  <div className="flex-1 pr-4">
-                    <p className="font-bold text-[var(--color-foreground)] text-base mb-1">{item.itemname}</p>
-                    <p className="text-xs text-[var(--color-muted-foreground)]">
-                      P-Price: <span className="text-[var(--color-foreground)] font-medium">{formatPrice(item.purchasePrice)}</span>
+                <div
+                  key={index}
+                  className="flex justify-between items-start border-b border-dashed border-[var(--color-border)] pb-3 last:border-none"
+                >
+                  <div>
+                    <p className="font-semibold text-[var(--color-foreground)]">
+                      {item.itemname}
+                    </p>
+                    <p className="text-sm text-[var(--color-muted-foreground)]">
+                      Price: {formatPrice(item.purchasePrice)}
                     </p>
                   </div>
-                  <div className="text-right flex-shrink-0">
-                    <p className="font-bold text-[var(--color-foreground)] text-base">x{item.quantity}</p>
-                    <p className="text-sm text-[var(--color-muted-foreground)] mt-1">
+
+                  <div className="text-right">
+                    <p className="text-sm font-medium text-[var(--color-foreground)]">
+                      Qty: {item.quantity}
+                    </p>
+                    <p className="text-sm font-semibold">
                       {formatPrice(item.quantity * item.purchasePrice)}
                     </p>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveItem(index)}
-                    className="ml-4 text-red-500 hover:text-red-700 transition duration-300 p-2 rounded-full hover:bg-[var(--color-background)]"
-                    title="Remove item"
-                  >
-                    <Trash2 size={16} />
-                  </button>
                 </div>
               ))}
-              <div className="pt-6">
-                <div className="flex justify-between font-semibold text-[var(--color-muted-foreground)]">
-                  <span>Total Items:</span>
-                  <span>{purchaseDetails.items.length}</span>
-                </div>
-                <div className="flex justify-between font-bold text-[var(--color-foreground)] mt-2 text-xl border-t-2 border-dashed border-[var(--color-border)] pt-2">
-                  <span>Grand Total:</span>
-                  <span>{formatPrice(purchaseDetails.items.reduce((total, item) => total + (item.quantity * item.purchasePrice), 0))}</span>
-                </div>
+            </div>
+
+            <div className="px-6 py-5 border-t border-dashed border-[var(--color-border)]">
+              <div className="flex justify-between text-lg font-bold">
+                <span>Total Amount</span>
+                <span>
+                  {formatPrice(
+                    purchaseDetails.items.reduce(
+                      (sum, i) => sum + i.quantity * i.purchasePrice,
+                      0
+                    )
+                  )}
+                </span>
               </div>
-              <div className="mt-6 text-center">
-                <div className="border-t border-dashed w-full border-[var(--color-border)] py-2"></div>
-                <p className="text-xs text-[var(--color-muted-foreground)]">Thank you for your business!</p>
-              </div>
+            </div>
+
+            <div className="text-center text-xs text-[var(--color-muted-foreground)] py-4 border-t border-[var(--color-border)]">
+              Thank you for shopping with us
             </div>
           </div>
         )}

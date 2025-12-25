@@ -3,7 +3,6 @@ import { updateProfile } from "../../services/profileServices.js";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { User, Phone, Lock, ArrowLeft, Loader2, Edit } from 'lucide-react';
-import Loader from "../loader/loader.jsx";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();

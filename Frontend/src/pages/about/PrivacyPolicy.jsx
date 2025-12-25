@@ -1,5 +1,3 @@
-import React from "react";
-
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] px-6 py-10 transition-colors duration-300">

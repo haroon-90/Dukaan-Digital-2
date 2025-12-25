@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getsales, deletesale } from "../../services/saleService.js";
 import { getPurchases, deletePurchase } from "../../services/purchaseServices.js";
-import { Eye, ShoppingCart, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Receipt, X, Loader2 } from "lucide-react";
+import { ShoppingCart, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Receipt, Loader2, Printer, SaveIcon, X } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
-import Loader from "../loader/loader.jsx";
+import dukaanLogo from "../../assets/Dukaan_Digital.svg";
+import { useReactToPrint } from 'react-to-print'
 
 const SalesListPage = () => {
+  const invoiceRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const [sales, setSales] = useState([]);
@@ -22,6 +24,12 @@ const SalesListPage = () => {
 
   const [type, setType] = useState();
 
+  const handlePrint = useReactToPrint({
+    contentRef: invoiceRef,
+    documentTitle: "Invoice",
+    styleMedia: "print",
+  });
+
   const fetchSales = async () => {
     try {
       setLoading(true);
@@ -35,7 +43,7 @@ const SalesListPage = () => {
         return;
       }
       console.log("Sales data : ", res.data)
-      setSales(res.data);
+      setSales(res.data.reverse());
     } catch (err) {
       if (err.response?.status === 404) {
         setSales([]);
@@ -147,6 +155,7 @@ const SalesListPage = () => {
             <tbody className="divide-y divide-[var(--color-border)]">
               {data.map((item) => (
                 <tr
+                  onClick={() => handleViewDetails(item)}
                   key={item._id}
                   className="hover:bg-[var(--color-muted)] transition-colors duration-200"
                 >
@@ -161,13 +170,13 @@ const SalesListPage = () => {
                     Rs {item.totalAmount ? item.totalAmount.toLocaleString() : item.total.toLocaleString()}
                   </td>
                   <td className="px-6 py-4 flex justify-center gap-3">
-                    <button
+                    {/* <button
                       onClick={() => handleViewDetails(item)}
                       className="p-2 rounded-lg bg-blue-500/10 text-blue-500 hover:bg-blue-500 hover:text-white transition-all"
                       title="View Details"
                     >
                       <Eye size={16} />
-                    </button>
+                    </button> */}
                     <button
                       onClick={() => handleDelete(item)}
                       className="p-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all"
@@ -250,94 +259,116 @@ const SalesListPage = () => {
       </div>
 
       {showDetails && selectedSale && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="glass-panel p-0 rounded-2xl shadow-2xl w-full max-w-xl overflow-hidden animate-scale-in">
+        <div
+          onClick={handleClose}
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-screen overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl">
 
-            {/* Modal Header */}
-            <div className="bg-[var(--color-surface)] p-6 border-b border-[var(--color-border)] flex justify-between items-center">
-              <div>
-                <h3 className="text-lg font-bold text-[var(--color-foreground)]">{type === "sale" ? "Sales Invoice" : "Purchase Receipt"}</h3>
-                <p className="text-xs text-[var(--color-muted-foreground)]">Details for transaction on {new Date(selectedSale.createdAt).toLocaleDateString()}</p>
-              </div>
-              <button onClick={handleClose} className="p-2 hover:bg-[var(--color-muted)] rounded-full transition-colors text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]">
-                <X size={20} />
-              </button>
-            </div>
-
-            <div className="p-8 font-mono text-sm bg-[var(--color-background)] max-h-[70vh] overflow-y-auto custom-scrollbar">
-
-              <div className="text-center pb-6 mb-6 border-b-2 border-dashed border-[var(--color-border)]">
-                <h2 className="text-xl font-bold text-[var(--color-foreground)] tracking-wide uppercase">
-                  {JSON.parse(sessionStorage.getItem("user"))?.shopname}
-                </h2>
-              </div>
-
-              <div className="mb-6 grid grid-cols-2 gap-4">
+            <div ref={invoiceRef} className="relative z-10 p-2">
+              <img
+                src={dukaanLogo}
+                alt="Dukaan Digital"
+                className="absolute inset-0 m-auto w-64 opacity-[0.04] pointer-events-none select-none"
+              />
+              <div className="relative z-10 flex justify-between items-center px-8 py-6 border-b">
                 <div>
-                  <p className="text-[var(--color-muted-foreground)] text-xs uppercase mb-1">{type === "sale" ? "Customer" : "Supplier"}</p>
-                  <p className="text-[var(--color-foreground)] font-bold">{type === "sale" ? selectedSale.customerName : selectedSale.suppliername || "Walk-in"}</p>
+                  <h2 className="text-2xl font-bold tracking-wide text-gray-900">
+                    {JSON.parse(sessionStorage.getItem("user"))?.shopname}
+                  </h2>
+                  <p className="text-sm text-gray-900">{type === "sale" ? "Sales Invoice" : "Purchase Invoice"}</p>
                 </div>
+
                 <div className="text-right">
-                  <p className="text-[var(--color-muted-foreground)] text-xs uppercase mb-1">Date</p>
-                  <p className="text-[var(--color-foreground)] font-bold">{new Date(selectedSale.createdAt).toLocaleDateString()}</p>
+                  <p className="text-sm text-gray-900 font-medium">Invoice Date</p>
+                  <p className="text-gray-600">
+                    {new Date(selectedSale.createdAt).toLocaleDateString()}
+                  </p>
                 </div>
               </div>
 
-              <div className="rounded-lg border border-[var(--color-border)] overflow-hidden mb-6">
-                <div className="flex justify-between font-bold text-xs bg-[var(--color-surface)] p-3 text-[var(--color-muted-foreground)] uppercase">
-                  <span className="flex-1">Item</span>
-                  <span className="w-16 text-right">Qty</span>
-                  <span className="w-20 text-right">Price</span>
-                  <span className="w-24 text-right">Total</span>
+              <div className="relative z-10 grid grid-cols-2 gap-6 px-8 py-5 border-b">
+                <div>
+                  <p className="text-xs uppercase text-gray-900 mb-1">
+                    {type === "sale" ? "Billed To" : "Supplier"}
+                  </p>
+                  <p className="font-semibold text-gray-900">
+                    {type === "sale" ? selectedSale.customerName : selectedSale.suppliername || "Walk-in"}
+                  </p>
                 </div>
 
-                <div className="divide-y divide-[var(--color-border)]">
-                  {selectedSale.items.map((it) => (
-                    <div key={it._id} className="flex justify-between p-3 text-[var(--color-foreground)]">
-                      <span className="flex-1 font-medium">{it.itemname || it.productName}</span>
-                      <span className="w-16 text-right text-[var(--color-muted-foreground)]">{it.quantity} {it.unit || ""}</span>
-                      {type == "sale" &&
-                        <span className="w-20 text-right text-[var(--color-muted-foreground)]">Rs {it.price.toLocaleString()}</span> ||
-                        <span className="w-20 text-right text-[var(--color-muted-foreground)]">Rs {it.purchasePrice.toLocaleString()}</span>
-                      }
-                      <span className="w-24 text-right font-bold">
-                        Rs {type == "sale" ? (it.quantity * it.price).toLocaleString() : (it.quantity * it.purchasePrice).toLocaleString()}
-                      </span>
-                    </div>
-                  ))}
+                <div className="text-right">
+                  <p className="text-xs uppercase text-gray-900 mb-1">Invoice ID</p>
+                  <p className="font-semibold text-gray-900">
+                    #{selectedSale._id.slice(-6).toUpperCase()}
+                  </p>
                 </div>
               </div>
 
+              <div className="relative z-10 px-8 py-6">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="border-b text-left text-sm text-gray-900">
+                      <th className="py-2">Item</th>
+                      <th className="py-2 text-right">Qty</th>
+                      <th className="py-2 text-right">Rate</th>
+                      <th className="py-2 text-right">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selectedSale.items.map((it) => (
+                      <tr key={it._id} className="border-b text-gray-800 last:border-none">
+                        <td className="py-2 font-medium">{it.itemname || it.productName}</td>
+                        <td className="py-2 text-right">{it.quantity}</td>
+                        <td className="py-2 text-right">
+                          Rs {type === "sale" ? it.price : it.purchasePrice}
+                        </td>
+                        <td className="py-2 text-right font-semibold">
+                          Rs {(type === "sale"
+                            ? it.price * it.quantity
+                            : it.purchasePrice * it.quantity).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-              <div className="border-t-2 border-dashed border-[var(--color-border)] pt-4">
-                <div className="flex justify-between items-baseline font-bold text-xl text-[var(--color-foreground)]">
-                  <span>TOTAL</span>
-                  <span className="text-[var(--color-primary)]">
-                    Rs {type == "sale" ? selectedSale.totalAmount.toLocaleString() : selectedSale.total.toLocaleString()}
-                  </span>
+              <div className="relative z-10 flex justify-end px-8 py-6 border-t">
+                <div className="text-right">
+                  <p className="text-sm text-gray-500">Grand Total</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    Rs {type === "sale" ? selectedSale.totalAmount : selectedSale.total}
+                  </p>
                 </div>
               </div>
 
-              <div className="text-center text-xs text-[var(--color-muted-foreground)] mt-8">
-                <p>Thank you for your business!</p>
+              <div className="relative z-10 text-center text-xs text-gray-500 py-4 border-t">
+                This is a system generated invoice by Dukaan Digital
               </div>
             </div>
 
-            <div className="p-4 bg-[var(--color-surface)] border-t border-[var(--color-border)] flex justify-end gap-3">
+            <div className="flex justify-center gap-3 px-6 py-4 border-t bg-gray-50">
+              <button
+                onClick={handlePrint}
+                className="px-5 py-2 flex items-center gap-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-500 hover:text-white transition"
+              >
+                <Printer size={16} className="mr-2" /> Print
+              </button>
               <button
                 onClick={handleDelete}
-                className="bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white px-6 py-2.5 rounded-xl transition-all font-medium flex items-center gap-2"
+                className="px-5 py-2 flex items-center gap-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-500 hover:text-white transition"
               >
-                <Trash2 size={16} /> Delete
+                <Trash2 size={16} className="mr-2" /> Delete
               </button>
               <button
                 onClick={handleClose}
-                className="bg-[var(--color-background)] hover:bg-[var(--color-muted)] text-[var(--color-foreground)] border border-[var(--color-border)] px-6 py-2.5 rounded-xl transition-all font-medium"
+                className="px-5 py-2 flex items-center gap-2 rounded-lg text-gray-600 bg-gray-300 hover:bg-gray-500 hover:text-white transition"
               >
-                Close
+                <X size={16} className="mr-2" /> Close
               </button>
             </div>
-
           </div>
         </div>
       )}
