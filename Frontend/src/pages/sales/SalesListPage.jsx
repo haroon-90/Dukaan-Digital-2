@@ -6,6 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import dukaanLogo from "../../assets/Dukaan_Digital.svg";
 import { useReactToPrint } from 'react-to-print'
+import Loader from "../loader/loader.jsx"
 
 const SalesListPage = () => {
   const invoiceRef = useRef(null);
@@ -243,7 +244,7 @@ const SalesListPage = () => {
 
         {loading &&
           <div className="flex justify-center py-12">
-            <Loader2 className="animate-spin text-[var(--color-primary)]" size={40} />
+            <Loader />
           </div>
         }
         {!loading && (

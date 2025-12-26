@@ -3,6 +3,7 @@ import { getUdhaarlist, deleteUdhaar } from "../../services/udhaarServices.js";
 import { Trash2, Edit2, HandCoins, Search, Filter, Loader2, CreditCard } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Loader from "../loader/loader.jsx"
 
 const UdhaarListPage = () => {
   const navigate = useNavigate();
@@ -106,7 +107,7 @@ const UdhaarListPage = () => {
 
         {loading &&
           <div className="flex justify-center py-12">
-            <Loader2 className="animate-spin text-[var(--color-primary)]" size={40} />
+            <Loader />
           </div>
         }
 
@@ -142,8 +143,8 @@ const UdhaarListPage = () => {
                       <td className="px-6 py-4">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${item.status === "paid"
-                              ? "bg-emerald-500/10 text-emerald-500"
-                              : "bg-rose-500/10 text-rose-500"
+                            ? "bg-emerald-500/10 text-emerald-500"
+                            : "bg-rose-500/10 text-rose-500"
                             }`}
                         >
                           {item.status}
