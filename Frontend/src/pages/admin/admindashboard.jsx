@@ -98,7 +98,7 @@ const Admindashboard = () => {
     return (
         <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] transition-colors duration-300">
             <div className="sticky top-0 z-30 bg-[var(--color-background)]/80 backdrop-blur-md border-b border-[var(--color-border)]">
-                <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between gap-3">
+                <div className="mx-auto max-w-8xl px-2 md:px-4 lg:px-4 py-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
                         <div
                             onClick={() => navigate("/adminprofile")}
@@ -131,7 +131,7 @@ const Admindashboard = () => {
                 </div>
             </div>
 
-            <div className="mx-auto max-w-7xl p-4 md:p-6 space-y-8 animate-fade-in-up">
+            <div className="mx-auto max-w-8xl p-1 md:p-4 lg:p-6 space-y-8 animate-fade-in-up">
                 {error && (
                     <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-800 p-4 text-amber-800 dark:text-amber-200">
                         <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0" />
@@ -202,7 +202,7 @@ const Usertable = ({ filtered, handlestatusupdate, statusBadge, handleDelete, na
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full text-sm text-left">
-                <thead className="bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
+                <thead className="bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)]">
                     <tr>
                         <Th>{isadmin === true ? "Name" : "Manager"}</Th>
                         <Th className="hidden md:table-cell">Email</Th>

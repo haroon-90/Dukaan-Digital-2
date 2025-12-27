@@ -59,9 +59,9 @@ const UdhaarListPage = () => {
   });
 
   return (
-    <div className="p-6 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
+    <div className="p-2 md:p-4 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
 
-      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
+      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
         <h1 className="text-2xl text-[var(--color-foreground)] flex items-center gap-2">
           <CreditCard size={28} className="text-[var(--color-primary)]" />
           <div className="flex flex-col">
@@ -81,25 +81,25 @@ const UdhaarListPage = () => {
         </div>
       </div>
 
-      <div className="glass-panel shadow-xl rounded-3xl border border-[var(--color-border)] space-y-6 animate-fade-in-up">
+      <div className="glass-panel shadow-xl rounded-3xl border border-[var(--color-border)] animate-fade-in-up">
         <div className="flex flex-wrap flex-1 gap-4 items-center p-4 border-b border-[var(--color-border)]">
-          <div className="relative group flex-1 md:flex-none">
-            <Search className="absolute left-3 top-2.5 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
+          <div className="relative group flex-1 md:flex-none min-w-64">
+            <Search className="absolute left-3 top-2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
             <input
               type="text"
               placeholder="Search by name or contact..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 pr-4 py-2 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
+              className="pl-10 pr-4 py-1 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
             />
           </div>
 
           <div className="relative flex-1 md:flex-none">
-            <Filter className="absolute left-3 top-2.5 text-[var(--color-muted-foreground)]" size={18} />
+            <Filter className="absolute left-3 top-2 text-[var(--color-muted-foreground)]" size={18} />
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="pl-10 pr-8 py-2 w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] appearance-none cursor-pointer"
+              className="pl-10 pr-8 py-1 w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] appearance-none cursor-pointer"
             >
               <option value="all">All Status</option>
               <option value="pending">Pending</option>
@@ -116,7 +116,7 @@ const UdhaarListPage = () => {
         {!loading &&
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-[var(--color-surface)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)]">
+              <thead className="bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)]">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Customer Name</th>
                   <th className="px-6 py-4 font-semibold">Contact</th>

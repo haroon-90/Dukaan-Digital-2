@@ -52,9 +52,9 @@ const ExpenseListPage = () => {
   );
 
   return (
-    <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-4 md:p-6 transition-colors duration-300">
+    <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-2 md:p-4 transition-colors duration-300">
 
-      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
+      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
         <div>
           <div className="flex items-center gap-3">
             <ReceiptIcon size={28} className="text-[var(--color-primary)]" />
@@ -75,13 +75,14 @@ const ExpenseListPage = () => {
       <div className="max-w-7xl mx-auto glass-panel rounded-2xl overflow-hidden animate-fade-in-up">
 
         <div className="p-4 border-b border-[var(--color-border)]">
-          <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
+          <div className="relative group flex-1 md:flex-none min-w-64">
+            <Search className="absolute left-3 top-2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
             <input
+              type="text"
+              placeholder="Search expenses..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search expenses..."
-              className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] py-2 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all placeholder:text-[var(--color-muted-foreground)]"
+              className="pl-10 pr-4 py-1 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
             />
           </div>
         </div>
@@ -93,7 +94,7 @@ const ExpenseListPage = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-[var(--color-surface)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs">
+              <thead className="bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs">
                 <tr>
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">Amount</th>

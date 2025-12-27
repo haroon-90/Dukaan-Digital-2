@@ -166,7 +166,7 @@ const ProductListPage = () => {
   }, [location]);
 
   return (
-    <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-4 md:p-6 transition-colors duration-300">
+    <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-2 md:p-4 transition-colors duration-300">
       {showSaleModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 backdrop-blur-sm p-4 animate-fade-in">
           <div className="glass-panel p-8 max-h-[90vh] rounded-2xl overflow-auto shadow-2xl w-full max-w-lg font-mono text-[var(--color-foreground)] print:shadow-none print:border-0 print:rounded-none print:p-0 print:bg-white animate-scale-in">
@@ -309,13 +309,14 @@ const ProductListPage = () => {
       <div className="max-w-7xl mx-auto glass-panel rounded-2xl overflow-hidden animate-fade-in-up">
 
         <div className="p-4 border-b border-[var(--color-border)]">
-          <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
+          <div className="relative group flex-1 md:flex-none min-w-64">
+            <Search className="absolute left-3 top-2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
             <input
+              type="text"
+              placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search products..."
-              className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] py-2 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all placeholder:text-[var(--color-muted-foreground)]"
+              className="pl-10 pr-4 py-1 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
             />
           </div>
         </div>
@@ -328,7 +329,7 @@ const ProductListPage = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-[var(--color-surface)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs">
+              <thead className="bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs">
                 <tr>
                   {[
                     "Item Name",

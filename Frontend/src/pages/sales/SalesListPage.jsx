@@ -154,7 +154,7 @@ const SalesListPage = () => {
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="bg-[var(--color-surface)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)]">
+            <thead className="bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)]">
               <tr>
                 <th className="px-6 py-4 font-semibold">{type == "sale" ? "Customer" : "Supplier"}</th>
                 <th className="px-6 py-4 font-semibold">Date</th>
@@ -205,30 +205,8 @@ const SalesListPage = () => {
   );
 
   return (
-    <div className="relative p-6 space-y-6 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
-      <div className="flex md:justify-between items-center flex-wrap gap-4 justify-center glass-panel p-4 rounded-2xl animate-fade-in-down">
-        {/* <div className="flex items-center justify-center flex-wrap gap-4">
-          <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-2 rounded-xl border border-[var(--color-border)]">
-            <Calendar size={16} className="text-[var(--color-primary)]" />
-            <span className="text-sm font-medium text-[var(--color-muted-foreground)]">From:</span>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
-            />
-          </div>
-          <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-2 rounded-xl border border-[var(--color-border)]">
-            <Calendar size={16} className="text-[var(--color-primary)]" />
-            <span className="text-sm font-medium text-[var(--color-muted-foreground)]">To:</span>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
-            />
-          </div>
-        </div> */}
+    <div className="relative p-2 md:p-4 space-y-6 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
+      <div className="flex md:justify-between items-center flex-wrap gap-4 justify-center glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
         <div className="flex items-center gap-2">
           {type === "sale" ? <ShoppingCart className="text-[var(--color-primary)]" size={28} /> : <ShoppingBag className="text-[var(--color-primary)]" size={28} />}
           <div className="flex flex-col">
@@ -253,7 +231,7 @@ const SalesListPage = () => {
       </div>
 
       <div className="relative glass-panel rounded-3xl shadow-xl animate-fade-in-up">
-        <h2 className="text-xl p-4 border-b border-[var(--color-border)] font-bold text-[var(--color-foreground)] flex items-center justify-between flex-wrap gap-3">
+        <div className="text-md p-4 border-b border-[var(--color-border)] text-[var(--color-foreground)] flex items-center justify-between flex-wrap gap-3">
 
           <div className="flex items-center justify-center flex-wrap gap-4">
             <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-2 rounded-xl border border-[var(--color-border)]">
@@ -278,16 +256,16 @@ const SalesListPage = () => {
             </div>
           </div>
 
-          <div className="relative w-full sm:w-80">
+          <div className="relative group flex-1 md:flex-none min-w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search expenses..."
-              className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] py-2 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all placeholder:text-[var(--color-muted-foreground)]"
+              placeholder="Search ..."
+              className="pl-10 pr-4 py-1 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
             />
           </div>
-        </h2>
+        </div>
 
         {loading &&
           <div className="flex justify-center py-12">
