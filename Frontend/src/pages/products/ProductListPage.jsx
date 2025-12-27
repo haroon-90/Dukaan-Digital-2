@@ -258,10 +258,31 @@ const ProductListPage = () => {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
+
         <div>
-          <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Products & Sales</h1>
-          <p className="text-[var(--color-muted-foreground)] text-sm">Manage inventory and process sales.</p>
+          {isSale ?
+            <>
+              <div className="flex items-center gap-3">
+                <ShoppingCart size={28} className="text-[var(--color-primary)]" />
+                <div className="flex flex-col">
+                  <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Sales</h1>
+                  <p className="text-[var(--color-muted-foreground)] text-sm">Manage your sales.</p>
+                </div>
+              </div>
+            </>
+            :
+            <>
+              <div className="flex items-center gap-3">
+                <Package size={28} className="text-[var(--color-primary)]" />
+                <div className="flex flex-col">
+                  <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Products</h1>
+                  <p className="text-[var(--color-muted-foreground)] text-sm">Manage your products.</p>
+                </div>
+              </div>
+            </>
+
+          }
         </div>
         <div className="flex flex-wrap items-center gap-3">
           {cart.length > 0 && (

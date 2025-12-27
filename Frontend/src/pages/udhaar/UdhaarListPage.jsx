@@ -62,7 +62,27 @@ const UdhaarListPage = () => {
     <div className="p-6 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
 
       <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
-        <div className="flex flex-wrap flex-1 gap-4 items-center">
+        <h1 className="text-2xl text-[var(--color-foreground)] flex items-center gap-2">
+          <CreditCard size={28} className="text-[var(--color-primary)]" />
+          <div className="flex flex-col">
+            <h1 className="font-bold text-2xl">Credit Records</h1>
+            <p className="text-[var(--color-muted-foreground)] text-sm">Manage your credit records</p>
+          </div>
+        </h1>
+
+        <div>
+          <button
+            onClick={() => navigate("/udhaar/new")}
+            className="w-full md:w-auto bg-[var(--color-primary)] hover:brightness-110 text-[var(--color-primary-foreground)] px-6 py-2 rounded-xl transition-all shadow-lg hover:shadow-[var(--color-primary)]/20 active:scale-95 flex items-center justify-center gap-2 font-bold"
+          >
+            <HandCoins size={20} />
+            Add Credit
+          </button>
+        </div>
+      </div>
+
+      <div className="glass-panel shadow-xl rounded-3xl border border-[var(--color-border)] space-y-6 animate-fade-in-up">
+        <div className="flex flex-wrap flex-1 gap-4 items-center p-4 border-b border-[var(--color-border)]">
           <div className="relative group flex-1 md:flex-none">
             <Search className="absolute left-3 top-2.5 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
             <input
@@ -87,24 +107,6 @@ const UdhaarListPage = () => {
             </select>
           </div>
         </div>
-
-        <div>
-          <button
-            onClick={() => navigate("/udhaar/new")}
-            className="w-full md:w-auto bg-[var(--color-primary)] hover:brightness-110 text-[var(--color-primary-foreground)] px-6 py-2 rounded-xl transition-all shadow-lg hover:shadow-[var(--color-primary)]/20 active:scale-95 flex items-center justify-center gap-2 font-bold"
-          >
-            <HandCoins size={20} />
-            Add Credit
-          </button>
-        </div>
-      </div>
-
-      <div className="glass-panel shadow-xl rounded-3xl border border-[var(--color-border)] p-6 space-y-6 animate-fade-in-up">
-        <h1 className="text-2xl font-bold text-[var(--color-foreground)] flex items-center gap-2">
-          <CreditCard size={28} className="text-[var(--color-primary)]" />
-          Credit Records
-        </h1>
-
         {loading &&
           <div className="flex justify-center py-12">
             <Loader />
@@ -112,8 +114,8 @@ const UdhaarListPage = () => {
         }
 
         {!loading &&
-          <div className="overflow-x-auto rounded-xl border border-[var(--color-border)]">
-            <table className="min-w-full text-sm text-left">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
               <thead className="bg-[var(--color-surface)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)]">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Customer Name</th>

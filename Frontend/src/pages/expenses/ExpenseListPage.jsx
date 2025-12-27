@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getExpense, deleteExpense } from '../../services/expenseServices.js';
-import { Trash2, PlusCircle, Search } from 'lucide-react';
+import { Trash2, PlusCircle, Search, ReceiptIcon } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../loader/loader.jsx';
@@ -54,10 +54,15 @@ const ExpenseListPage = () => {
   return (
     <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-4 md:p-6 transition-colors duration-300">
 
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
         <div>
-          <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Expense Records</h1>
-          <p className="text-[var(--color-muted-foreground)] text-sm">Manage and track your business expenses.</p>
+          <div className="flex items-center gap-3">
+            <ReceiptIcon size={28} className="text-[var(--color-primary)]" />
+            <div className="flex flex-col">
+              <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Expense Records</h1>
+              <p className="text-[var(--color-muted-foreground)] text-sm">Manage and track your business expenses.</p>
+            </div>
+          </div>
         </div>
         <button
           onClick={() => navigate('/expenses/new')}
