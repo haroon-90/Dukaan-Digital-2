@@ -54,7 +54,7 @@ const ExpenseListPage = () => {
   return (
     <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-2 md:p-4 transition-colors duration-300">
 
-      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
+      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
         <div>
           <div className="flex items-center gap-3">
             <ReceiptIcon size={28} className="text-[var(--color-primary)]" />
@@ -106,7 +106,7 @@ const ExpenseListPage = () => {
               <tbody className="divide-y divide-[var(--color-border)]">
                 {filteredExpenses.length > 0 ? (
                   filteredExpenses.map((expense) => (
-                    <tr key={expense._id} className="hover:bg-[var(--color-surface)] transition-colors group">
+                    <tr key={expense._id} className="hover:bg-[var(--color-muted)] transition-colors group">
                       <td className="px-6 py-4 font-medium text-[var(--color-foreground)]">{expense.title}</td>
                       <td className="px-6 py-4 font-bold text-red-600 dark:text-red-400">
                         ₨ {expense.amount.toLocaleString()}

@@ -259,7 +259,6 @@ const ProductListPage = () => {
       )}
 
       <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
-
         <div>
           {isSale ?
             <>
@@ -364,7 +363,7 @@ const ProductListPage = () => {
                   </tr>
                 ) : (
                   filteredProduct.map((p) => (
-                    <tr key={p._id} className="hover:bg-[var(--color-surface)] transition-colors group">
+                    <tr key={p._id} className="hover:bg-[var(--color-muted)] transition-colors group">
                       <td className="px-6 py-4 font-medium text-[var(--color-foreground)]">{p.itemname}</td>
                       <td className="px-6 py-4 text-[var(--color-muted-foreground)]">{p.category}</td>
                       <td className="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">

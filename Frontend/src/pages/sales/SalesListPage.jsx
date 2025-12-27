@@ -232,7 +232,6 @@ const SalesListPage = () => {
 
       <div className="relative glass-panel rounded-3xl shadow-xl animate-fade-in-up">
         <div className="text-md p-4 border-b border-[var(--color-border)] text-[var(--color-foreground)] flex items-center justify-between flex-wrap gap-3">
-
           <div className="flex items-center justify-center flex-wrap gap-4">
             <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-2 rounded-xl border border-[var(--color-border)]">
               <Calendar size={16} className="text-[var(--color-primary)]" />
@@ -255,7 +254,6 @@ const SalesListPage = () => {
               />
             </div>
           </div>
-
           <div className="relative group flex-1 md:flex-none min-w-64">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
             <input
@@ -291,7 +289,6 @@ const SalesListPage = () => {
           <div
             onClick={(e) => e.stopPropagation()}
             className="max-h-screen overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl">
-
             <div ref={invoiceRef} className="relative z-10 p-2">
               <img
                 src={dukaanLogo}
@@ -305,7 +302,6 @@ const SalesListPage = () => {
                   </h2>
                   <p className="text-sm text-gray-900">{type === "sale" ? "Sales Invoice" : "Purchase Invoice"}</p>
                 </div>
-
                 <div className="text-right">
                   <p className="text-sm text-gray-900 font-medium">Invoice Date</p>
                   <p className="text-gray-600">
@@ -400,7 +396,6 @@ const SalesListPage = () => {
       )}
     </div>
   );
-
 };
 
 export default SalesListPage;

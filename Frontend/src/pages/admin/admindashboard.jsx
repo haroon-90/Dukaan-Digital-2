@@ -216,7 +216,7 @@ const Usertable = ({ filtered, handlestatusupdate, statusBadge, handleDelete, na
                 </thead>
                 <tbody className="divide-y divide-[var(--color-border)]">
                     {filtered.map((m) => (
-                        <tr key={m._id} className="hover:bg-[var(--color-surface)] transition-colors group">
+                        <tr key={m._id} className="hover:bg-[var(--color-muted)] transition-colors group">
                             <Td className="font-medium">
                                 <div className="text-[var(--color-foreground)] flex items-center gap-2">
                                     {m.name}

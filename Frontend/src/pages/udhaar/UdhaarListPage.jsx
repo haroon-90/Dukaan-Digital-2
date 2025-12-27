@@ -70,15 +70,13 @@ const UdhaarListPage = () => {
           </div>
         </h1>
 
-        <div>
-          <button
-            onClick={() => navigate("/udhaar/new")}
-            className="w-full md:w-auto bg-[var(--color-primary)] hover:brightness-110 text-[var(--color-primary-foreground)] px-6 py-2 rounded-xl transition-all shadow-lg hover:shadow-[var(--color-primary)]/20 active:scale-95 flex items-center justify-center gap-2 font-bold"
-          >
-            <HandCoins size={20} />
-            Add Credit
-          </button>
-        </div>
+        <button
+          onClick={() => navigate("/udhaar/new")}
+          className="w-full md:w-auto bg-[var(--color-primary)] hover:brightness-110 text-[var(--color-primary-foreground)] px-6 py-2 rounded-xl transition-all shadow-lg hover:shadow-[var(--color-primary)]/20 active:scale-95 flex items-center justify-center gap-2 font-bold"
+        >
+          <HandCoins size={20} />
+          Add Credit
+        </button>
       </div>
 
       <div className="glass-panel shadow-xl rounded-3xl border border-[var(--color-border)] animate-fade-in-up">
