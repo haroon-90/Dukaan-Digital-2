@@ -79,7 +79,7 @@ const Sidebar = ({ toggleSidebar }) => {
                                 <span className={`flex-shrink-0 ${active ? 'text-white' : ''}`}>
                                     {item.icon}
                                 </span>
-                                <span className="md:group-hover:opacity-100 md:opacity-0 opacity-100 whitespace-nowrap transition-opacity duration-200 font-medium">
+                                <span className={`${active ? 'text-white' : ''} md:group-hover:opacity-100 md:opacity-0 opacity-100 whitespace-nowrap transition-opacity duration-200 font-medium`}>
                                     {item.label}
                                 </span>
                             </button>

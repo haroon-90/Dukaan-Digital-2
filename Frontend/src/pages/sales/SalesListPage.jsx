@@ -206,7 +206,7 @@ const SalesListPage = () => {
 
   return (
     <div className="relative p-2 md:p-4 space-y-6 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
-      <div className="flex md:justify-between items-center flex-wrap gap-4 justify-center glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
+      <div className="flex md:justify-between items-center flex-wrap gap-4 w-full glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
         <div className="flex items-center gap-2">
           {type === "sale" ? <ShoppingCart className="text-[var(--color-primary)]" size={28} /> : <ShoppingBag className="text-[var(--color-primary)]" size={28} />}
           <div className="flex flex-col">
@@ -215,7 +215,7 @@ const SalesListPage = () => {
           </div>
         </div>
         <button
-          className="px-6 py-2.5 bg-[var(--color-primary)] hover:brightness-110 transition-all text-[var(--color-primary-foreground)] rounded-xl flex items-center gap-2 font-bold shadow-lg shadow-[var(--color-primary)]/20 active:scale-95"
+          className="px-6 py-2.5 w-full bg-[var(--color-primary)] hover:brightness-110 transition-all text-[var(--color-primary-foreground)] rounded-xl flex items-center justify-center gap-2 font-bold shadow-lg shadow-[var(--color-primary)]/20 active:scale-95"
           onClick={() => {
             type === "sale" && navigate("/sales/new")
             type === "purchase" && navigate("/purchase/new")

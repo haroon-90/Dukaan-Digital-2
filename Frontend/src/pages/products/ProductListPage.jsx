@@ -283,26 +283,24 @@ const ProductListPage = () => {
 
           }
         </div>
-        <div className="flex flex-wrap items-center gap-3">
-          {cart.length > 0 && (
-            <button
-              onClick={ShowCart}
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-foreground)] text-[var(--color-background)] px-4 py-2.5 text-sm font-bold shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
-            >
-              <ShoppingCart size={18} /> Sale ({cart.length})
-            </button>
-          )}
-          {!isSale &&
-            <button
-              className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
-              onClick={() => {
-                navigate("/products/new");
-              }}>
-              <PlusCircle size={18} />
-              Add Product
-            </button>
-          }
-        </div>
+        {cart.length > 0 && (
+          <button
+            onClick={ShowCart}
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-foreground)] text-[var(--color-background)] px-4 py-2.5 text-sm font-bold shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
+          >
+            <ShoppingCart size={18} /> Sale ({cart.length})
+          </button>
+        )}
+        {!isSale &&
+          <button
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
+            onClick={() => {
+              navigate("/products/new");
+            }}>
+            <PlusCircle size={18} />
+            Add Product
+          </button>
+        }
       </div>
 
       <div className="max-w-7xl mx-auto glass-panel rounded-2xl overflow-hidden animate-fade-in-up">
