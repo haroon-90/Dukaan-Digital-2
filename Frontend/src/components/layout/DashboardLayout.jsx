@@ -43,7 +43,9 @@ const DashboardLayout = () => {
                     <div className="container mx-auto p-1 py-2 md:p-2 lg:p-4 max-w-7xl animate-fade-in">
                         <Outlet />
                     </div>
-                    <Footer />
+                    <div className='hidden md:block'>
+                        <Footer />
+                    </div>
                 </main>
             </div>
         </div>

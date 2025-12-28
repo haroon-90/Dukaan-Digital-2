@@ -50,6 +50,10 @@ import ExpenseFormPage from "../pages/expenses/ExpenseFormPage.jsx"
 // Reports
 import Reporthomepage from "../pages/reports/Reporthomepage.jsx"
 
+// Footer
+import MobileAboutLayout from "./layout/MobileAboutLayout.jsx"
+import Footer from "../components/parts/Footer.jsx"
+
 import { Navigate } from "react-router-dom"
 
 export default function AppRouter() {
@@ -131,6 +135,11 @@ export default function AppRouter() {
           {/* Reports */}
           <Route path="reports">
             <Route index element={<Reporthomepage />} />
+          </Route>
+
+          {/* Footer */}
+          <Route path="footer">
+            <Route index element={<MobileAboutLayout />} />
           </Route>
 
         </Route>

@@ -8,6 +8,7 @@ import {
     ReceiptIcon,
     LayoutDashboard,
     ShoppingBag,
+    Info
 } from "lucide-react";
 
 const Sidebar = ({ toggleSidebar }) => {
@@ -102,6 +103,20 @@ const Sidebar = ({ toggleSidebar }) => {
                     <User className={`flex-shrink-0 ${isActive("/profile") ? 'text-white' : ''}`} size={20} />
                     <span className="md:group-hover:opacity-100 md:opacity-0 opacity-100 whitespace-nowrap transition-opacity duration-200 font-medium">
                         Profile
+                    </span>
+                </button>
+                <button
+                    onClick={() => { navigate("/footer"); toggleSidebar && toggleSidebar(); }}
+                    className={`relative md:hidden flex items-center gap-3 p-3 w-full text-left rounded-xl transition-all duration-200 outline-none 
+                        ${isActive("/footer") ?
+                            "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-md" :
+                            "text-[var(--color-muted-foreground)] hover:bg-[var(--color-muted)] hover:text-[var(--color-foreground)]"}`}
+                >
+                    <span className={`flex-shrink-0 ${isActive("/footer") ? 'text-white' : ''}`}>
+                        <Info size={20} />
+                    </span>
+                    <span className={`${isActive("/footer") ? 'text-white' : ''} md:group-hover:opacity-100 md:opacity-0 opacity-100 whitespace-nowrap transition-opacity duration-200 font-medium`}>
+                        About
                     </span>
                 </button>
             </div>

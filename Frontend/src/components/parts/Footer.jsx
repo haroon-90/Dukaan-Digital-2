@@ -13,7 +13,7 @@ const Footer = () => {
                     </div>
 
                     <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm font-medium text-[var(--color-foreground)]">
-                        <Link to="/aboutus" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-primary)] transition-colors duration-200 flex items-center gap-1">
+                        <Link to="/aboutus" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-primary)] hidden md:flex transition-colors duration-200 items-center gap-1">
                             About Us
                         </Link>
                         <Link to="/privacypolicy" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--color-primary)] transition-colors duration-200 flex items-center gap-1">
