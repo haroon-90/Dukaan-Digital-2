@@ -40,7 +40,7 @@ const LoginPage = () => {
         setError('Invalid login response')
       }
     } catch (err) {
-      toast.error('Login failed!');
+      toast.error(err.response?.data?.message || 'Login failed!');
       setError(err.response?.data?.message || 'An error occurred during login')
     } finally {
       setLoading(false)

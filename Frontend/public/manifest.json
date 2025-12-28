@@ -15,9 +15,9 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "description": "Dukaan Digital helps shopkeepers manage inventory, sales, and udhaar easily.",
+  "description": "Dukaan Digital helps shopkeepers manage inventory, purchase, sales, expenses and credits easily.",
   "scope": "/",
   "orientation": "portrait",
   "theme_color": "#ffffff",
-  "background_color": "#54a3ff"
+  "background_color": "#ffffff"
 }

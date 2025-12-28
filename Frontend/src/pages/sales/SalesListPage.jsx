@@ -376,19 +376,19 @@ const SalesListPage = () => {
                 onClick={handlePrint}
                 className="px-5 py-2 flex items-center gap-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-500 hover:text-white transition"
               >
-                <Printer size={16} className="mr-2" title="Print" />
+                <Printer size={16} title="Print" />
               </button>
               <button
                 onClick={handleDelete}
                 className="px-5 py-2 flex items-center gap-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-500 hover:text-white transition"
               >
-                <Trash2 size={16} className="mr-2" title="Delete" />
+                <Trash2 size={16} title="Delete" />
               </button>
               <button
                 onClick={handleClose}
                 className="px-5 py-2 flex items-center gap-2 rounded-lg text-gray-600 bg-gray-300 hover:bg-gray-500 hover:text-white transition"
               >
-                <X size={16} className="mr-2" title="Close" />
+                <X size={16} title="Close" />
               </button>
             </div>
           </div>

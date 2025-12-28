@@ -131,7 +131,7 @@ const Admindashboard = () => {
                 </div>
             </div>
 
-            <div className="mx-auto max-w-8xl p-1 md:p-4 lg:p-6 space-y-8 animate-fade-in-up">
+            <div className="mx-auto max-w-8xl p-1 py-4 md:p-4 lg:p-6 space-y-8 animate-fade-in-up">
                 {error && (
                     <div className="flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 dark:bg-amber-900/20 dark:border-amber-800 p-4 text-amber-800 dark:text-amber-200">
                         <AlertTriangle className="mt-0.5 h-5 w-5 flex-shrink-0" />
@@ -142,11 +142,10 @@ const Admindashboard = () => {
                     </div>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <StatCard icon={Store} label="Total Shops" value={managers.length} loading={loading} color="blue" />
                     <StatCard icon={Shield} label="Total Admins" value={admins.length} loading={loading} color="indigo" />
                 </div>
-
 
                 <div className='glass-panel rounded-2xl overflow-hidden'>
                     <div className="p-4 border-b border-[var(--color-border)] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -270,7 +269,7 @@ const Usertable = ({ filtered, handlestatusupdate, statusBadge, handleDelete, na
     )
 };
 
-function StatCard({ icon: Icon, label, value, loading, color }) {
+function StatCard({ icon: Icon, label, value, loading }) {
     return (
         <div className="glass-panel p-5 rounded-2xl flex items-center gap-4 relative overflow-hidden group">
             <div className={`p-3 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)] group-hover:scale-110 transition-transform`}>
