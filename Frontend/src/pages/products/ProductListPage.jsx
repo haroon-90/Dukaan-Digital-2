@@ -365,9 +365,9 @@ const ProductListPage = () => {
                       <td className="px-6 py-4 font-medium text-[var(--color-foreground)]">{p.itemname}</td>
                       <td className="px-6 py-4 text-[var(--color-muted-foreground)]">{p.category}</td>
                       <td className="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">
-                        {prprice ? `Rs ${p.purchasePrice}` : "•••"}
+                        {prprice ? `Rs ${p.purchasePrice.toLocaleString()}` : "•••"}
                       </td>
-                      <td className="px-6 py-4 font-bold text-[var(--color-foreground)]">Rs {p.sellingPrice}</td>
+                      <td className="px-6 py-4 font-bold text-[var(--color-foreground)]">Rs {p.sellingPrice.toLocaleString()}</td>
                       <td className="px-6 py-4 font-medium text-[var(--color-muted-foreground)]">{p.quantity}</td>
                       <td className="px-6 py-4 text-[var(--color-muted-foreground)]">{p.unit}</td>
                       {isSale && (

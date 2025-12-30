@@ -86,17 +86,17 @@ const ReportReceipt = ({ report, period }) => {
 
                 <div className="text-center text-xs urdu-font leading-8 text-[var(--color-foreground)] mt-6 pt-4 border-t border-dashed border-[var(--color-border)] print:border-solid">
                     {period.length == 7 ? " اس مہینے " : " آج "}
-                    <span className="underline text-[var(--color-primary)] mx-1">{report.totalSale}</span>
+                    <span className="underline text-[var(--color-primary)] mx-1">{report.totalSale.toLocaleString()}</span>
                     کی فروخت ہوئی،
-                    <span className="underline text-orange-500 mx-1">{report.totalExpense}</span>
+                    <span className="underline text-orange-500 mx-1">{report.totalExpense.toLocaleString()}</span>
                     خرچ ہوا اور
                     {report.totalProfit >= 0 ? (
                         <span className="underline text-emerald-600 dark:text-emerald-400 mx-1">
-                            {report.totalProfit}
+                            {report.totalProfit.toLocaleString()}
                         </span>
                     ) : (
                         <span className="underline text-red-500 mx-1">
-                            {Math.abs(report.totalProfit)}
+                            {Math.abs(report.totalProfit).toLocaleString()}
                         </span>
                     )}
                     {report.totalProfit >= 0 ? (
@@ -116,10 +116,10 @@ const ReportReceipt = ({ report, period }) => {
                     <h4 className="text-[var(--color-muted-foreground)] text-sm mb-2">Address: {JSON.parse(sessionStorage.getItem("user"))?.address}</h4>
                 </div>
                 <div className="text-center text-xs text-[var(--color-muted-foreground)] mt-6">
-                    Generated at : {new Date().toLocaleDateString()}
+                    Generated at : {new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()}
                 </div>
                 <div className="text-center text-xs text-[var(--color-muted-foreground)] pt-4">
-                    Thank you!
+                    Powered by <span className="text-[var(--color-primary)]">Dukaan Digital</span>
                 </div>
             </div>
         </div>

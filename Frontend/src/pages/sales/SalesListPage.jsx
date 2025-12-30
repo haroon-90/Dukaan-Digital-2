@@ -344,7 +344,7 @@ const SalesListPage = () => {
                         <td className="py-2 font-medium">{it.itemname || it.productName}</td>
                         <td className="py-2 text-right">{it.quantity}</td>
                         <td className="py-2 text-right">
-                          Rs {type === "sale" ? it.price : it.purchasePrice}
+                          Rs {type === "sale" ? it.price.toLocaleString() : it.purchasePrice.toLocaleString()}
                         </td>
                         <td className="py-2 text-right font-semibold">
                           Rs {(type === "sale"
@@ -361,7 +361,7 @@ const SalesListPage = () => {
                 <div className="text-right">
                   <p className="text-sm text-gray-500">Grand Total</p>
                   <p className="text-2xl font-bold text-gray-900">
-                    Rs {type === "sale" ? selectedSale.totalAmount : selectedSale.total}
+                    Rs {type === "sale" ? selectedSale.totalAmount.toLocaleString() : selectedSale.total.toLocaleString()}
                   </p>
                 </div>
               </div>

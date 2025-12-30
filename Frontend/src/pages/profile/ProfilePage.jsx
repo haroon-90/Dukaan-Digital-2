@@ -99,12 +99,14 @@ const ProfilePage = () => {
             {/* Profile Card */}
             <div className="w-full max-w-4xl rounded-3xl glass-panel shadow-2xl overflow-hidden animate-fade-in-up">
                 {/* Header */}
-                <div className="bg-gradient-to-r from-[var(--color-primary)] to-blue-500 p-8 flex items-center justify-between h-48 relative overflow-hidden">
-                    {/* Abstract background detail */}
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-black/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl pointer-events-none"></div>
-
-
+                <div className="bg-blue-500 p-8 flex items-center justify-between h-48 relative overflow-hidden">
+                    {/* Decorative Background Pattern */}
+                    <div className="absolute inset-0 opacity-20 pointer-events-none"
+                        style={{
+                            backgroundImage: 'radial-gradient(circle, white 1.5px, transparent 1.5px)',
+                            backgroundSize: '14px 14px'
+                        }}>
+                    </div>
                     <button
                         onClick={() => navigate(-1)}
                         className="absolute top-6 left-6 flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full text-white hover:bg-white/30 transition-colors shadow-sm"
@@ -121,7 +123,7 @@ const ProfilePage = () => {
                     </div>
                     <h2 className="mt-4 text-3xl text-center font-bold text-[var(--color-foreground)]">{user.name}</h2>
                     <p className="text-sm capitalize font-medium text-[var(--color-muted-foreground)]">{user.role}</p>
-                    <div className="mt-3 px-4 py-1.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold text-sm capitalize border border-[var(--color-primary)]/20 shadow-sm">{user.shopname || "No Shop Assigned"}</div>
+                    {user.role !== "admin" && <div className="mt-3 px-4 py-1.5 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] font-semibold text-sm capitalize border border-[var(--color-primary)]/20 shadow-sm">{user.shopname || "No Shop Assigned"}</div>}
                 </div>
 
                 {/* Details */}
@@ -129,10 +131,6 @@ const ProfilePage = () => {
                     <ProfileDetail icon={<Mail size={20} />} label="Email" value={user.email} />
                     <ProfileDetail icon={<Phone size={20} />} label="Phone" value={user.phone} />
                     <ProfileDetail icon={<MapPinned size={20} />} label="Address" value={user.address} />
-                    {user.role !== "admin" && (
-                        <ProfileDetail icon={<Store size={20} />} label="Shop Name" value={user.shopname} />
-                    )}
-                    <ProfileDetail icon={<Briefcase size={20} />} label="Role" value={user.role} />
                     <ProfileDetail icon={<Calendar size={20} />} label="Joined On" value={user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'} />
                 </div>
 
