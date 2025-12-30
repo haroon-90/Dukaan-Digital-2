@@ -35,18 +35,9 @@ const MenuLink = ({ icon, label, onClick, danger, value }) => (
 const ProfilePage = () => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
-    const [profile, setProfile] = useState({});
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [loading, setLoading] = useState(false);
-
-    const fetchProfile = async () => {
-        try {
-            const response = await getProfile();
-            setProfile(response.data);
-        } catch (error) {
-            toast.error('Failed to fetch profile!');
-        }
-    };
+    const user = JSON.parse(sessionStorage.getItem("user")) || {};
 
     const handleDelete = async () => {
         setLoading(true);
@@ -66,8 +57,8 @@ const ProfilePage = () => {
     };
 
     const handleEdit = () => {
-        if (profile.role === "admin") {
-            navigate('/admin/profile/edit', { state: { data: profile } });
+        if (user.role === "admin") {
+            navigate('/admin/profile/edit', { state: { data: user } });
         } else {
             navigate('/profile/edit');
         }
@@ -80,11 +71,6 @@ const ProfilePage = () => {
 
     const [showPersonalDetails, setShowPersonalDetails] = useState(false);
 
-    useEffect(() => {
-        fetchProfile();
-    }, []);
-
-    const user = profile._id ? profile : JSON.parse(sessionStorage.getItem("user")) || {};
 
     return (
         <div className="relative min-h-screen bg-[var(--color-background)] font-sans text-[var(--color-foreground)] flex flex-col items-center justify-center py-6 px-4 pb-24 md:pb-6 transition-colors duration-300">
@@ -190,28 +176,29 @@ const ProfilePage = () => {
                     </div>
                 </div>
 
-                {/* dashboard, credits, report , expenses */}
-                <div className="space-y-6 md:hidden">
-                    <h3 className="text-lg font-bold text-[var(--color-foreground)] px-1">Business</h3>
-                    <div className="grid grid-cols-1 gap-3">
-                        <MenuLink
-                            icon={<Briefcase size={20} />}
-                            label="Expenses"
-                            onClick={() => navigate('/expenses')}
-                        />
-                        <MenuLink
-                            icon={<CreditCard size={20} />}
-                            label="Credits"
-                            onClick={() => navigate('/udhaar')}
-                        />
-                        <MenuLink
-                            icon={<FileText size={20} />}
-                            label="Reports"
-                            onClick={() => navigate('/reports')}
-                        />
+                {/* Business: credits, report , expenses */}
+                {user.role !== "admin" && (
+                    <div className="space-y-6 md:hidden">
+                        <h3 className="text-lg font-bold text-[var(--color-foreground)] px-1">Business</h3>
+                        <div className="grid grid-cols-1 gap-3">
+                            <MenuLink
+                                icon={<Briefcase size={20} />}
+                                label="Expenses"
+                                onClick={() => navigate('/expenses')}
+                            />
+                            <MenuLink
+                                icon={<CreditCard size={20} />}
+                                label="Credits"
+                                onClick={() => navigate('/udhaar')}
+                            />
+                            <MenuLink
+                                icon={<FileText size={20} />}
+                                label="Reports"
+                                onClick={() => navigate('/reports')}
+                            />
+                        </div>
                     </div>
-                </div>
-
+                )}
                 {/* Mobile/Menu Actions Section - HIDDEN ON DESKTOP */}
                 <div className="space-y-6 md:hidden">
 

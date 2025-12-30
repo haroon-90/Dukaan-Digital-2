@@ -27,7 +27,7 @@ const EditProfile = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await editUserProfile(data._id, form);
+            const response = await editUserProfile(data.id, form);
             if (response.status === 200) {
                 toast.success("Profile updated successfully!");
                 setTimeout(() => {

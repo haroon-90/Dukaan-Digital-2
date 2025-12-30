@@ -39,13 +39,13 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(400).json({ message: 'User not found' });
         }
-        
+
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ message: 'Invalid credentials' });
         }
-        const userststus = await UserStatus.findOne({userId : user._id})
-        if(userststus.status == "suspended"){
+        const userststus = await UserStatus.findOne({ userId: user._id })
+        if (userststus.status == "suspended") {
             return res.status(400).json({ message: 'Your Account is suspended' });
         }
 
@@ -62,6 +62,7 @@ const login = async (req, res) => {
                 address: user.address,
                 email: user.email,
                 role: user.role,
+                createdAt: user.createdAt
             }
         })
     }

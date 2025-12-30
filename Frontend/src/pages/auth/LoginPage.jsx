@@ -31,6 +31,7 @@ const LoginPage = () => {
         toast.success('Login successfully!');
         const USER = response.data.user;
         setUser(USER);
+        console.log(USER);
         if (USER.role === 'admin') {
           navigate('/admin');
         } else {

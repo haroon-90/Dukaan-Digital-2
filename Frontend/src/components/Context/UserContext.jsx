@@ -7,13 +7,14 @@ export const UserProvider = ({ children }) => {
         // initial load pe storage se read karega
         const storedUser = sessionStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : {
-            id: null,
+            id: "",
             name: "",
             email: "",
             role: "",
             shopname: "",
             address: "",
-            phone: ""
+            phone: "",
+            createdAt: ""
         };
     });
 
