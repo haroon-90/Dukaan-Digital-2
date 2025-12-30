@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { getsales, deletesale } from "../../services/saleService.js";
 import { getPurchases, deletePurchase } from "../../services/purchaseServices.js";
-import { ShoppingCart, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Receipt, Printer, X, Search } from "lucide-react";
+import { TrendingUp, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Receipt, Printer, X, Search } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import dukaanLogo from "../../assets/Dukaan_Digital.svg";
@@ -208,7 +208,7 @@ const SalesListPage = () => {
     <div className="relative p-2 md:p-4 space-y-6 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
       <div className="flex md:justify-between items-center flex-wrap gap-4 w-full glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
         <div className="flex items-center gap-2">
-          {type === "sale" ? <ShoppingCart className="text-[var(--color-primary)]" size={28} /> : <ShoppingBag className="text-[var(--color-primary)]" size={28} />}
+          {type === "sale" ? <TrendingUp className="text-[var(--color-primary)]" size={28} /> : <ShoppingBag className="text-[var(--color-primary)]" size={28} />}
           <div className="flex flex-col">
             <h1 className="font-bold text-2xl">{type === "sale" ? "Sales Records" : "Purchase Records"}</h1>
             <p className="text-[var(--color-muted-foreground)] text-sm">Manage your {type === "sale" ? "sales" : "purchase"} records</p>
@@ -222,7 +222,7 @@ const SalesListPage = () => {
           }}
         >
           {
-            type == "sale" ? <ShoppingCart size={18} /> : <ShoppingBag size={18} />
+            type == "sale" ? <TrendingUp size={18} /> : <ShoppingBag size={18} />
           }
           {
             type == "sale" ? "New Sale" : "New Purchase"

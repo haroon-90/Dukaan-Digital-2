@@ -8,7 +8,7 @@ import {
     ResponsiveContainer,
     CartesianGrid
 } from "recharts";
-import { ShoppingCart, HandCoins, DollarSign, Receipt, MessageCircleWarning, Eye, EyeOff, CheckCircle2 } from "lucide-react";
+import { TrendingUp, HandCoins, DollarSign, Receipt, MessageCircleWarning, Eye, EyeOff, CheckCircle2 } from "lucide-react";
 import { getDashboard } from "../../services/dashboardServices.js";
 import Loader from "../loader/loader";
 import toast from "react-hot-toast";
@@ -106,7 +106,7 @@ const Dashboard = () => {
                 <StatCard
                     title="Total Sales"
                     value={ishide ? "*****" : `₨ ${summary?.sales.toLocaleString() || "---"}`}
-                    icon={ShoppingCart}
+                    icon={TrendingUp}
                     colorClass="bg-blue-500 shadow-blue-500/30 shadow-lg"
                     delay={100}
                 />

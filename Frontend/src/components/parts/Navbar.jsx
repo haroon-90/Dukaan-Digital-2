@@ -14,12 +14,6 @@ const Navbar = ({ toggleSidebar }) => {
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     <div className="flex items-center gap-4">
-                        <button
-                            onClick={toggleSidebar}
-                            className={`p-2 rounded-lg text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-muted)] transition-colors focus:outline-none md:hidden ${role === 'admin' ? 'hidden' : 'block'}`}
-                        >
-                            <Menu size={24} />
-                        </button>
 
                         <div
                             onClick={() => window.location.reload()}
@@ -36,7 +30,7 @@ const Navbar = ({ toggleSidebar }) => {
                     <div className="flex items-center gap-3">
                         <button
                             onClick={toggleTheme}
-                            className="p-2 rounded-full text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors"
+                            className="hidden md:flex p-2 rounded-full text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors"
                             title="Toggle Theme"
                         >
                             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
@@ -63,7 +57,7 @@ const Navbar = ({ toggleSidebar }) => {
                         <button
                             onClick={() => { sessionStorage.clear(); navigate('/login') }}
                             title="Logout"
-                            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-[var(--color-foreground)] bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-muted)] hover:text-red-500 transition-all shadow-sm"
+                            className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-[var(--color-foreground)] bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-muted)] hover:text-red-500 transition-all shadow-sm"
                         >
                             <LogOut size={18} />
                             <span className="hidden md:inline">Logout</span>

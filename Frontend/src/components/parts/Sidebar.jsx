@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
     User,
     Package,
-    ShoppingCart,
+    TrendingUp,
     BarChart2,
     HandCoins,
     ReceiptIcon,
@@ -29,7 +29,7 @@ const Sidebar = ({ toggleSidebar }) => {
         {
             label: "Sales",
             path: "/sales",
-            icon: <ShoppingCart size={20} />,
+            icon: <TrendingUp size={20} />,
         },
         {
             label: "Purchase",
