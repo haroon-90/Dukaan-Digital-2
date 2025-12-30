@@ -288,7 +288,7 @@ const SalesListPage = () => {
           className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div
             onClick={(e) => e.stopPropagation()}
-            className="max-h-screen overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl">
+            className="max-h-[calc(100vh-10rem)] overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl">
             <div ref={invoiceRef} className="relative z-10 p-2">
               <img
                 src={dukaanLogo}
