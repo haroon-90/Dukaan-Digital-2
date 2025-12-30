@@ -190,6 +190,28 @@ const ProfilePage = () => {
                     </div>
                 </div>
 
+                {/* dashboard, credits, report , expenses */}
+                <div className="space-y-6 md:hidden">
+                    <h3 className="text-lg font-bold text-[var(--color-foreground)] px-1">Business</h3>
+                    <div className="grid grid-cols-1 gap-3">
+                        <MenuLink
+                            icon={<Briefcase size={20} />}
+                            label="Expenses"
+                            onClick={() => navigate('/expenses')}
+                        />
+                        <MenuLink
+                            icon={<CreditCard size={20} />}
+                            label="Credits"
+                            onClick={() => navigate('/udhaar')}
+                        />
+                        <MenuLink
+                            icon={<FileText size={20} />}
+                            label="Reports"
+                            onClick={() => navigate('/reports')}
+                        />
+                    </div>
+                </div>
+
                 {/* Mobile/Menu Actions Section - HIDDEN ON DESKTOP */}
                 <div className="space-y-6 md:hidden">
 
