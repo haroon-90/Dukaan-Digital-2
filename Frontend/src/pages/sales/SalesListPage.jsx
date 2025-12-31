@@ -215,7 +215,7 @@ const SalesListPage = () => {
           </div>
         </div>
         <button
-          className="px-6 py-2.5 w-full bg-[var(--color-primary)] hover:brightness-110 transition-all text-[var(--color-primary-foreground)] rounded-xl flex items-center justify-center gap-2 font-bold shadow-lg shadow-[var(--color-primary)]/20 active:scale-95"
+          className="px-6 py-2.5 w-full md:w-auto bg-[var(--color-primary)] hover:brightness-110 transition-all text-[var(--color-primary-foreground)] rounded-xl flex items-center justify-center gap-2 font-bold shadow-lg shadow-[var(--color-primary)]/20 active:scale-95"
           onClick={() => {
             type === "sale" && navigate("/sales/new")
             type === "purchase" && navigate("/purchase/new")
