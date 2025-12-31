@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getProducts, deleteProducts } from "../../services/productServices.js";
 import { createsale } from "../../services/saleService.js";
-import { Edit2, Trash2, ShoppingCart, Eye, Package, PlusCircle, Search, X, EyeOff } from "lucide-react";
+import { Edit2, Trash2, TrendingUp, ShoppingCart, Eye, Package, PlusCircle, Search, X, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx";
 
@@ -263,7 +263,7 @@ const ProductListPage = () => {
           {isSale ?
             <>
               <div className="flex items-center gap-3">
-                <ShoppingCart size={28} className="text-[var(--color-primary)]" />
+                <TrendingUp size={28} className="text-[var(--color-primary)]" />
                 <div className="flex flex-col">
                   <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Sales</h1>
                   <p className="text-[var(--color-muted-foreground)] text-sm">Manage your sales.</p>
@@ -288,7 +288,7 @@ const ProductListPage = () => {
             onClick={ShowCart}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-foreground)] text-[var(--color-background)] px-4 py-2.5 text-sm font-bold shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
           >
-            <ShoppingCart size={18} /> Sale ({cart.length})
+            <TrendingUp size={18} /> Sale ({cart.length})
           </button>
         )}
         {!isSale &&

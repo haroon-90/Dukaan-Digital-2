@@ -38,7 +38,7 @@
   /* Blue 100 */
 
   /* Glassmorphism */
-  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-bg: rgba(255, 255, 255, 0.2);
   --glass-border: rgba(37, 99, 235, 0.2);
   --glass-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
 }
@@ -73,7 +73,7 @@
   /* Slate 800 */
 
   /* Glassmorphism */
-  --glass-bg: rgba(15, 23, 42, 0.75);
+  --glass-bg: rgba(15, 23, 42, 0.2);
   --glass-border: rgba(96, 165, 250, 0.2);
   --glass-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
 }

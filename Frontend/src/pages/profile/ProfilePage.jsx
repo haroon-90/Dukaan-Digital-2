@@ -125,12 +125,12 @@ const ProfilePage = () => {
                         <span className="text-sm font-medium">Back</span>
                     </button>
                     {/* Theme Toggle for Mobile inside banner */}
-                    <button
+                    {/* <button
                         onClick={toggleTheme}
                         className="md:hidden absolute top-4 right-4 p-2 rounded-full bg-black/20 text-white backdrop-blur-sm"
                     >
                         {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                    </button>
+                    </button> */}
                 </div>
 
                 <div className="px-6 pb-6 -mt-12 flex flex-col items-center relative z-10">
@@ -166,12 +166,26 @@ const ProfilePage = () => {
                         <ProfileDetail icon={<MapPinned size={20} />} label="Address" value={user.address} />
                         <ProfileDetail icon={<Calendar size={20} />} label="Joined" value={user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A'} />
                     </div>
-                    <div className={`pt-4 ${showPersonalDetails ? 'block' : 'hidden'} md:block`}>
+                    <div className={`pt-4 ${showPersonalDetails ? 'block' : 'hidden'} md:flex gap-2`}>
+                        <button
+                            onClick={handleLogout}
+                            className="hidden md:flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 border border-red-500/30 text-red-500 font-semibold bg-transparent hover:bg-red-500 hover:text-white active:scale-[0.98] transition-all duration-200"
+                        >
+                            <LogOut size={18} />
+                            Logout
+                        </button>
                         <button
                             onClick={handleEdit}
                             className="w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] px-6 py-3.5 text-[var(--color-primary-foreground)] font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
                         >
                             <Edit2 size={18} /> Edit Profile
+                        </button>
+                        <button
+                            onClick={() => setConfirmDelete(true)}
+                            className="hidden md:flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 border border-red-500/30 text-red-500 font-semibold bg-transparent hover:bg-red-500 hover:text-white active:scale-[0.98] transition-all duration-200"
+                        >
+                            <Trash2 size={18} />
+                            Delete Account
                         </button>
                     </div>
                 </div>
@@ -230,6 +244,9 @@ const ProfilePage = () => {
                                 danger={true}
                                 onClick={() => setConfirmDelete(true)}
                             />
+                            <div className="flex items-center justify-center mt-2 text-sm">
+                                Made with ❤️ by &nbsp; <span onClick={() => window.open('https://github.com/haroon-90', '_blank')} className="font-bold text-[var(--color-primary)] cursor-pointer underline"> Haroon</span>
+                            </div>
                         </div>
                     </div>
                 </div>

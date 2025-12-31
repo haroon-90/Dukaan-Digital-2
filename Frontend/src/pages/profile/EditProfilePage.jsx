@@ -2,7 +2,7 @@ import { useState } from "react";
 import { updateProfile } from "../../services/profileServices.js";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { User, Phone, Lock, ArrowLeft, Loader2, Edit } from 'lucide-react';
+import { User, Phone, Lock, ArrowLeft, Loader2, Edit, Send } from 'lucide-react';
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
@@ -147,6 +147,13 @@ const EditProfilePage = () => {
           )}
           <div className="mt-8 text-center bg-[var(--color-surface)] p-3 rounded-lg border border-[var(--color-border)]">
             <span className="text-xs text-[var(--color-muted-foreground)] font-medium">To make any other changes, please contact your administrator.</span>
+            <div className="flex items-center justify-center mt-2 text-sm">
+              {/* whatsapp link */}
+              <a href="https://wa.me/923279351337?text=Hello%20Dukaan%20Digital%20Team%2C%20I%20need%20to%20make%20some%20changes%20to%20my%20profile." target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                <Send size={20} className="text-[var(--color-primary)]" />
+                <span className="text-[var(--color-primary)] underline">WhatsApp</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
