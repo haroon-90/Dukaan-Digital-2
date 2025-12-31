@@ -45,7 +45,7 @@ const SalesListPage = () => {
         return;
       }
       console.log("Sales data : ", res.data)
-      setSales(res.data.reverse());
+      setSales(res.data);
     } catch (err) {
       if (err.response?.status === 404) {
         setSales([]);
