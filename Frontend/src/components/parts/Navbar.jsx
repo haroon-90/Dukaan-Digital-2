@@ -11,7 +11,7 @@ const Navbar = () => {
     const shopName = user?.shopname;
 
     return (
-        <nav className="sticky top-0 z-50 glass border-b border-[var(--glass-border)] transition-transform duration-300">
+        <nav className="sticky top-0 z-50 border-b border-[var(--glass-border)] shadow-[var(--glass-shadow)] transition-transform duration-300">
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     <div className="flex items-center gap-4">
@@ -26,13 +26,19 @@ const Navbar = () => {
                             />
                         </div>
                         {/* separator */}
-                        <div className='flex h-6 w-px bg-[var(--color-border)]'></div>
+                        <div className='flex h-6 w-px bg-[var(--glass-border)]'></div>
                         <div className="flex flex-col leading-tight">
-                            <span className="text-[13px] font-semibold text-[var(--color-foreground)] max-w-[140px]">
-                                {shopName || "Shop Name"}
-                            </span>
+                            {role === 'admin' ? (
+                                <span className="text-[13px] font-bold text-[var(--color-foreground)] max-w-[140px]">
+                                    Admin Panel
+                                </span>
+                            ) : (
+                                <span className="text-[13px] font-bold text-[var(--color-foreground)] max-w-[140px]">
+                                    {shopName || "Shop Name"}
+                                </span>
+                            )}
                             <span className="text-[11px] text-[var(--color-muted-foreground)]">
-                                Smart Business Panel
+                                {role === 'admin' ? "Platform Management" : "Smart Business Panel"}
                             </span>
                         </div>
                     </div>

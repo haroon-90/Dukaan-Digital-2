@@ -12,9 +12,9 @@ const navItems = [
 
 export default function BottomNavbar() {
     return (
-        <div className="fixed md:hidden bottom-1 left-1/2 -translate-x-1/2 z-50 w-[98%] max-w-md">
+        <div className="fixed md:hidden bottom-0 left-1/2 -translate-x-1/2 z-50 w-[98%] max-w-md">
             <div
-                className="flex items-end justify-between rounded-2xl px-4 py-3 bg-[var(--glass-bg)] border border-[var(--glass-border)] shadow-[var(--glass-shadow)] backdrop-blur-xl"
+                className="flex items-end justify-between rounded-t-2xl px-4 py-1 bg-[var(--glass-bg)] border border-[var(--glass-border)] shadow-[var(--glass-shadow)] backdrop-blur-xl"
             >
                 {navItems.map((item) => (
                     <NavLink key={item.label} to={item.path} end>
@@ -22,7 +22,7 @@ export default function BottomNavbar() {
                             <motion.div
                                 whileTap={{ scale: 0.9 }}
                                 animate={{
-                                    y: isActive && item.center ? -2 : 0,
+                                    y: isActive && item.center ? -1 : 0,
                                 }}
                                 transition={{ type: "spring", stiffness: 260, damping: 18 }}
                                 className="relative flex flex-col items-center gap-1"
@@ -42,7 +42,7 @@ export default function BottomNavbar() {
                                 <span
                                     className={`text-[11px] font-medium transition-colors
                                     ${isActive
-                                            ? "text-[var(--color-primary)]"
+                                            ? "text-[var(--color-primary)] font-bold"
                                             : "text-[var(--color-muted-foreground)]"
                                         }`}
                                 >

@@ -66,9 +66,9 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <div className="space-y-6 min-h-[calc(100vh-15rem)]">
+        <div className="space-y-2 md:space-y-6 min-h-[calc(100vh-15rem)]">
             {/* Header */}
-            <div className="flex flex-row flex-wrap justify-between items-center p-4 border border-[var(--color-border)] shadow-sm rounded-2xl bg-[var(--color-surface)] gap-4">
+            <div className="flex flex-row flex-wrap justify-between items-center p-4 border border-[var(--color-border)] shadow-sm rounded-2xl bg-[var(--color-surface)] md:gap-4 gap-2">
                 <div className="flex items-center gap-3">
                     <LayoutDashboard size={28} className="text-[var(--color-primary)]" />
                     <div className="flex flex-col">
@@ -77,19 +77,19 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+                <div className="flex items-center gap-3 w-auto justify-end">
                     <button
                         onClick={() => setishide(!ishide)}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:border-[var(--color-muted-foreground)] transition-all"
+                        className="flex items-center gap-2 px-2 md:px-4 py-2 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:border-[var(--color-muted-foreground)] transition-all"
                     >
                         {ishide ? <EyeOff size={18} /> : <Eye size={18} />}
-                        <span className="text-sm font-medium">{ishide ? "Hidden" : "Visible"}</span>
+                        <span className="text-sm font-medium hidden md:block">{ishide ? "Hidden" : "Visible"}</span>
                     </button>
                 </div>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6">
                 <StatCard
                     title="Total Sales"
                     value={loading ? <div className="mb-1 h-5 w-[90%] rounded-lg bg-[var(--color-muted)] text-sm"></div>
@@ -125,7 +125,7 @@ const Dashboard = () => {
             </div>
 
             {/* Charts & Lists */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-6 gap-2">
                 {/* Sales Chart */}
                 <Card>
                     <CardContent>
