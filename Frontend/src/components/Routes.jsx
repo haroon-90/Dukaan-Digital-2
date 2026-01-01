@@ -57,13 +57,15 @@ import Footer from "../components/parts/Footer.jsx"
 import { Navigate } from "react-router-dom"
 
 export default function AppRouter() {
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <Routes path="/">
 
       {/* Auth Layout Routes */}
       <Route element={<AuthLayout />}>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/" element={user?.role === "manager" ? <Navigate to="/manager" replace /> : <Navigate to="/admin" replace />} />
+        {/* <Route path="/" element={<ProtectedRoute role="manager" />} /> */}
         <Route path="/login" element={<LoginPage />} />
       </Route>
 
