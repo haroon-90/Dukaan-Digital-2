@@ -6,7 +6,7 @@ import { User, Phone, Lock, ArrowLeft, Loader2, Edit, Send } from 'lucide-react'
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
-  const user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null;
+  const user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
 
   const [form, setForm] = useState({
     name: user?.name || "",
@@ -46,7 +46,7 @@ const EditProfilePage = () => {
 
         const updatedUser = { ...user, ...formDataToSend };
         if (formDataToSend.password) delete updatedUser.password;
-        sessionStorage.setItem("user", JSON.stringify(updatedUser));
+        localStorage.setItem("user", JSON.stringify(updatedUser));
 
         setTimeout(() => {
           navigate('/profile');

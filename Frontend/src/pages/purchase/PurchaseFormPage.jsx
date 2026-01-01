@@ -375,7 +375,7 @@ const PurchaseFormPage = () => {
               </div>
 
               <h2 className="text-xl font-bold text-[var(--color-foreground)] tracking-wide">
-                {JSON.parse(sessionStorage.getItem("user"))?.shopname}
+                {JSON.parse(localStorage.getItem("user"))?.shopname}
               </h2>
 
               <p className="text-sm text-[var(--color-muted-foreground)] mt-1">

@@ -6,7 +6,7 @@ import { useTheme } from '../Context/ThemeContext';
 const Navbar = () => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
-    const user = JSON.parse(sessionStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
     const role = user?.role;
     const shopName = user?.shopname;
 
@@ -71,7 +71,7 @@ const Navbar = () => {
                         </div>
 
                         {/* <button
-                            onClick={() => { sessionStorage.clear(); navigate('/login') }}
+                            onClick={() => { localStorage.clear(); navigate('/login') }}
                             title="Logout"
                             className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-[var(--color-foreground)] bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-muted)] hover:text-red-500 transition-all shadow-sm"
                         >

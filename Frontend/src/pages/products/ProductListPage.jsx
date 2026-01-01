@@ -179,7 +179,7 @@ const ProductListPage = () => {
 
             <div className="text-center pb-4 mb-4 border-b border-dashed border-[var(--color-border)] print:border-black print:mb-2">
               <h2 className="text-2xl font-bold text-[var(--color-primary)] tracking-wide">
-                {JSON.parse(sessionStorage.getItem("user"))?.shopname}
+                {JSON.parse(localStorage.getItem("user"))?.shopname}
               </h2>
               <p className="text-sm font-semibold text-[var(--color-muted-foreground)] mt-1">
                 Sales Invoice

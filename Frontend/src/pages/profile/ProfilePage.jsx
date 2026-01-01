@@ -37,7 +37,7 @@ const ProfilePage = () => {
     const { theme, toggleTheme } = useTheme();
     const [confirmDelete, setConfirmDelete] = useState(false);
     const [loading, setLoading] = useState(false);
-    const user = JSON.parse(sessionStorage.getItem("user")) || {};
+    const user = JSON.parse(localStorage.getItem("user")) || {};
 
     const handleDelete = async () => {
         setLoading(true);
@@ -45,7 +45,7 @@ const ProfilePage = () => {
             const deleted = await deleteProfile();
             if (deleted) {
                 toast.success('Profile deleted successfully!');
-                sessionStorage.clear();
+                localStorage.clear();
                 navigate('/login');
             }
         } catch (err) {
@@ -65,7 +65,7 @@ const ProfilePage = () => {
     };
 
     const handleLogout = () => {
-        sessionStorage.clear();
+        localStorage.clear();
         navigate('/login');
     };
 

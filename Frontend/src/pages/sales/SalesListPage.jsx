@@ -298,7 +298,7 @@ const SalesListPage = () => {
               <div className="relative z-10 flex justify-between items-center px-8 py-6 border-b">
                 <div>
                   <h2 className="text-2xl font-bold tracking-wide text-gray-900">
-                    {JSON.parse(sessionStorage.getItem("user"))?.shopname}
+                    {JSON.parse(localStorage.getItem("user"))?.shopname}
                   </h2>
                   <p className="text-sm text-gray-900">{type === "sale" ? "Sales Invoice" : "Purchase Invoice"}</p>
                 </div>

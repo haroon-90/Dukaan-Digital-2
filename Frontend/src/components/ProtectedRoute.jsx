@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = ({ role }) => {
-    const isAuth = Boolean(sessionStorage.getItem("token"));
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const isAuth = Boolean(localStorage.getItem("token"));
+    const user = JSON.parse(localStorage.getItem("user"));
     const userRole = user?.role || null;
 
     if (!isAuth) {

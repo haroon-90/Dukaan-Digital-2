@@ -33,7 +33,7 @@ const ReportReceipt = ({ report, period }) => {
                 <div className="text-center flex flex-col justify-center pb-4 border-b border-dashed border-[var(--color-border)] mb-4 print:border-solid">
                     <img className='h-15 mb-4 mx-auto invert-logo' src={Dukaan_Digital} alt="Dukaan_Digital" />
                     <div className="border-t border-dashed border-[var(--color-border)] py-2 print:border-solid"></div>
-                    <h4 className="text-[var(--color-foreground)] mx-auto mb-2 font-bold">{JSON.parse(sessionStorage.getItem("user"))?.shopname}</h4>
+                    <h4 className="text-[var(--color-foreground)] mx-auto mb-2 font-bold">{JSON.parse(localStorage.getItem("user"))?.shopname}</h4>
                     <div className="border-t border-dashed border-[var(--color-border)] py-2 print:border-solid"></div>
                     <h2 className="text-2xl font-bold text-[var(--color-foreground)]">{period.length == 7 ? "Monthly" : "Daily"} Report</h2>
                     <p className="text-xs text-[var(--color-muted-foreground)] mt-1">
@@ -112,8 +112,8 @@ const ReportReceipt = ({ report, period }) => {
                 </div>
 
                 <div className='flex flex-col items-start justify-center mt-4 pt-2 border-y border-dashed border-[var(--color-border)] print:border-solid'>
-                    <h4 className="text-[var(--color-muted-foreground)] text-sm mb-2">Contact: {JSON.parse(sessionStorage.getItem("user"))?.phone}</h4>
-                    <h4 className="text-[var(--color-muted-foreground)] text-sm mb-2">Address: {JSON.parse(sessionStorage.getItem("user"))?.address}</h4>
+                    <h4 className="text-[var(--color-muted-foreground)] text-sm mb-2">Contact: {JSON.parse(localStorage.getItem("user"))?.phone}</h4>
+                    <h4 className="text-[var(--color-muted-foreground)] text-sm mb-2">Address: {JSON.parse(localStorage.getItem("user"))?.address}</h4>
                 </div>
                 <div className="text-center text-xs text-[var(--color-muted-foreground)] mt-6">
                     Generated at : {new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()}

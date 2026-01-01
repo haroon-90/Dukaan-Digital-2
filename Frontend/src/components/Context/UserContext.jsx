@@ -5,7 +5,7 @@ const UserContext = createContext();
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         // initial load pe storage se read karega
-        const storedUser = sessionStorage.getItem("user");
+        const storedUser = localStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : {
             id: "",
             name: "",
@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
     // jab bhi user change hoga, storage me save karo
     useEffect(() => {
         if (user && user.id) {
-            sessionStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("user", JSON.stringify(user));
         }
     }, [user]);
 
