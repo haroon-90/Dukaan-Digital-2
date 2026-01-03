@@ -64,6 +64,8 @@ const Admindashboard = () => {
             return <span className={`${base} border-green-200 bg-green-50 !text-green-600 dark:bg-green-900/20 dark:border-green-800`}>● Active</span>;
         if (status === "suspended")
             return <span className={`${base} border-rose-200 bg-rose-50 !text-rose-600 dark:bg-rose-900/20 dark:border-rose-800`}>● Suspended</span>;
+        if (status === "inactive")
+            return <span className={`${base} border-amber-200 bg-amber-50 !text-amber-600 dark:bg-amber-900/20 dark:border-amber-800`}>● Inactive</span>;
     };
 
     const handleDelete = async (e) => {

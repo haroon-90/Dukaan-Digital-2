@@ -9,14 +9,20 @@ function App() {
 
   return (
     <>
-      <Toaster position="bottom-right" />
-      <BrowserRouter>
-        <ThemeProvider>
+      <ThemeProvider>
+        <Toaster position="top-center" duration={1000}
+          toastOptions={{
+            duration: 1000,
+            error: {
+              duration: 5000,
+            },
+          }} />
+        <BrowserRouter>
           <UserProvider>
             <AppRouter />
           </UserProvider>
-        </ThemeProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   )
 }

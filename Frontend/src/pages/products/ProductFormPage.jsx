@@ -3,6 +3,8 @@ import { addProduct, getProductById, updateProduct } from '../../services/produc
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from 'react-hot-toast';
 import { Tag, Package, Weight, Box, ArrowLeft, Loader2 } from 'lucide-react';
+import RS from '../../components/UI/RS.jsx';
+import InputField from '../../components/UI/inputFields.jsx';
 
 const ProductFormPage = () => {
   const { id } = useParams();
@@ -24,7 +26,6 @@ const ProductFormPage = () => {
         try {
           const res = await getProductById(id);
           setProduct(res.data);
-          // toast.success('Product fetched successfully!');
         } catch (err) {
           toast.error('Failed to fetch product!');
         }
@@ -87,102 +88,84 @@ const ProductFormPage = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-1">
-            <label className="block text-sm font-medium text-[var(--color-foreground)]">Item Name</label>
-            <div className="relative">
-              <Tag className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-              <input
-                name="itemname"
-                value={product.itemname}
-                onChange={handleChange}
-                type="text"
-                placeholder="Enter item name"
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                required
-              />
-            </div>
+            <InputField
+              label="Item Name"
+              icon={Tag}
+              type="text"
+              name="itemname"
+              placeholder="Enter item name"
+              required
+              value={product.itemname}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="space-y-1">
-            <label className="block text-sm font-medium text-[var(--color-foreground)]">Category</label>
-            <div className="relative">
-              <Weight className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-              <input
-                name="category"
-                value={product.category}
-                onChange={handleChange}
-                type="text"
-                placeholder="Enter category"
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                required
-              />
-            </div>
+            <InputField
+              label="Category"
+              icon={Weight}
+              type="text"
+              name="category"
+              placeholder="Enter category"
+              required
+              value={product.category}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-1">
-              <label className="block text-sm font-medium text-[var(--color-foreground)]">Purchase Price</label>
-              <div className="relative">
-                <span className="absolute left-5 top-3.5 text-[var(--color-muted-foreground)] font-bold text-sm">₨</span>
-                <input
-                  name="purchasePrice"
-                  value={product.purchasePrice}
-                  onChange={handleChange}
-                  type="number"
-                  placeholder="0.00"
-                  className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                  required
-                />
-              </div>
+              <InputField
+                label="Purchase Price"
+                icon={RS}
+                type="number"
+                name="purchasePrice"
+                placeholder="Enter purchase price"
+                required
+                value={product.purchasePrice}
+                onChange={handleChange}
+              />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-sm font-medium text-[var(--color-foreground)]">Selling Price</label>
-              <div className="relative">
-                <span className="absolute left-5 top-3.5 text-[var(--color-muted-foreground)] font-bold text-sm">₨</span>
-                <input
-                  name="sellingPrice"
-                  value={product.sellingPrice}
-                  onChange={handleChange}
-                  type="number"
-                  placeholder="0.00"
-                  className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                  required
-                />
-              </div>
+              <InputField
+                label="Selling Price"
+                icon={RS}
+                type="number"
+                name="sellingPrice"
+                placeholder="Enter selling price"
+                required
+                value={product.sellingPrice}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-6 pb-2">
             <div className="space-y-1">
-              <label className="block text-sm font-medium text-[var(--color-foreground)]">Quantity</label>
-              <div className="relative">
-                <Package className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                <input
-                  name="quantity"
-                  value={product.quantity}
-                  onChange={handleChange}
-                  type="number"
-                  placeholder="Enter quantity"
-                  className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                  required
-                />
-              </div>
+              <InputField
+                label="Quantity"
+                icon={Package}
+                type="number"
+                name="quantity"
+                placeholder="Enter quantity"
+                required
+                value={product.quantity}
+                onChange={handleChange}
+              />
             </div>
 
             <div className="space-y-1">
-              <label className="block text-sm font-medium text-[var(--color-foreground)]">Unit</label>
-              <div className="relative">
-                <Box className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                <input
-                  name="unit"
-                  value={product.unit}
-                  onChange={handleChange}
-                  type="text"
-                  placeholder="e.g. kg, pcs"
-                  className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                  required
-                />
-              </div>
+              <InputField
+                label="Unit"
+                icon={Box}
+                type="text"
+                name="unit"
+                placeholder="e.g. kg, pcs"
+                required
+                value={product.unit}
+                onChange={handleChange}
+              />
             </div>
           </div>
 

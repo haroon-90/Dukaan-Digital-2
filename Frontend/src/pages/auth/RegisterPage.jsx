@@ -3,6 +3,7 @@ import { register } from '../../services/authServices.js';
 import { useNavigate } from 'react-router-dom';
 import DukaanDigital from '../../assets/Dukaan_Digital.svg'
 import toast from 'react-hot-toast';
+import InputField from '../../components/UI/inputFields'
 import { User, Mail, Lock, Phone, Store, MapPin, UserCog, ChevronDown, Loader2 } from 'lucide-react';
 
 const RegisterPage = () => {
@@ -45,27 +46,6 @@ const RegisterPage = () => {
         }
     };
 
-    const InputField = ({ label, icon: Icon, type = "text", name, placeholder, required = true }) => (
-        <div className="space-y-1">
-            <label htmlFor={name} className="block text-sm font-medium text-[var(--color-foreground)]">
-                {label}
-            </label>
-            <div className="relative group">
-                <Icon className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
-                <input
-                    type={type}
-                    name={name}
-                    id={name}
-                    required={required}
-                    className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all disabled:opacity-70"
-                    onChange={handleChange}
-                    placeholder={placeholder}
-                    disabled={loading}
-                />
-            </div>
-        </div>
-    );
-
     return (
         <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)] relative overflow-hidden font-sans transition-colors duration-300 py-12 px-4">
 
@@ -88,16 +68,16 @@ const RegisterPage = () => {
 
                 <form className="space-y-6" onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <InputField label="Full Name" icon={User} name="name" placeholder="John Doe" />
-                        <InputField label="Email" icon={Mail} name="email" type="email" placeholder="john@example.com" />
-                        <InputField label="Password" icon={Lock} name="password" type="password" placeholder="Create a password" />
-                        <InputField label="Phone Number" icon={Phone} name="phone" type="tel" placeholder="+1234567890" />
+                        <InputField label="Full Name" icon={User} name="name" placeholder="Haroon" value={formData.name} onChange={handleChange} />
+                        <InputField label="Email" icon={Mail} name="email" type="email" placeholder="haroon@example.com" value={formData.email} onChange={handleChange} />
+                        <InputField label="Password" icon={Lock} name="password" type="password" placeholder="Create a password" value={formData.password} onChange={handleChange} />
+                        <InputField label="Phone Number" icon={Phone} name="phone" type="tel" placeholder="+923000000000" value={formData.phone} onChange={handleChange} />
 
                         {formData.role === "manager" && (
-                            <InputField label="Shop Name" icon={Store} name="shopname" placeholder="My Awesome Shop" required={false} />
+                            <InputField label="Shop Name" icon={Store} name="shopname" placeholder="My Awesome Shop" required={false} value={formData.shopname} onChange={handleChange} />
                         )}
 
-                        <InputField label="Address" icon={MapPin} name="address" placeholder="123 Main St, City" />
+                        <InputField label="Address" icon={MapPin} name="address" placeholder="123 Main St, City" value={formData.address} onChange={handleChange} />
 
                         {/* Role Select Dropdown */}
                         <div className="space-y-1">

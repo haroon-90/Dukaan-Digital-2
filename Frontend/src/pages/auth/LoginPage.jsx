@@ -5,6 +5,7 @@ import { useUserContext } from '../../components/Context/UserContext.jsx';
 import DukaanDigital from '../../assets/Dukaan_Digital.svg'
 import { toast } from 'react-hot-toast';
 import { Mail, Lock, Loader2 } from 'lucide-react';
+import InputField from '../../components/UI/inputFields.jsx';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -69,41 +70,31 @@ const LoginPage = () => {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="space-y-1">
-            <label className="text-sm font-medium text-[var(--color-foreground)] ml-1" htmlFor="email">Email</label>
-            <div className="relative group">
-              <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
-              <input
-                type="email"
-                name="email"
-                id="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all"
-                placeholder="you@company.com"
-                disabled={loading}
-              />
-            </div>
+            <InputField
+              label="Email"
+              icon={Mail}
+              type="email"
+              name="email"
+              placeholder="you@company.com"
+              required
+              value={form.email}
+              onChange={handleChange}
+              disabled={loading}
+            />
           </div>
 
           <div className="space-y-1">
-            <div className="flex justify-between items-center ml-1">
-              <label className="text-sm font-medium text-[var(--color-foreground)]" htmlFor="password">Password</label>
-            </div>
-            <div className="relative group">
-              <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
-              <input
-                type="password"
-                name="password"
-                id="password"
-                value={form.password}
-                onChange={handleChange}
-                required
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-all"
-                placeholder="••••••••"
-                disabled={loading}
-              />
-            </div>
+            <InputField
+              label="Password"
+              icon={Lock}
+              type="password"
+              name="password"
+              placeholder="••••••••"
+              required
+              value={form.password}
+              onChange={handleChange}
+              disabled={loading}
+            />
           </div>
 
           {error && (

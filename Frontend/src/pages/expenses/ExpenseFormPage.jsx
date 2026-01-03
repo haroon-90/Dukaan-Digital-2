@@ -3,6 +3,8 @@ import { addExpense } from '../../services/expenseServices.js';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { FileText, Tag, ArrowLeft, Loader2 } from 'lucide-react';
+import InputField from '../../components/UI/inputFields.jsx';
+import RS from '../../components/UI/RS.jsx';
 
 const ExpenseFormPage = () => {
   const navigate = useNavigate();
@@ -69,56 +71,42 @@ const ExpenseFormPage = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-1">
-            <label className="block text-sm font-medium text-[var(--color-foreground)]">
-              Title
-            </label>
-            <div className="relative">
-              <Tag className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-              <input
-                type="text"
-                name="title"
-                placeholder="Enter expense title"
-                value={formData.title}
-                onChange={handleChange}
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                required
-              />
-            </div>
+            <InputField
+              name="title"
+              label="Title"
+              icon={Tag}
+              type="text"
+              placeholder="Enter expense title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="space-y-1">
-            <label className="block text-sm font-medium text-[var(--color-foreground)]">
-              Amount
-            </label>
-            <div className="relative">
-              <span className="absolute left-5 top-3.5 text-[var(--color-muted-foreground)] font-bold text-sm">₨</span>
-              <input
-                type="number"
-                name="amount"
-                placeholder="Enter amount"
-                value={formData.amount}
-                onChange={handleChange}
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                required
-              />
-            </div>
+            <InputField
+              name="amount"
+              label="Amount"
+              icon={Tag}
+              type="number"
+              placeholder="Enter amount"
+              value={formData.amount}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="space-y-1">
-            <label className="block text-sm font-medium text-[var(--color-foreground)]">
-              Description
-            </label>
-            <div className="relative">
-              <FileText className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-              <textarea
-                name="description"
-                placeholder="Enter expense description"
-                value={formData.description}
-                onChange={handleChange}
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none resize-none"
-                rows="4"
-              ></textarea>
-            </div>
+            <InputField
+              name="description"
+              label="Description"
+              icon={FileText}
+              type="textarea"
+              placeholder="Enter expense description"
+              value={formData.description}
+              onChange={handleChange}
+              required={false}
+            />
           </div>
 
           <button

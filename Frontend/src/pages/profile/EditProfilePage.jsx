@@ -3,6 +3,7 @@ import { updateProfile } from "../../services/profileServices.js";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { User, Phone, Lock, ArrowLeft, Loader2, Edit, Send } from 'lucide-react';
+import InputField from "../../components/UI/inputFields";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
@@ -84,56 +85,39 @@ const EditProfilePage = () => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="relative">
-                <label htmlFor="name" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Name</label>
-                <div className="relative">
-                  <User className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={form.name}
-                    onChange={handleChange}
-                    className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                    placeholder="Enter your full name"
-                    disabled={loading}
-                  />
-                </div>
-              </div>
+                <InputField
+                  name="name"
+                  label="Name"
+                  icon={User}
+                  type="text"
+                  placeholder="Enter your full name"
+                  value={form.name}
+                  onChange={handleChange}
+                  disabled={loading}
+                />
 
-              <div className="relative">
-                <label htmlFor="phone" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Phone</label>
-                <div className="relative">
-                  <Phone className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                    className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                    placeholder="Enter your phone number"
-                    disabled={loading}
-                  />
-                </div>
-              </div>
+                <InputField
+                  name="phone"
+                  label="Phone"
+                  icon={Phone}
+                  type="tel"
+                  placeholder="Enter your phone number"
+                  value={form.phone}
+                  onChange={handleChange}
+                  disabled={loading}
+                />
 
-              <div className="relative">
-                <label htmlFor="password" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">New Password</label>
-                <div className="relative">
-                  <Lock className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                    placeholder="Leave blank to keep current password"
-                    disabled={loading}
-                  />
-                </div>
-              </div>
+                <InputField
+                  name="password"
+                  label="New Password"
+                  icon={Lock}
+                  type="password"
+                  placeholder="Leave blank to keep current password"
+                  value={form.password}
+                  onChange={handleChange}
+                  disabled={loading}
+                  required={false}
+                />
 
               <button
                 type="submit"
@@ -146,7 +130,7 @@ const EditProfilePage = () => {
             </form>
           )}
           <div className="mt-8 text-center bg-[var(--color-surface)] p-3 rounded-lg border border-[var(--color-border)]">
-            <span className="text-xs text-[var(--color-muted-foreground)] font-medium">To make any other changes, please contact your administrator.</span>
+            <span className="text-xs text-[var(--color-muted-foreground)] font-medium">To make any other changes, please contact the administrator.</span>
             <div className="flex items-center justify-center mt-2 text-sm">
               {/* whatsapp link */}
               <a href="https://wa.me/923279351337?text=Hello%20Dukaan%20Digital%20Team%2C%20I%20need%20to%20make%20some%20changes%20to%20my%20profile." target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">

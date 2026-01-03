@@ -3,6 +3,8 @@ import { addUdhaar, getUdhaarById, updateUdhaar } from "../../services/udhaarSer
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { User, Phone, MessageSquare, CheckCircle, ArrowLeft, Loader2, CreditCard } from 'lucide-react';
+import InputField from '../../components/UI/inputFields';
+import RS from '../../components/UI/RS.jsx'
 
 const UdhaarFormPage = () => {
   const navigate = useNavigate();
@@ -95,71 +97,51 @@ const UdhaarFormPage = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Customer Name</label>
-            <div className="relative">
-              <User className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-              <input
-                type="text"
-                name="customerName"
-                value={formData.customerName}
-                onChange={handleChange}
-                placeholder="Enter customer name"
-                disabled={isEdit}
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] disabled:bg-[var(--color-muted)] disabled:cursor-not-allowed outline-none"
-                required
-              />
-            </div>
-          </div>
+          <InputField
+            label="Customer Name"
+            name="customerName"
+            placeholder="Enter customer name"
+            icon={User}
+            value={formData.customerName}
+            onChange={handleChange}
+            disabled={isEdit}
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Contact Number</label>
-            <div className="relative">
-              <Phone className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-              <input
-                type="tel"
-                name="contact"
-                value={formData.contact}
-                onChange={handleChange}
-                placeholder="03XXXXXXXXX"
-                disabled={isEdit}
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] disabled:bg-[var(--color-muted)] disabled:cursor-not-allowed outline-none"
-                required
-              />
-            </div>
-          </div>
+          <InputField
+            label="Contact Number"
+            name="contact"
+            placeholder="03XXXXXXXXX"
+            icon={Phone}
+            value={formData.contact}
+            onChange={handleChange}
+            disabled={isEdit}
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Amount</label>
-            <div className="relative">
-              <span className="absolute left-5 top-3.5 text-[var(--color-muted-foreground)] font-bold text-sm">₨</span>
-              <input
-                type="number"
-                name="amount"
-                value={formData.amount}
-                onChange={handleChange}
-                placeholder="Enter amount"
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                required
-              />
-            </div>
-          </div>
+          <InputField
+            label="Amount"
+            name="amount"
+            placeholder="Enter amount"
+            type="number"
+            icon={RS}
+            value={formData.amount}
+            onChange={handleChange}
+            disabled={isEdit}
+            required
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Reason</label>
-            <div className="relative">
-              <MessageSquare className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-              <textarea
-                name="reason"
-                value={formData.reason}
-                onChange={handleChange}
-                placeholder="Enter reason"
-                disabled={isEdit}
-                rows={3}
-                className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] disabled:bg-[var(--color-muted)] disabled:cursor-not-allowed outline-none resize-none"
-              ></textarea>
-            </div>
-          </div>
+          <InputField
+            label="Reason"
+            name="reason"
+            placeholder="Enter reason"
+            type="textarea"
+            icon={MessageSquare}
+            value={formData.reason}
+            onChange={handleChange}
+            disabled={isEdit}
+            required={false}
+          />
 
           <div>
             <label className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Status</label>

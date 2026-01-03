@@ -4,7 +4,9 @@ import { addPurchase } from '../../services/purchaseServices.js';
 import { getProducts } from '../../services/productServices.js';
 import Dukaan_Digital from '../../assets/Dukaan_Digital_Icon.svg'
 import { useNavigate } from 'react-router-dom';
-import { Package, Tag, CheckCircle, Trash2, Store, Weight, ArrowLeft, Loader2, Plus, ShoppingBag } from 'lucide-react';
+import { Package, Tag, CheckCircle, Trash2, Store, Weight, ArrowLeft, Loader2, Plus } from 'lucide-react';
+import InputField from '../../components/UI/inputFields';
+import RS from '../../components/UI/RS.jsx'
 
 const PurchaseFormPage = () => {
   const navigate = useNavigate();
@@ -46,12 +48,10 @@ const PurchaseFormPage = () => {
   const handleItemChange = (e) => {
     const { name, value } = e.target;
 
-    // agar input ka naam "itemname" hai
     if (name === "itemname") {
       setCurrentItem({ ...currentItem, itemname: value });
 
       if (!value.trim()) {
-        // input khali ho gaya to reset
         setIsNewProduct(false);
         setFilteredProducts([]);
         setCurrentItem({
@@ -92,7 +92,6 @@ const PurchaseFormPage = () => {
         });
       }
     } else {
-      // baaki fields (price, qty, category, unit)
       setCurrentItem({ ...currentItem, [name]: value });
     }
   };
@@ -215,20 +214,16 @@ const PurchaseFormPage = () => {
         </div>
 
         <div className="mb-8">
-          <label htmlFor="suppliername" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Supplier Name</label>
-          <div className="relative">
-            <Store className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-            <input
-              type="text"
-              id="suppliername"
-              name="suppliername"
-              value={purchaseDetails.suppliername}
-              onChange={handleSupplierChange}
-              placeholder="Enter supplier name"
-              className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-              required
-            />
-          </div>
+          <InputField
+            label="Supplier Name"
+            name="suppliername"
+            placeholder="Enter supplier name"
+            type="text"
+            icon={Store}
+            value={purchaseDetails.suppliername}
+            onChange={handleSupplierChange}
+            required
+          />
         </div>
 
         <div className="mb-6 border-t border-[var(--color-border)] pt-8">
@@ -238,20 +233,17 @@ const PurchaseFormPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
             <div className="relative">
-              <label htmlFor="itemname" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Item Name</label>
-              <div className="relative">
-                <Tag className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                <input
-                  type="text"
-                  id="itemname"
-                  name="itemname"
-                  value={currentItem.itemname}
-                  onChange={handleItemChange}
-                  placeholder="Scan or enter item name"
-                  className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                  autoComplete="off"
-                />
-              </div>
+              <InputField
+                label="Item Name"
+                name="itemname"
+                placeholder="Scan or enter item name"
+                type="text"
+                icon={Tag}
+                required
+                value={currentItem.itemname}
+                onChange={handleItemChange}
+                autoComplete="off"
+              />
               {filteredProducts.length > 0 && currentItem.itemname && (
                 <ul className="absolute z-20 w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl mt-1 max-h-40 overflow-y-auto shadow-xl">
                   {filteredProducts.map((product) => (
@@ -269,84 +261,69 @@ const PurchaseFormPage = () => {
             </div>
 
             <div>
-              <label htmlFor="purchasePrice" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Purchase Price</label>
-              <div className="relative">
-                <span className="absolute left-5 top-3.5 text-[var(--color-muted-foreground)] font-bold text-sm">₨</span>
-                <input
-                  type="number"
-                  id="purchasePrice"
-                  name="purchasePrice"
-                  value={currentItem.purchasePrice}
-                  onChange={handleItemChange}
-                  placeholder="0.00"
-                  className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                />
-              </div>
+              <InputField
+                label="Purchase Price"
+                name="purchasePrice"
+                placeholder="0.00"
+                type="number"
+                icon={RS}
+                value={currentItem.purchasePrice}
+                onChange={handleItemChange}
+                required
+              />
             </div>
 
             <div>
-              <label htmlFor="sellingPrice" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Selling Price</label>
-              <div className="relative">
-                <span className="absolute left-5 top-3.5 text-[var(--color-muted-foreground)] font-bold text-sm">₨</span>
-                <input
-                  type="number"
-                  id="sellingPrice"
-                  name="sellingPrice"
-                  value={currentItem.sellingPrice}
-                  onChange={handleItemChange}
-                  placeholder="0.00"
-                  className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                />
-              </div>
+              <InputField
+                label="Selling Price"
+                name="sellingPrice"
+                placeholder="0.00"
+                type="number"
+                icon={RS}
+                value={currentItem.sellingPrice}
+                onChange={handleItemChange}
+                required
+              />
             </div>
 
             <div>
-              <label htmlFor="quantity" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Quantity</label>
-              <div className="relative">
-                <Package className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                <input
-                  type="number"
-                  id="quantity"
-                  name="quantity"
-                  value={currentItem.quantity}
-                  onChange={handleItemChange}
-                  placeholder="Qty"
-                  className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                />
-              </div>
+              <InputField
+                label="Quantity"
+                name="quantity"
+                placeholder="Qty"
+                type="number"
+                icon={Package}
+                value={currentItem.quantity}
+                onChange={handleItemChange}
+                required
+              />
             </div>
 
             {isNewProduct && (
               <>
                 <div>
-                  <label htmlFor="category" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Category</label>
-                  <div className="relative">
-                    <Tag className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                    <input
-                      type="text"
-                      id="category"
-                      name="category"
-                      placeholder="Enter category"
-                      value={currentItem.category}
-                      onChange={handleItemChange}
-                      className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                    />
-                  </div>
+                  <InputField
+                    label="Category"
+                    name="category"
+                    placeholder="Enter category"
+                    type="text"
+                    icon={Tag}
+                    value={currentItem.category}
+                    onChange={handleItemChange}
+                    required
+                  />
                 </div>
                 <div>
-                  <label htmlFor="unit" className="block text-sm font-medium text-[var(--color-foreground)] mb-1">Unit</label>
-                  <div className="relative">
-                    <Weight className="absolute left-4 top-3.5 text-[var(--color-muted-foreground)]" size={18} />
-                    <input
-                      id="unit"
-                      name="unit"
-                      type='text'
-                      placeholder="e.g. kg, pcs"
-                      value={currentItem.unit}
-                      onChange={handleItemChange}
-                      className="w-full pl-11 pr-4 py-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] outline-none"
-                    />
-                  </div>
+                  <InputField
+                    label="Unit"
+                    name="unit"
+                    type='text'
+                    placeholder="e.g. kg, pcs"
+                    icon={Weight}
+                    value={currentItem.unit}
+                    onChange={handleItemChange}
+                    required
+                  />
                 </div>
               </>
             )}
@@ -414,13 +391,22 @@ const PurchaseFormPage = () => {
                     </p>
                   </div>
 
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-[var(--color-foreground)]">
-                      Qty: {item.quantity}
-                    </p>
-                    <p className="text-sm font-semibold">
-                      {formatPrice(item.quantity * item.purchasePrice)}
-                    </p>
+                  <div className="text-right flex items-center gap-2">
+                    <div className="flex items-center flex-col">
+                      <p className="text-sm font-medium text-[var(--color-foreground)]">
+                        Qty: {item.quantity}
+                      </p>
+                      <p className="text-sm font-semibold">
+                        {formatPrice(item.quantity * item.purchasePrice)}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveItem(index)}
+                      className="text-red-400 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 size={18} />
+                    </button>
                   </div>
                 </div>
               ))}

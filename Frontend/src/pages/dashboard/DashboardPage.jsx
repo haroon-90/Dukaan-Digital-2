@@ -92,7 +92,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6">
                 <StatCard
                     title="Total Sales"
-                    value={loading ? <div className="mb-1 h-5 w-[90%] rounded-lg bg-[var(--color-muted)] text-sm"></div>
+                    value={loading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.sales.toLocaleString() || "---"}`}
                     icon={TrendingUp}
                     colorClass="bg-blue-500 shadow-blue-500/30 shadow-lg"
@@ -100,7 +100,7 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Total Profit"
-                    value={loading ? <div className="mb-1 h-5 w-[90%] rounded-lg bg-[var(--color-muted)] text-sm"></div>
+                    value={loading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.profit.toLocaleString() || "---"}`}
                     icon={DollarSign}
                     colorClass="bg-emerald-500 shadow-emerald-500/30 shadow-lg"
@@ -108,7 +108,7 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Expenses"
-                    value={loading ? <div className="mb-1 h-5 w-[90%] rounded-lg bg-[var(--color-muted)] text-sm"></div>
+                    value={loading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.expenses.toLocaleString() || "---"}`}
                     icon={Receipt}
                     colorClass="bg-rose-500 shadow-rose-500/30 shadow-lg"
@@ -116,7 +116,7 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Total Credit"
-                    value={loading ? <div className="mb-1 h-5 w-[90%] rounded-lg bg-[var(--color-muted)] text-sm"></div>
+                    value={loading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.credit.toLocaleString() || "---"}`}
                     icon={HandCoins}
                     colorClass="bg-amber-500 shadow-amber-500/30 shadow-lg"
