@@ -28,7 +28,7 @@ const Admindashboard = () => {
 
     const fetchDashboard = async () => {
         try {
-            setLoading(true);
+            // setLoading(true);
             setError("");
             const response = await getAdminDashboard();
             console.log(response.data);
@@ -45,7 +45,9 @@ const Admindashboard = () => {
     };
 
     useEffect(() => {
+        setLoading(true);
         fetchDashboard();
+        // setLoading(false);
     }, []);
 
     const filteredManagers = useMemo(() => {
@@ -69,6 +71,7 @@ const Admindashboard = () => {
     };
 
     const handleDelete = async (e) => {
+        setLoading(true)
         try {
             if (confirm("Are you sure you want to delete this manager? This action cannot be undone.")) {
                 const deleted = await deleteUserProfile(e._id);
@@ -80,10 +83,12 @@ const Admindashboard = () => {
         } catch (err) {
             toast.error('Failed to fetch profile!')
             console.error('Error fetching profile:', err);
+            setLoading(false)
         }
     }
 
     const handlestatusupdate = async (e) => {
+        setLoading(true);
         try {
             const updated = await editUserStatus(e._id);
             if (updated) {
@@ -94,12 +99,18 @@ const Admindashboard = () => {
         catch (err) {
             toast.error('Failed to fetch profile!')
             console.error('Error fetching profile:', err);
+            setLoading(false);
         }
     }
 
     return (
         <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] transition-colors duration-300">
             <div className="sticky top-0 z-30 bg-[var(--color-background)]/80 backdrop-blur-md border-b border-[var(--color-border)]">
+                {loading && (
+                    <div className='absolute -bottom-1 left-0 h-[4px] w-full overflow-hidden'>
+                        <div className='loading-line' />
+                    </div>
+                )}
                 <div className="mx-auto max-w-8xl px-2 md:px-4 lg:px-4 py-3 flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3">
                         <div
@@ -172,18 +183,21 @@ const Admindashboard = () => {
                         </div>
                     </div>
 
-                    <div className="p-0">
+                    <div className={`${loading && "opacity-60 pointer-events-none"} p-0`}>
                         {managers.length === 0 && !loading ? (
                             <div className="py-12 text-center text-[var(--color-muted-foreground)]">
                                 {error || "No shops found matching your search."}
                             </div>
-                        ) : (loading ? (
-                            <div className="py-12 flex justify-center">
-                                <Loader />
-                            </div>
                         ) : (
+                            //     loading ? (
+                            //     <div className="py-12 flex justify-center">
+                            //         <Loader />
+                            //     </div>
+                            // ) : (
                             <Usertable filtered={filteredManagers} handleDelete={handleDelete} statusBadge={statusBadge} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={false} />
-                        ))}
+                        )
+                            // )
+                        }
                     </div>
                 </div>
 
@@ -191,14 +205,14 @@ const Admindashboard = () => {
                     <div className="p-4 border-b border-[var(--color-border)] flex items-center gap-2 text-lg font-bold text-[var(--color-foreground)]">
                         <Shield className="text-[var(--color-primary)]" /> Admins
                     </div>
-                    <div className="p-0">
-                        {loading ? (
+                    <div className={`${loading && "opacity-60 pointer-events-none"} p-0`}>
+                        {/* {loading ? (
                             <div className="py-12 flex justify-center">
                                 <Loader />
                             </div>
-                        ) : (
-                            <Usertable filtered={admins} handleDelete={handleDelete} statusBadge={statusBadge} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={true} />
-                        )}
+                        ) : ( */}
+                        <Usertable filtered={admins} handleDelete={handleDelete} statusBadge={statusBadge} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={true} />
+                        {/* )} */}
                     </div>
                 </div>
             </div>

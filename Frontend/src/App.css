@@ -7,3 +7,20 @@
 .urdu-font {
   font-family: 'Noto Nastaliq Urdu', serif;
 }
+
+.loading-line {
+  height: 100%;
+  width: 100%;
+  background: #2563eb;
+  animation: loadingMove 1.2s linear infinite;
+}
+
+@keyframes loadingMove {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
