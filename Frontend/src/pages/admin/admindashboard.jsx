@@ -154,6 +154,14 @@ const Admindashboard = () => {
                         <div className="flex items-center gap-2 text-lg font-bold text-[var(--color-foreground)]">
                             <Store className="text-[var(--color-primary)]" /> Shops
                         </div>
+                        <div>
+                            {/* shoe no of active , suspended and inactive accounts with good style */}
+                            <div className="flex items-center gap-2 flex-wrap text-sm font-medium text-[var(--color-foreground)]">
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-green-200 bg-green-50 !text-green-600 dark:bg-green-900/20 dark:border-green-800">● Active: {managers.filter((m) => m.status === "active").length}</span>
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-rose-200 bg-rose-50 !text-rose-600 dark:bg-rose-900/20 dark:border-rose-800">● Suspended: {managers.filter((m) => m.status === "suspended").length}</span>
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-amber-200 bg-amber-50 !text-amber-600 dark:bg-amber-900/20 dark:border-amber-800">● Inactive: {managers.filter((m) => m.status === "inactive").length}</span>
+                            </div>
+                        </div>
                         <div className="relative w-full sm:w-80">
                             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
                             <input
