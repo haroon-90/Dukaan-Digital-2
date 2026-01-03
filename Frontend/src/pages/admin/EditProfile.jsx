@@ -7,6 +7,7 @@ import { User, Mail, Phone, MapPin, Store, Lock, ArrowLeft, Loader2 } from 'luci
 const EditProfile = () => {
     const location = useLocation();
     const data = location.state?.data;
+    console.log(data);
     const [form, setform] = useState({
         name: data?.name || "",
         email: data?.email || "",
@@ -27,7 +28,7 @@ const EditProfile = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const response = await editUserProfile(data.id, form);
+            const response = await editUserProfile(data._id, form);
             if (response.status === 200) {
                 toast.success("Profile updated successfully!");
                 setTimeout(() => {
