@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { getProfile, deleteProfile } from '../../services/profileServices.js';
-import { User, Mail, Phone, Briefcase, Store, Calendar, Edit2, Trash2, MapPinned, ArrowLeft, Loader2, CreditCard, Receipt, FileText, Info, Sun, Moon, LogOut, ChevronRight } from "lucide-react";
+import { useState } from 'react';
+import { deleteProfile } from '../../services/profileServices.js';
+import { User, Mail, Phone, Briefcase, Store, Calendar, Edit2, Trash2, MapPinned, ArrowLeft, Loader2, CreditCard, Receipt, FileText, Info, Sun, Moon, LogOut, ChevronRight, Heart } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useTheme } from '../../components/Context/ThemeContext';
@@ -119,18 +119,11 @@ const ProfilePage = () => {
                     {/* Desktop Back Button */}
                     <button
                         onClick={() => navigate(-1)}
-                        className="flex absolute top-6 left-6 items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full text-white hover:bg-white/30 transition-colors shadow-sm"
+                        className="hidden md:flex absolute top-6 left-6 items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full text-white hover:bg-white/30 transition-colors shadow-sm"
                     >
                         <ArrowLeft size={16} />
                         <span className="text-sm font-medium">Back</span>
                     </button>
-                    {/* Theme Toggle for Mobile inside banner */}
-                    {/* <button
-                        onClick={toggleTheme}
-                        className="md:hidden absolute top-4 right-4 p-2 rounded-full bg-black/20 text-white backdrop-blur-sm"
-                    >
-                        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                    </button> */}
                 </div>
 
                 <div className="px-6 pb-6 -mt-12 flex flex-col items-center relative z-10">
@@ -245,7 +238,7 @@ const ProfilePage = () => {
                                 onClick={() => setConfirmDelete(true)}
                             />
                             <div className="flex items-center justify-center mt-2 text-sm">
-                                Made with ❤️ by &nbsp; <span onClick={() => window.open('https://github.com/haroon-90', '_blank')} className="font-bold text-[var(--color-primary)] cursor-pointer underline"> Haroon</span>
+                                Made with <Heart size={12} className="text-red-500 fill-red-500 mx-1" /> by &nbsp; <span onClick={() => window.open('https://github.com/haroon-90', '_blank')} className="font-bold text-[var(--color-primary)] cursor-pointer underline"> Haroon</span>
                             </div>
                         </div>
                     </div>

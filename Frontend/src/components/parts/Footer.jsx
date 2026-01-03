@@ -1,8 +1,9 @@
 import Dukaan_Digital from '../../assets/Dukaan_Digital.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Heart } from 'lucide-react';
 
 const Footer = () => {
+    const navigate = useNavigate();
     return (
         <footer className="bg-[var(--color-surface)] border-t border-[var(--color-border)] py-8 transition-colors duration-300">
             <div className="container mx-auto px-6">
@@ -31,7 +32,7 @@ const Footer = () => {
                 <div className="mt-8 pt-6 border-t border-[var(--color-border)] flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[var(--color-muted-foreground)]">
                     <p>&copy; {new Date().getFullYear()} Dukaan Digital. All rights reserved.</p>
                     <p className="flex items-center gap-1">
-                        Made with <Heart size={12} className="text-red-500 fill-red-500" /> by Haroon
+                        Made with <Heart size={12} className="text-red-500 fill-red-500" /> by <span onClick={() => window.open('https://github.com/haroon-90', '_blank')} className="font-bold text-[var(--color-primary)] cursor-pointer underline"> Haroon</span>
                     </p>
                 </div>
             </div>

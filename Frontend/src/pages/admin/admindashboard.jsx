@@ -155,11 +155,10 @@ const Admindashboard = () => {
                             <Store className="text-[var(--color-primary)]" /> Shops
                         </div>
                         <div>
-                            {/* shoe no of active , suspended and inactive accounts with good style */}
-                            <div className="flex items-center gap-2 flex-wrap text-sm font-medium text-[var(--color-foreground)]">
-                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-green-200 bg-green-50 !text-green-600 dark:bg-green-900/20 dark:border-green-800">● Active: {managers.filter((m) => m.status === "active").length}</span>
-                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-rose-200 bg-rose-50 !text-rose-600 dark:bg-rose-900/20 dark:border-rose-800">● Suspended: {managers.filter((m) => m.status === "suspended").length}</span>
-                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-amber-200 bg-amber-50 !text-amber-600 dark:bg-amber-900/20 dark:border-amber-800">● Inactive: {managers.filter((m) => m.status === "inactive").length}</span>
+                            <div className="flex items-center gap-2 flex-wrap text-sm min-w- font-medium text-[var(--color-foreground)]">
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-green-200 bg-green-50 !text-green-600 dark:bg-green-900/20 dark:border-green-800"><span className='hidden md:block'>● </span>Active: {managers.filter((m) => m.status === "active").length}</span>
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-rose-200 bg-rose-50 !text-rose-600 dark:bg-rose-900/20 dark:border-rose-800"><span className='hidden md:block'>● </span>Suspended: {managers.filter((m) => m.status === "suspended").length}</span>
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-amber-200 bg-amber-50 !text-amber-600 dark:bg-amber-900/20 dark:border-amber-800"><span className='hidden md:block'>● </span>Inactive: {managers.filter((m) => m.status === "inactive").length}</span>
                             </div>
                         </div>
                         <div className="relative w-full sm:w-80">
@@ -167,7 +166,7 @@ const Admindashboard = () => {
                             <input
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                placeholder="Search managers, shops..."
+                                placeholder="Search by Shop, manager, phone, email..."
                                 className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] py-2 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all placeholder:text-[var(--color-muted-foreground)]"
                             />
                         </div>
