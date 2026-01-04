@@ -64,6 +64,9 @@ export default function AppRouter() {
   return (
     <Routes path="/">
 
+      {/* Public invoice Routes */}
+      <Route path="invoice/:id" element={<Invoice />} />
+
       {/* Auth Layout Routes */}
       <Route element={<AuthLayout />}>
         <Route path="/" element={user?.role === "manager" ? <Navigate to="/manager" replace /> : <Navigate to="/admin" replace />} />
@@ -148,7 +151,6 @@ export default function AppRouter() {
 
         </Route>
       </Route>
-      <Route path="invoice/:id" element={<Invoice />} />
     </Routes>
   )
 }
