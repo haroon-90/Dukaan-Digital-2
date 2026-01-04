@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { getsales, deletesale } from "../../services/saleService.js";
 import { getPurchases, deletePurchase } from "../../services/purchaseServices.js";
-import { TrendingUp, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Receipt, Printer, X, Search } from "lucide-react";
+import { TrendingUp, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Printer, X, Search, Download } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import dukaanLogo from "../../assets/Dukaan_Digital.svg";
 import { useReactToPrint } from 'react-to-print'
 import Loader from "../loader/loader.jsx"
+import { toPng } from "html-to-image"
 
 const SalesListPage = () => {
   const invoiceRef = useRef(null);
@@ -28,9 +29,39 @@ const SalesListPage = () => {
 
   const handlePrint = useReactToPrint({
     contentRef: invoiceRef,
-    documentTitle: "Invoice",
+    documentTitle:
+      (selectedSale?.customerName || selectedSale?.supplierName) +
+      "_Invoice_" +
+      new Date(selectedSale?.createdAt).toLocaleDateString(),
     styleMedia: "print",
   });
+
+
+  const downloadReceipt = async () => {
+    if (!invoiceRef.current) {
+      toast.error("Invoice not found")
+      return
+    }
+    try {
+      const receipt = await toPng(invoiceRef.current, {
+        quality: 1,
+        pixelRatio: 2,
+      })
+      const link = document.createElement("a")
+      link.download =
+        (selectedSale?.customerName
+          ? selectedSale.customerName
+          : selectedSale?.supplierName) +
+        "_" +
+        new Date(selectedSale?.createdAt).toLocaleDateString() +
+        "_" + (type === "sale" ? "sale" : "purchase") + "_invoice.png";
+      link.href = receipt
+      link.click()
+    } catch (err) {
+      console.error(err)
+      toast.error("Failed to download invoice")
+    }
+  };
 
   const fetchSales = async () => {
     try {
@@ -148,13 +179,13 @@ const SalesListPage = () => {
     <div>
       {data.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-[var(--color-muted-foreground)]">
-          <Receipt size={48} className="mb-4 opacity-50" />
-          <p>No records found for this period.</p>
+          {type === "sale" ? <TrendingUp size={40} /> : <ShoppingBag size={40} />}
+          <p>No {type === "sale" ? "sales" : "purchases"} found for this period.</p>
         </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full text-sm text-left">
-            <thead className="bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)]">
+            <thead className={`bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)] ${data.length > 0 ? '' : 'hidden'}`}>
               <tr>
                 <th className="px-6 py-4 font-semibold">{type == "sale" ? "Customer" : "Supplier"}</th>
                 <th className="px-6 py-4 font-semibold">Date</th>
@@ -230,7 +261,7 @@ const SalesListPage = () => {
         </button>
       </div>
 
-      <div className="relative glass-panel rounded-3xl shadow-xl animate-fade-in-up">
+      <div className="relative glass-panel rounded-2xl shadow-xl animate-fade-in-up">
         <div className="text-md p-4 border-b border-[var(--color-border)] text-[var(--color-foreground)] flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center justify-center flex-wrap gap-4">
             <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-2 rounded-xl border border-[var(--color-border)]">
@@ -289,7 +320,7 @@ const SalesListPage = () => {
           <div
             onClick={(e) => e.stopPropagation()}
             className="max-h-[calc(100vh-10rem)] overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl">
-            <div ref={invoiceRef} className="relative z-10 p-2">
+            <div ref={invoiceRef} className="relative z-10 p-2 bg-white">
               <img
                 src={dukaanLogo}
                 alt="Dukaan Digital"
@@ -377,6 +408,12 @@ const SalesListPage = () => {
                 className="px-5 py-2 flex items-center gap-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-500 hover:text-white transition"
               >
                 <Printer size={16} title="Print" />
+              </button>
+              <button
+                onClick={downloadReceipt}
+                className="px-5 py-2 flex items-center gap-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white transition"
+              >
+                <Download size={16} title="Download" />
               </button>
               <button
                 onClick={handleDelete}

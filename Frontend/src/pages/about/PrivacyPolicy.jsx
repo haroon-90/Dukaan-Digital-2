@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
             Privacy Policy
           </h1>
           <p className="text-sm text-[var(--color-muted-foreground)]">
-            Last updated: August 2025
+            Last updated: January 2026
           </p>
         </div>
 
@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
                 <b className="text-[var(--color-foreground)]">Business Data:</b> As you use the app to manage your shop, we collect and store your business data, including sales records, purchases, expenses, product inventory, and customer credit (udhaar) information. This data is the core of our service and is stored securely to allow you to run your business efficiently.
               </li>
               <li>
-                <b className="text-[var(--color-foreground)]">Technical & Usage Information:</b> We automatically collect certain information when you access or use the app. This includes your device information (e.g., type of device, operating system), usage data (e.g., pages visited, features used), and IP address. This helps us understand how our app is used, diagnose technical issues, and improve your experience.
+                <b className="text-[var(--color-foreground)]">Technical & Usage Information:</b> We automatically collect certain information when you access or use the app. This includes your device information (e.g., type of device, operating system), usage data (e.g., pages visited, features used), and IP address but we do not collect any personal information related to your business. This helps us understand how our app is used, diagnose technical issues, and improve your experience.
               </li>
             </ul>
           </section>
@@ -80,7 +80,7 @@ const PrivacyPolicy = () => {
                 <b className="text-[var(--color-foreground)]">With Your Consent:</b> We will share your information if you give us explicit permission to do so.
               </li>
               <li>
-                <b className="text-[var(--color-foreground)]">For Service Provision:</b> We may use trusted third-party services to help us run our business, such as cloud hosting providers, payment processors, and analytics services. These partners are bound by confidentiality agreements and are only given access to the information necessary to perform their specific tasks.
+                <b className="text-[var(--color-foreground)]">For Service Provision:</b> We may use trusted third-party services to help us run our business, such as cloud hosting providers and analytics services. These partners are bound by confidentiality agreements and are only given access to the information necessary to perform their specific tasks.
               </li>
               <li>
                 <b className="text-[var(--color-foreground)]">For Legal Reasons:</b> We may disclose your information if required by law, court order, or government regulation, or to protect our legal rights, property, or safety.
@@ -125,7 +125,7 @@ const PrivacyPolicy = () => {
               If you have any questions about this Privacy Policy, your data, or our privacy practices, please contact our support team at:
             </p>
             <p className="mt-2 font-medium">
-              <a href="mailto:haroonboy90@gmail.com" className="text-[var(--color-primary)] hover:underline">support@dukaandigital.com</a>
+              <a href="mailto:dukaandigital2@gmail.com" className="text-[var(--color-primary)] hover:underline">dukaandigital2@gmail.com</a>
             </p>
           </section>
         </div>

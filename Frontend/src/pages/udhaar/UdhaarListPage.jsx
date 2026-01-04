@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUdhaarlist, deleteUdhaar } from "../../services/udhaarServices.js";
-import { Trash2, Edit2, HandCoins, Search, Filter, Loader2, CreditCard } from "lucide-react";
+import { Trash2, Edit2, HandCoins, Search, Filter, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx"
@@ -63,7 +63,7 @@ const UdhaarListPage = () => {
 
       <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
         <h1 className="text-2xl text-[var(--color-foreground)] flex items-center gap-2">
-          <CreditCard size={28} className="text-[var(--color-primary)]" />
+          <HandCoins size={28} className="text-[var(--color-primary)]" />
           <div className="flex flex-col">
             <h1 className="font-bold text-2xl">Credit Records</h1>
             <p className="text-[var(--color-muted-foreground)] text-sm">Manage your credit records</p>
@@ -79,7 +79,7 @@ const UdhaarListPage = () => {
         </button>
       </div>
 
-      <div className="glass-panel shadow-xl rounded-3xl border border-[var(--color-border)] animate-fade-in-up">
+      <div className="glass-panel shadow-xl rounded-2xl border border-[var(--color-border)] animate-fade-in-up">
         <div className="flex flex-wrap flex-1 gap-4 items-center p-4 border-b border-[var(--color-border)]">
           <div className="relative group flex-1 md:flex-none min-w-64">
             <Search className="absolute left-3 top-2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
@@ -114,7 +114,7 @@ const UdhaarListPage = () => {
         {!loading &&
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)]">
+              <thead className={`bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)] ${filteredData.length > 0 ? '' : 'hidden'}`}>
                 <tr>
                   <th className="px-6 py-4 font-semibold">Customer Name</th>
                   <th className="px-6 py-4 font-semibold">Contact</th>
@@ -172,7 +172,7 @@ const UdhaarListPage = () => {
                       className="px-6 py-12 text-center text-[var(--color-muted-foreground)]"
                     >
                       <div className="flex flex-col items-center justify-center gap-2">
-                        <CreditCard size={40} className="opacity-20" />
+                        <HandCoins size={40} />
                         <p>No credit records found matching your criteria.</p>
                       </div>
                     </td>

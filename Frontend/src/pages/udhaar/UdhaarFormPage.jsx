@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { addUdhaar, getUdhaarById, updateUdhaar } from "../../services/udhaarServices.js";
 import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
-import { User, Phone, MessageSquare, CheckCircle, ArrowLeft, Loader2, CreditCard } from 'lucide-react';
+import { User, Phone, MessageSquare, CheckCircle, ArrowLeft, Loader2, HandCoins } from 'lucide-react';
 import InputField from '../../components/UI/inputFields';
 import RS from '../../components/UI/RS.jsx'
 
@@ -88,7 +88,7 @@ const UdhaarFormPage = () => {
         </button>
         <div className="flex flex-col items-center mb-6">
           <h2 className="text-3xl font-extrabold text-[var(--color-foreground)] text-center flex items-center gap-2">
-            <CreditCard size={32} className="text-[var(--color-primary)]" />
+            <HandCoins size={32} className="text-[var(--color-primary)]" />
             {isEdit ? "Edit Credit" : "Add Credit"}
           </h2>
           <p className="text-[var(--color-muted-foreground)] text-sm mt-2 text-center">

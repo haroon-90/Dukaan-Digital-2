@@ -2,7 +2,6 @@ const AboutUs = () => {
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] px-6 py-12 md:px-20 transition-colors duration-300">
       <div className="max-w-4xl mx-auto space-y-12 animate-fade-in-up">
-        {/* Page Heading */}
         <div className="text-center md:text-left space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold text-[var(--color-foreground)] tracking-tight">
             About <span className="text-[var(--color-primary)]">Dukaan Digital</span>
@@ -12,14 +11,12 @@ const AboutUs = () => {
           </p>
         </div>
 
-        {/* Introduction */}
         <div className="glass-panel p-8 rounded-2xl">
           <p className="text-lg leading-relaxed text-[var(--color-foreground)]">
             Dukaan Digital isn't just a platform; it's a solution crafted for the heart of local commerce. We are a modern shop management platform built to help shopkeepers, small business owners, and entrepreneurs take control of their business. In an increasingly digital world, we recognize that small shops face unique challenges, and our goal is to empower them with the right tools to thrive.
           </p>
         </div>
 
-        {/* Our Story Section */}
         <section>
           <h2 className="text-2xl font-semibold text-[var(--color-primary)] mb-4 flex items-center gap-2">
             Our Story
@@ -29,7 +26,6 @@ const AboutUs = () => {
           </p>
         </section>
 
-        {/* Our Mission Section */}
         <section>
           <h2 className="text-2xl font-semibold text-[var(--color-primary)] mb-4">
             Our Mission
@@ -39,7 +35,6 @@ const AboutUs = () => {
           </p>
         </section>
 
-        {/* What We Offer Section */}
         <section className="space-y-6">
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold text-[var(--color-primary)]">
@@ -67,7 +62,6 @@ const AboutUs = () => {
           </div>
         </section>
 
-        {/* Our Vision Section */}
         <section>
           <h2 className="text-2xl font-semibold text-[var(--color-primary)] mb-4">
             Our Vision

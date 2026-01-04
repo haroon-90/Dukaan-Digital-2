@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package, ShoppingCart, TrendingUp, User } from "lucide-react"
+import { LayoutDashboard, Package, ShoppingCart, TrendingUp, User, HandCoins } from "lucide-react"
 import { NavLink } from "react-router-dom"
 import { motion } from "framer-motion"
 
@@ -6,7 +6,7 @@ const navItems = [
     { icon: Package, label: "Products", path: "/products" },
     { icon: TrendingUp, label: "Sales", path: "/sales" },
     { icon: LayoutDashboard, label: "Dashboard", path: "/manager", center: true },
-    { icon: ShoppingCart, label: "Purchase", path: "/purchase" },
+    { icon: HandCoins, label: "Credit", path: "/udhaar" },
     { icon: User, label: "Profile", path: "/profile" },
 ]
 

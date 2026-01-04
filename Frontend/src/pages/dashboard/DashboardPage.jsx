@@ -30,8 +30,8 @@ const StatCard = ({ title, value, icon: Icon, colorClass, delay }) => (
 
             <div className="relative z-10 flex justify-between items-start">
                 <div>
-                    <p className="text-sm font-medium text-[var(--color-muted-foreground)] mb-1">{title}</p>
-                    <h2 className="text-3xl font-bold tracking-tight text-[var(--color-foreground)]">
+                    <p className="text-md font-medium text-[var(--color-muted-foreground)] mb-1">{title}</p>
+                    <h2 className="text-[1em] md:text-xl font-bold tracking-tight text-[var(--color-foreground)]">
                         {value}
                     </h2>
                 </div>
@@ -72,8 +72,8 @@ const Dashboard = () => {
                 <div className="flex items-center gap-3">
                     <LayoutDashboard size={28} className="text-[var(--color-primary)]" />
                     <div className="flex flex-col">
-                        <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Dashboard</h1>
-                        <p className="text-[var(--color-muted-foreground)] text-sm">Overview of your business performance</p>
+                        <h1 className="text-xl md:text-2xl font-bold text-[var(--color-foreground)]">Dashboard</h1>
+                        <p className="text-[var(--color-muted-foreground)] text-[0.8em] md:text-sm">Overview of your business performance</p>
                     </div>
                 </div>
 

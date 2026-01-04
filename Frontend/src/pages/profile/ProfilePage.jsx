@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { deleteProfile } from '../../services/profileServices.js';
-import { User, Mail, Phone, Briefcase, Store, Calendar, Edit2, Trash2, MapPinned, ArrowLeft, Loader2, CreditCard, Receipt, FileText, Info, Sun, Moon, LogOut, ChevronRight, Heart } from "lucide-react";
+import { User, Mail, Phone, Briefcase, Store, Calendar, Edit2, Trash2, MapPinned, ArrowLeft, Loader2, ShoppingBag, Receipt, FileText, Info, Sun, Moon, LogOut, ChevronRight, Heart } from "lucide-react";
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useTheme } from '../../components/Context/ThemeContext';
@@ -194,9 +194,9 @@ const ProfilePage = () => {
                                 onClick={() => navigate('/expenses')}
                             />
                             <MenuLink
-                                icon={<CreditCard size={20} />}
-                                label="Credits"
-                                onClick={() => navigate('/udhaar')}
+                                icon={<ShoppingBag size={20} />}
+                                label="Purchase"
+                                onClick={() => navigate('/purchase')}
                             />
                             <MenuLink
                                 icon={<FileText size={20} />}

@@ -118,6 +118,9 @@ const LoginPage = () => {
             </button>
           </div>
         </form>
+        <p className="text-sm text-center text-[var(--color-muted-foreground)] mt-4">
+          By logging in, you agree to our <a href="/termsandconditions" target="_blank" className="text-[var(--color-primary)] hover:underline">Terms and Conditions</a> and <a href="/privacypolicy" target="_blank" className="text-[var(--color-primary)] hover:underline">Privacy Policy</a>.
+        </p>
       </div>
     </div>
   )

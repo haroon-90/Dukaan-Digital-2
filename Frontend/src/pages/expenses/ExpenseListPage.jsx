@@ -68,7 +68,7 @@ const ExpenseListPage = () => {
           onClick={() => navigate('/expenses/new')}
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
         >
-          <PlusCircle size={18} /> Add Expense
+          <ReceiptIcon size={18} /> Add Expense
         </button>
       </div>
 
@@ -94,7 +94,7 @@ const ExpenseListPage = () => {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
-              <thead className="bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs">
+              <thead className={`bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs ${filteredExpenses.length > 0 ? '' : 'hidden'}`}>
                 <tr>
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">Amount</th>
@@ -129,7 +129,10 @@ const ExpenseListPage = () => {
                 ) : (
                   <tr>
                     <td colSpan="5" className="px-6 py-12 text-center text-[var(--color-muted-foreground)]">
-                      {query ? "No expenses found matching your search" : "No expense records found"}
+                      <div className="flex flex-col items-center justify-center gap-2 w-full">
+                        <ReceiptIcon size={40} />
+                        <p className="text-sm">{query ? "No expenses found matching your search" : "No expense records found"}</p>
+                      </div>
                     </td>
                   </tr>
                 )}

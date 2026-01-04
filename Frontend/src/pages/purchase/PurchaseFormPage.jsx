@@ -228,7 +228,7 @@ const PurchaseFormPage = () => {
 
         <div className="mb-6 border-t border-[var(--color-border)] pt-8">
           <h2 className="text-xl font-bold text-[var(--color-foreground)] mb-6 flex items-center gap-2">
-            <Plus size={20} className="text-[var(--color-primary)]" /> Add Product
+            <Package size={20} className="text-[var(--color-primary)]" /> Add Product
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 

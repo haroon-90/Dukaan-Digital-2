@@ -27,7 +27,7 @@ const ReportReceipt = ({ report, period }) => {
     ];
 
     return (
-        <div className="flex justify-center my-10 animate-scale-in">
+        <div className="flex justify-center animate-scale-in">
             <div className="w-full max-w-sm font-mono bg-[var(--color-background)] text-[var(--color-foreground)] border-y-2 border-dashed border-[var(--color-border)] shadow-lg p-6 print:shadow-none print:w-auto dark:bg-[var(--color-surface)] rounded-sm">
 
                 <div className="text-center flex flex-col justify-center pb-4 border-b border-dashed border-[var(--color-border)] mb-4 print:border-solid">

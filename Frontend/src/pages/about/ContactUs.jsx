@@ -1,6 +1,54 @@
 import { Facebook, Instagram, Linkedin, Phone, Mail, MapPin, Globe, Send, HelpCircle, ShieldCheck, KeyRound } from 'lucide-react';
+import { useState } from 'react';
 
 const ContactUs = () => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState('');
+    const [submitMessage, setSubmitMessage] = useState('');
+    const [formData, setFormData] = useState({
+        from: "Dukaan Digital Form page",
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+    });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch("https://formspree.io/f/mvzgvzqa", {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                setSubmitStatus('success');
+                setSubmitMessage('Your message has been sent successfully!');
+                setFormData({
+                    name: '',
+                    email: '',
+                    subject: '',
+                    message: '',
+                });
+            } else {
+                setSubmitStatus('error');
+                setSubmitMessage('Failed to send your message. Please try again later.');
+            }
+        } catch (error) {
+            setSubmitStatus('error');
+            setSubmitMessage('An error occurred. Please try again later.');
+        } finally {
+            setIsSubmitting(false);
+            setTimeout(() => {
+                setSubmitMessage('');
+                setSubmitStatus('');
+            }, 5000);
+        }
+    };
     return (
         <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] py-16 px-6 sm:px-10 transition-colors duration-300">
             <div className="max-w-6xl mx-auto space-y-12 animate-fade-in-up">
@@ -15,7 +63,6 @@ const ContactUs = () => {
 
                 <div className="grid lg:grid-cols-2 gap-8">
                     <div className="space-y-8">
-                        {/* Contact Details */}
                         <div className="glass-panel p-8 rounded-2xl">
                             <h2 className="text-2xl font-bold text-[var(--color-foreground)] mb-6 flex items-center gap-2">Contact Details</h2>
                             <p className="mb-6 text-[var(--color-muted-foreground)]">
@@ -28,7 +75,7 @@ const ContactUs = () => {
                                     </div>
                                     <div>
                                         <p className="font-medium text-[var(--color-foreground)]">Phone</p>
-                                        <p className="text-[var(--color-muted-foreground)]">+92 300 9530640</p>
+                                        <a href="tel:+923009530640" className="text-[var(--color-primary)] hover:underline">+92 300 9530640</a>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
@@ -37,7 +84,16 @@ const ContactUs = () => {
                                     </div>
                                     <div>
                                         <p className="font-medium text-[var(--color-foreground)]">Email</p>
-                                        <a href="mailto:haroonboy90@gmail.com" className="text-[var(--color-primary)] hover:underline">support@dukaandigital.com</a>
+                                        <a href="mailto:dukaandigital2@gmail.com" className="text-[var(--color-primary)] hover:underline">dukaandigital2@gmail.com</a>
+                                    </div>
+                                </div>
+                                <div className="flex items-start gap-4">
+                                    <div className="p-3 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                                        <Globe size={20} />
+                                    </div>
+                                    <div>
+                                        <p className="font-medium text-[var(--color-foreground)]">Website</p>
+                                        <a href="https://dukaan-digital.vercel.app" target="_blank" rel="noopener noreferrer" className="text-[var(--color-primary)] hover:underline">www.dukaan-digital.vercel.app</a>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
@@ -49,19 +105,9 @@ const ContactUs = () => {
                                         <p className="text-[var(--color-muted-foreground)]">Main Market, Kotla Arab Ali Khan, District Gujrat, Punjab, Pakistan</p>
                                     </div>
                                 </div>
-                                <div className="flex items-start gap-4">
-                                    <div className="p-3 rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
-                                        <Globe size={20} />
-                                    </div>
-                                    <div>
-                                        <p className="font-medium text-[var(--color-foreground)]">Website</p>
-                                        <a href="https://haroon-90.github.io/Dukaan-Digital/" target="_blank" rel="noopener noreferrer" className="text-[var(--color-primary)] hover:underline">www.dukaandigital.pk</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-                        {/* Office Hours & Socials */}
                         <div className="glass-panel p-8 rounded-2xl">
                             <h2 className="text-2xl font-bold text-[var(--color-foreground)] mb-6">Office Hours & Socials</h2>
                             <div className="mb-6">
@@ -69,7 +115,13 @@ const ContactUs = () => {
                                     Our support team is available during:
                                 </p>
                                 <p className="font-medium text-[var(--color-foreground)]">
-                                    Monday - Friday: <span className="text-[var(--color-muted-foreground)] font-normal">9:00 AM to 5:00 PM (PKT)</span>
+                                    Monday - Thursday, Saturday: <span className="text-[var(--color-muted-foreground)] font-normal">9:00 AM to 5:00 PM (PKT)</span>
+                                </p>
+                                <p>
+                                    Friday: <span className="text-[var(--color-muted-foreground)] font-normal">9:00 AM to 12:00 PM (PKT)</span>
+                                </p>
+                                <p>
+                                    Sunday: <span className="text-[var(--color-muted-foreground)] font-normal">Closed</span>
                                 </p>
                             </div>
                             <div>
@@ -96,15 +148,23 @@ const ContactUs = () => {
                         </div>
                     </div>
 
-                    {/* Contact Form */}
                     <div className="glass-panel p-8 rounded-2xl">
                         <h2 className="text-2xl font-bold text-[var(--color-foreground)] mb-6">Send us a Message</h2>
-                        <form className="space-y-6">
+                        {submitStatus && (
+                            <div className={`mb-6 flex items-center gap-2 border ${submitStatus === 'success' ? 'bg-green-100 border-green-200' : 'bg-red-100 border-red-200'} p-3 rounded-xl`}>
+                                <p className={`text-sm ${submitStatus === 'success' ? 'text-green-500' : 'text-red-500'}`}>
+                                    {submitMessage}
+                                </p>
+                            </div>
+                        )}
+                        <form className="space-y-6" onSubmit={handleSubmit}>
                             <div className="space-y-2">
                                 <label htmlFor="name" className="block text-sm font-medium text-[var(--color-foreground)]">Your Name</label>
                                 <input
                                     type="text"
                                     id="name"
+                                    value={formData.name}
+                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                     className="w-full p-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent outline-none transition-all placeholder:text-[var(--color-muted-foreground)]"
                                     placeholder="e.g., Haroon"
                                 />
@@ -114,6 +174,8 @@ const ContactUs = () => {
                                 <input
                                     type="email"
                                     id="email"
+                                    value={formData.email}
+                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                     className="w-full p-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent outline-none transition-all placeholder:text-[var(--color-muted-foreground)]"
                                     placeholder="e.g., yourname@example.com"
                                 />
@@ -122,6 +184,9 @@ const ContactUs = () => {
                                 <label htmlFor="subject" className="block text-sm font-medium text-[var(--color-foreground)]">Subject</label>
                                 <select
                                     id="subject"
+                                    required
+                                    value={formData.subject}
+                                    onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                                     className="w-full p-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent outline-none transition-all text-[var(--color-foreground)]"
                                 >
                                     <option value="">Select an inquiry type</option>
@@ -137,22 +202,24 @@ const ContactUs = () => {
                                 <textarea
                                     id="message"
                                     rows="5"
+                                    value={formData.message}
+                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                     className="w-full p-3 bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent outline-none transition-all placeholder:text-[var(--color-muted-foreground)]"
                                     placeholder="Write your message here..."
                                 ></textarea>
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-6 py-3 rounded-xl hover:brightness-110 transition-all font-semibold shadow-lg shadow-[var(--color-primary)]/20 flex items-center justify-center gap-2"
+                                disabled={isSubmitting}
+                                className="w-full disabled:opacity-60 bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-6 py-3 rounded-xl hover:brightness-110 transition-all font-semibold shadow-lg shadow-[var(--color-primary)]/20 flex items-center justify-center gap-2"
                             >
                                 <Send size={18} />
-                                Send Message
+                                {isSubmitting ? 'Sending...' : 'Send Message'}
                             </button>
                         </form>
                     </div>
                 </div>
 
-                {/* FAQ Section */}
                 <div className="glass-panel p-8 rounded-2xl">
                     <h2 className="text-2xl font-bold text-[var(--color-foreground)] mb-6 text-center">Frequently Asked Questions</h2>
                     <div className="grid md:grid-cols-3 gap-8">
@@ -162,7 +229,7 @@ const ContactUs = () => {
                                 <h3 className="font-semibold text-lg text-[var(--color-foreground)]">Getting Started</h3>
                             </div>
                             <p className="text-[var(--color-muted-foreground)] leading-relaxed">
-                                You can easily sign up for an account on our website. Our intuitive onboarding process will guide you through setting up your shop.
+                                You can create account by contacting to the admin team and provide your details.
                             </p>
                         </div>
                         <div>
@@ -171,7 +238,7 @@ const ContactUs = () => {
                                 <h3 className="font-semibold text-lg text-[var(--color-foreground)]">Data Security</h3>
                             </div>
                             <p className="text-[var(--color-muted-foreground)] leading-relaxed">
-                                Yes, data security is our top priority. We use robust encryption and secure cloud servers to ensure all your business data is protected.
+                                We use encryption and secure servers to keep your business data protected.
                             </p>
                         </div>
                         <div>
@@ -180,7 +247,7 @@ const ContactUs = () => {
                                 <h3 className="font-semibold text-lg text-[var(--color-foreground)]">Forgot Password?</h3>
                             </div>
                             <p className="text-[var(--color-muted-foreground)] leading-relaxed">
-                                You can reset your password directly from the login page by clicking the "Forgot Password" link and following the instructions.
+                                If you have forgotten your password, you can reset it by contacting our support team.
                             </p>
                         </div>
                     </div>

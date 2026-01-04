@@ -2,7 +2,7 @@ const TermsAndConditions = () => {
     return (
         <div className="max-w-4xl mx-auto px-6 py-12 text-[var(--color-foreground)] leading-relaxed">
             <h1 className="text-3xl font-bold mb-4 text-blue-700">Terms and Conditions</h1>
-            <p className="text-sm text-gray-500 mb-6">Last updated: August 2025</p>
+            <p className="text-sm text-gray-500 mb-6">Last updated: January 2026</p>
 
             <p className="mb-6">
                 Welcome to Dukaan Digital. By accessing, using, or registering for our shop management platform and related services, you are entering into a legally binding agreement with Dukaan Digital and agree to comply with the following terms and conditions ("Terms"). Please read them carefully. If you do not agree with these Terms, you must not use our services. These Terms apply to all users, including shop owners, staff, and customers accessing the platform.
@@ -86,7 +86,10 @@ const TermsAndConditions = () => {
 
             <h2 className="text-xl font-semibold mt-8 mb-4">9. Contact Information</h2>
             <p>
-                If you have any questions or concerns about these Terms, please contact us at: <b><a href="mailto:haroonboy90@gmail.com" className="text-blue-600 hover:underline">contact@dukaandigital.com</a></b>
+                If you have any questions or concerns about these Terms, please contact us at: <b><a href="mailto:dukaandigital2@gmail.com" className="text-blue-600 hover:underline">dukaandigital2@gmail.com</a></b>
+            </p>
+            <p className="mt-4 text-center border-t pt-4">
+                Learn more about  <a href="/aboutus" className="text-blue-600 hover:underline font-bold">About Us</a>
             </p>
         </div>
     );
