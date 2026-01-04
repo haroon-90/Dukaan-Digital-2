@@ -151,6 +151,13 @@ const Reporthomepage = () => {
 
       {report && (
         <div className="flex flex-col items-center pt-8 gap-4 w-full max-w-lg animate-fade-in-up">
+          <div ref={receiptRef}>
+            <ReportReceipt
+              report={report}
+              period={selectedType === "date" ? date : month}
+            />
+          </div>
+
           <div className="flex gap-4 w-full">
             <button
               onClick={downloadReceipt}
@@ -164,13 +171,6 @@ const Reporthomepage = () => {
             >
               <FileText size={18} /> PDF
             </button>
-          </div>
-
-          <div ref={receiptRef}>
-            <ReportReceipt
-              report={report}
-              period={selectedType === "date" ? date : month}
-            />
           </div>
         </div>
       )}
