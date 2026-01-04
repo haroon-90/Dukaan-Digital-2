@@ -52,7 +52,9 @@ import Reporthomepage from "../pages/reports/Reporthomepage.jsx"
 
 // Footer
 import MobileAboutLayout from "./layout/MobileAboutLayout.jsx"
-import Footer from "../components/parts/Footer.jsx"
+
+// invoice
+import Invoice from "../pages/invoice/invoice.jsx"
 
 import { Navigate } from "react-router-dom"
 
@@ -146,6 +148,7 @@ export default function AppRouter() {
 
         </Route>
       </Route>
+      <Route path="invoice/:id" element={<Invoice />} />
     </Routes>
   )
 }
