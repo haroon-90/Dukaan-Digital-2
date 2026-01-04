@@ -56,7 +56,6 @@ const Dashboard = () => {
             setloading(false);
         } catch (err) {
             toast.error("Failed to refresh data!")
-            console.log(err);
             setloading(false);
         }
     }

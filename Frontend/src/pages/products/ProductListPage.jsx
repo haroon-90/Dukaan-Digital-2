@@ -97,7 +97,6 @@ const ProductListPage = () => {
     try {
       setloading(true);
       const res = await createsale(payload);
-      console.log("Sale Created:", res.data);
       toast.success("Sale Created")
       setCart([]);
       setSaleQuantities({});
@@ -107,7 +106,6 @@ const ProductListPage = () => {
       loadProducts();
     } catch (err) {
       toast.error("Failed to create Sale")
-      console.error("Error creating record:", err);
       setloading(false);
     }
   };

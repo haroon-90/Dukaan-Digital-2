@@ -31,7 +31,6 @@ const RegisterPage = () => {
 
         try {
             const response = await register(formData);
-            console.log(response)
             if (response.data) {
                 toast.success("Account registered successfully!");
                 setTimeout(() => {

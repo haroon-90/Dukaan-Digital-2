@@ -26,13 +26,11 @@ const LoginPage = () => {
     setError('')
     try {
       const response = await login(form)
-      console.log(response.data);
       if (response.data && response.data.token) {
         localStorage.setItem('token', response.data.token)
         toast.success('Login successfully!');
         const USER = response.data.user;
         setUser(USER);
-        console.log(USER);
         if (USER.role === 'admin') {
           navigate('/admin');
         } else {

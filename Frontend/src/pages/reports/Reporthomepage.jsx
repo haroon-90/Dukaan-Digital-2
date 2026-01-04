@@ -57,7 +57,6 @@ const Reporthomepage = () => {
         body = { month };
       }
       const res = await getReport(body);
-      console.log(res)
       if (res && res.data) {
         setReport(res.data);
         toast.success("Report generated")

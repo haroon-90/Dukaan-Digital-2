@@ -56,7 +56,7 @@ const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
             className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div
                 onClick={(e) => e.stopPropagation()}
-                className={`${isPublic ? "relative max-h-[calc(100vh-2rem)]" : "max-h-[calc(100vh-10rem)] md:max-h-[calc(100vh-2rem)]"} overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl`}>
+                className={`${isPublic ? "max-h-[calc(100vh-2rem)]" : "max-h-[calc(100vh-10rem)] md:max-h-[calc(100vh-2rem)]"} overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl`}>
                 <div ref={invoiceRef} className="invoice-a4 relative z-10 p-2 bg-white">
                     <img
                         src={dukaanLogo}

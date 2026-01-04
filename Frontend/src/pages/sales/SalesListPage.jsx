@@ -36,7 +36,6 @@ const SalesListPage = () => {
         setSales([]);
         return;
       }
-      console.log("Sales data : ", res.data)
       setSales(res.data);
     } catch (err) {
       if (err.response?.status === 404) {
@@ -123,7 +122,6 @@ const SalesListPage = () => {
         }
       }
     } catch (err) {
-      console.log(err);
       toast.error(err.response?.data?.msg || "Error deleting sale")
     }
   }

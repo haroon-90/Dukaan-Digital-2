@@ -28,7 +28,6 @@ const ExpenseFormPage = () => {
     setLoading(true);
 
     try {
-      console.log(formData)
       const res = await addExpense(formData);
       if (res.status === 200 || res.status === 201) {
         toast.success("Expense added successfully!")

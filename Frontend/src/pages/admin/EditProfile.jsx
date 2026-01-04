@@ -7,7 +7,6 @@ import { User, Mail, Phone, MapPin, Store, Lock, ArrowLeft, Loader2 } from 'luci
 const EditProfile = () => {
     const location = useLocation();
     const data = location.state?.data;
-    console.log(data);
     const [form, setform] = useState({
         name: data?.name || "",
         email: data?.email || "",
@@ -38,7 +37,6 @@ const EditProfile = () => {
                 toast.error(response.msg || "Failed to update profile");
             }
         } catch (err) {
-            console.log(err);
             toast.error("Failed to update profile");
         }
         setLoading(false);

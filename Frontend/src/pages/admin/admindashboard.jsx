@@ -30,7 +30,6 @@ const Admindashboard = () => {
             // setLoading(true);
             setError("");
             const response = await getAdminDashboard();
-            console.log(response.data);
             setManagers((response.data.shops).filter((shop) => shop.role === "manager"));
             setAdmins((response.data.shops).filter((shop) => shop.role === "admin"));
             setLoading(false);
@@ -75,13 +74,11 @@ const Admindashboard = () => {
             if (confirm("Are you sure you want to delete this manager? This action cannot be undone.")) {
                 const deleted = await deleteUserProfile(e._id);
                 if (deleted) {
-                    console.log("Profile deleted seccessfully")
                     fetchDashboard();
                 }
             }
         } catch (err) {
             toast.error('Failed to fetch profile!')
-            console.error('Error fetching profile:', err);
             setLoading(false)
         }
     }
@@ -91,7 +88,6 @@ const Admindashboard = () => {
         try {
             const updated = await editUserStatus(e._id);
             if (updated) {
-                console.log("Profile status updated seccessfully")
                 fetchDashboard();
             }
         }
