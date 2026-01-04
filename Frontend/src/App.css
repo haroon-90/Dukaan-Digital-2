@@ -26,7 +26,8 @@
 }
 
 .invoice-a4 {
-  width: 50rem;
+  width: 210mm;
+  /* min-height: 297mm; */
   margin: auto;
   background: white;
   transform-origin: top center;
@@ -49,6 +50,6 @@
 /* Phones */
 @media (max-width: 640px) {
   .invoice-a4 {
-    transform: scale(0.9);
+    transform: scale(0.75);
   }
 }
