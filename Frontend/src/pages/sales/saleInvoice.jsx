@@ -54,8 +54,8 @@ const SaleInvoice = ({ selected, handleClose, type, invoiceRef, handleDelete }) 
             className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div
                 onClick={(e) => e.stopPropagation()}
-                className={`${isPublic ? "max-h-[calc(100vh-2rem)]" : "max-h-[calc(100vh-10rem)]"} overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl`}>
-                <div ref={invoiceRef} className="relative z-10 p-2 bg-white">
+                className={`${isPublic ? "relative max-h-[calc(100vh-2rem)]" : "max-h-[calc(100vh-10rem)]"} overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl`}>
+                <div ref={invoiceRef} className="invoice-a4 relative z-10 p-2 bg-white">
                     <img
                         src={dukaanLogo}
                         alt="Dukaan Digital"
@@ -68,7 +68,7 @@ const SaleInvoice = ({ selected, handleClose, type, invoiceRef, handleDelete }) 
                             </h2>
                             <p className="text-sm text-gray-900">{type === "sale" ? "Sales Invoice" : "Purchase Invoice"}</p>
                         </div>
-                        <div className="text-right flex gap-2">
+                        <div className="text-right flex flex-col-reverse md:flex-row justify-between items-end md:items-center gap-2">
                             <div>
                                 <p className="text-sm text-gray-900 font-medium">Invoice Date</p>
                                 <p className="text-gray-600">
@@ -77,7 +77,7 @@ const SaleInvoice = ({ selected, handleClose, type, invoiceRef, handleDelete }) 
                             </div>
                             <QRCodeSVG
                                 value={qrCodeUrl}
-                                size={60}
+                                size={70}
                                 bgColor={"#ffffff"}
                                 fgColor={"#000000"}
                                 level={"L"}
