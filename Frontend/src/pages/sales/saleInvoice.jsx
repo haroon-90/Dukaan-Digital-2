@@ -1,12 +1,14 @@
 import dukaanLogo from "../../assets/Dukaan_Digital.svg";
 import { QRCodeSVG } from 'qrcode.react';
-import { Trash2, Printer, X, Download, Copy } from "lucide-react";
+import { Trash2, Printer, X, Download, Copy, Share2 } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import { toPng } from "html-to-image";
 import toast from "react-hot-toast";
+import { useRef } from "react";
 
-const SaleInvoice = ({ selected, handleClose, type, invoiceRef, handleDelete }) => {
+const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
     if (!selected) return null;
+    const invoiceRef = useRef();
 
     const isPublic = window.location.pathname.includes("invoice");
 
@@ -54,7 +56,7 @@ const SaleInvoice = ({ selected, handleClose, type, invoiceRef, handleDelete }) 
             className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div
                 onClick={(e) => e.stopPropagation()}
-                className={`${isPublic ? "relative max-h-[calc(100vh-2rem)]" : "max-h-[calc(100vh-10rem)]"} overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl`}>
+                className={`${isPublic ? "relative max-h-[calc(100vh-2rem)]" : "max-h-[calc(100vh-10rem)] md:max-h-[calc(100vh-2rem)]"} overflow-auto relative bg-white w-full max-w-4xl rounded-xl shadow-2xl`}>
                 <div ref={invoiceRef} className="invoice-a4 relative z-10 p-2 bg-white">
                     <img
                         src={dukaanLogo}
@@ -68,7 +70,7 @@ const SaleInvoice = ({ selected, handleClose, type, invoiceRef, handleDelete }) 
                             </h2>
                             <p className="text-sm text-gray-900">{type === "sale" ? "Sales Invoice" : "Purchase Invoice"}</p>
                         </div>
-                        <div className="text-right flex flex-col-reverse md:flex-row justify-between items-end md:items-center gap-2">
+                        <div className="text-right flex gap-2">
                             <div>
                                 <p className="text-sm text-gray-900 font-medium">Invoice Date</p>
                                 <p className="text-gray-600">
@@ -151,32 +153,32 @@ const SaleInvoice = ({ selected, handleClose, type, invoiceRef, handleDelete }) 
                         onClick={handlePrint}
                         className="px-5 py-2 flex items-center gap-2 rounded-lg bg-green-100 text-green-600 hover:bg-green-500 hover:text-white transition"
                     >
-                        <Printer size={16} title="Print" />
+                        <Printer size={16} title="Print" /> Print
                     </button>
                     <button
                         onClick={downloadReceipt}
                         className="px-5 py-2 flex items-center gap-2 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-500 hover:text-white transition"
                     >
-                        <Download size={16} title="Download" />
+                        <Download size={16} title="Download" /> Download
                     </button>
                     <button
-                        onClick={() => { navigator.clipboard.writeText(qrCodeUrl); toast.success("Invoice copied to clipboard") }}
+                        onClick={() => { navigator.clipboard.writeText(qrCodeUrl); toast.success("Invoice link copied to clipboard") }}
                         className="px-5 py-2 flex items-center gap-2 rounded-lg bg-yellow-100 text-yellow-600 hover:bg-yellow-500 hover:text-white transition"
                     >
-                        <Copy size={16} title="Copy" />
+                        <Share2 size={16} title="Share" /> Share
                     </button>
                     <div className={`flex gap-2 ${isPublic ? "hidden" : ""}`}>
                         <button
                             onClick={handleDelete}
                             className="px-5 py-2 flex items-center gap-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-500 hover:text-white transition"
                         >
-                            <Trash2 size={16} title="Delete" />
+                            <Trash2 size={16} title="Delete" /> Delete
                         </button>
                         <button
                             onClick={handleClose}
                             className="px-5 py-2 flex items-center gap-2 rounded-lg text-gray-600 bg-gray-300 hover:bg-gray-500 hover:text-white transition"
                         >
-                            <X size={16} title="Close" />
+                            <X size={16} title="Close" /> Close
                         </button>
                     </div>
                 </div>

@@ -26,30 +26,8 @@
 }
 
 .invoice-a4 {
-  width: 210mm;
-  /* min-height: 297mm; */
+  min-width: 210mm;
   margin: auto;
   background: white;
   transform-origin: top center;
-}
-
-/* Desktop, mostly no scaling */
-@media (min-width: 1024px) {
-  .invoice-a4 {
-    transform: scale(1);
-  }
-}
-
-/* Tablets */
-@media (max-width: 1023px) {
-  .invoice-a4 {
-    transform: scale(0.9);
-  }
-}
-
-/* Phones */
-@media (max-width: 640px) {
-  .invoice-a4 {
-    transform: scale(0.75);
-  }
 }
