@@ -160,7 +160,7 @@ const SaleInvoice = ({ selected, handleClose, type, invoiceRef, handleDelete }) 
                         <Download size={16} title="Download" />
                     </button>
                     <button
-                        onClick={() => navigator.clipboard.writeText(qrCodeUrl)}
+                        onClick={() => { navigator.clipboard.writeText(qrCodeUrl); toast.success("Invoice copied to clipboard") }}
                         className="px-5 py-2 flex items-center gap-2 rounded-lg bg-yellow-100 text-yellow-600 hover:bg-yellow-500 hover:text-white transition"
                     >
                         <Copy size={16} title="Copy" />
