@@ -13,7 +13,6 @@ import {
     Ban
 } from "lucide-react";
 import toast from "react-hot-toast";
-import Loader from '../loader/loader.jsx'
 import { getAdminDashboard, deleteUserProfile, editUserStatus } from '../../services/adminServices.js';
 
 const isYou = JSON.parse(localStorage.getItem("user"))?.id || "";
@@ -63,11 +62,11 @@ const Admindashboard = () => {
     const statusBadge = (status) => {
         const base = "px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border";
         if (status === "active")
-            return <span className={`${base} border-green-200 bg-green-50 !text-green-600 dark:bg-green-900/20 dark:border-green-800`}>● Active</span>;
+            return <span className={`${base} border-[var(--color-success)] bg-[var(--color-success)]/10 text-[var(--color-success)] dark:bg-[var(--color-success)]/20 dark:border-[var(--color-success)]`}>● Active</span>;
         if (status === "suspended")
-            return <span className={`${base} border-rose-200 bg-rose-50 !text-rose-600 dark:bg-rose-900/20 dark:border-rose-800`}>● Suspended</span>;
+            return <span className={`${base} border-[var(--color-danger)] bg-[var(--color-danger)]/10 text-[var(--color-danger)] dark:bg-[var(--color-danger)]/20 dark:border-[var(--color-danger)]`}>● Suspended</span>;
         if (status === "inactive")
-            return <span className={`${base} border-amber-200 bg-amber-50 !text-amber-600 dark:bg-amber-900/20 dark:border-amber-800`}>● Inactive</span>;
+            return <span className={`${base} border-[var(--color-warning)] bg-[var(--color-warning)]/10 text-[var(--color-warning)] dark:bg-[var(--color-warning)]/20 dark:border-[var(--color-warning)]`}>● Inactive</span>;
     };
 
     const handleDelete = async (e) => {
@@ -167,9 +166,9 @@ const Admindashboard = () => {
                         </div>
                         <div>
                             <div className="flex items-center gap-2 flex-wrap text-sm min-w- font-medium text-[var(--color-foreground)]">
-                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-green-200 bg-green-50 !text-green-600 dark:bg-green-900/20 dark:border-green-800"><span className='hidden md:block'>● </span>Active: {managers.filter((m) => m.status === "active").length}</span>
-                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-rose-200 bg-rose-50 !text-rose-600 dark:bg-rose-900/20 dark:border-rose-800"><span className='hidden md:block'>● </span>Suspended: {managers.filter((m) => m.status === "suspended").length}</span>
-                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-amber-200 bg-amber-50 !text-amber-600 dark:bg-amber-900/20 dark:border-amber-800"><span className='hidden md:block'>● </span>Inactive: {managers.filter((m) => m.status === "inactive").length}</span>
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-[var(--color-success)] bg-[var(--color-success)]/10 text-[var(--color-success)] dark:bg-[var(--color-success)]/20 dark:border-[var(--color-success)]"><span className='hidden md:block'>● </span>Active: {managers.filter((m) => m.status === "active").length}</span>
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-[var(--color-danger)] bg-[var(--color-danger)]/10 text-[var(--color-danger)] dark:bg-[var(--color-danger)]/20 dark:border-[var(--color-danger)]"><span className='hidden md:block'>● </span>Suspended: {managers.filter((m) => m.status === "suspended").length}</span>
+                                <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-[var(--color-warning)] bg-[var(--color-warning)]/10 text-[var(--color-warning)] dark:bg-[var(--color-warning)]/20 dark:border-[var(--color-warning)]"><span className='hidden md:block'>● </span>Inactive: {managers.filter((m) => m.status === "inactive").length}</span>
                             </div>
                         </div>
                         <div className="relative w-full sm:w-80">

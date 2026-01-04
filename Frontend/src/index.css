@@ -37,6 +37,10 @@
   --color-border: #dbeafe;
   /* Blue 100 */
 
+  --color-success: #22c55d;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+
   /* Glassmorphism */
   --glass-bg: rgba(255, 255, 255, 0.2);
   --glass-border: rgba(37, 99, 235, 0.2);
@@ -71,6 +75,10 @@
   /* Borders visible but subtle */
   --color-border: #1e293b;
   /* Slate 800 */
+
+  --color-success: #22c55d;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
 
   /* Glassmorphism */
   --glass-bg: rgba(15, 23, 42, 0.2);
