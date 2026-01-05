@@ -9,6 +9,7 @@ import { useRef } from "react";
 const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
     if (!selected) return null;
     const invoiceRef = useRef();
+    console.log(selected);
 
     const isPublic = window.location.pathname.includes("invoice");
 
@@ -134,7 +135,15 @@ const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
                         </table>
                     </div>
 
-                    <div className="relative z-10 flex justify-end px-8 py-6 border-t">
+                    <div className="relative z-10 flex flex-col items-end justify-end px-8 py-6 border-t">
+                        {type === "sale" && selected.discount && (
+                            <div className="text-right">
+                                <p className="text-sm text-gray-500">Discount</p>
+                                <p className="text-2xl font-bold text-gray-900">
+                                    {selected.discount?.toLocaleString()} %
+                                </p>
+                            </div>
+                        )}
                         <div className="text-right">
                             <p className="text-sm text-gray-500">Grand Total</p>
                             <p className="text-2xl font-bold text-gray-900">

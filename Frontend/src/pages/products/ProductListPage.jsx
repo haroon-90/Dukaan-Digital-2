@@ -19,6 +19,8 @@ const ProductListPage = () => {
   const [prprice, setprprice] = useState(false);
   const [isSale, setisSale] = useState(false);
   const [loading, setloading] = useState(true);
+  const [discount, setDiscount] = useState(0);
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
 
   const filteredProduct = products.filter((item) =>
     item.itemname.toLowerCase().includes(searchTerm.toLowerCase())
@@ -54,6 +56,10 @@ const ProductListPage = () => {
       TotalBill + (product.sellingPrice * quantity)
     );
 
+    setTotalAfterDiscount(
+      TotalBill + (product.sellingPrice * quantity)
+    );
+
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product._id);
       if (existing) {
@@ -85,6 +91,9 @@ const ProductListPage = () => {
     }
 
     const payload = {
+      discount,
+      totalAfterDiscount,
+      TotalBill,
       items: cart.map((item) => ({
         productId: item.id,
         quantity: item.quantity,
@@ -96,7 +105,7 @@ const ProductListPage = () => {
 
     try {
       setloading(true);
-      const res = await createsale(payload);
+      await createsale(payload);
       toast.success("Sale Created")
       setCart([]);
       setSaleQuantities({});
@@ -153,6 +162,22 @@ const ProductListPage = () => {
       setShowSaleModal(false)  // <-- yeh user ko previous page pe le jayega
     }
   };
+
+  const handleDiscountChange = (e) => {
+    const value = Number(e.target.value) || 0;
+    setDiscount(value);
+    const discountedTotal = TotalBill - (TotalBill * value) / 100;
+    setTotalAfterDiscount(discountedTotal);
+  };
+
+  const handleTotalAfterDiscountChange = (e) => {
+    const value = Number(e.target.value) || 0;
+    setTotalAfterDiscount(value);
+    const calculatedDiscount =
+      ((TotalBill - value) / TotalBill) * 100;
+    setDiscount(Number(calculatedDiscount.toFixed(2)));
+  };
+
 
   useEffect(() => {
     if (location.pathname === "/products") {
@@ -228,12 +253,43 @@ const ProductListPage = () => {
               </div>
             )}
             <div className="border-t border-dashed border-[var(--color-border)] my-4 print:border-black"></div>
-            <div className="flex justify-between items-baseline font-bold text-xl">
-              <span>TOTAL:</span>
-              <span className="text-[var(--color-primary)]">
-                Rs {TotalBill.toLocaleString()}
-              </span>
+            <div className="space-y-3">
+
+              <div className="flex justify-between font-bold text-xl">
+                <span>Total</span>
+                <span className="text-[var(--color-primary)]">
+                  Rs {TotalBill.toLocaleString()}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center text-lg">
+                <span>Discount</span>
+                <div>
+                  <span className="text-right pr-1">%</span>
+                  <input
+                    type="number"
+                    value={discount}
+                    onChange={handleDiscountChange}
+                    className="w-32 border rounded px-2 py-1 text-right"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-between font-bold text-xl">
+                <span>Total After Discount</span>
+                <div>
+                  <span className="text-right pr-1">RS</span>
+                  <input
+                    type="number"
+                    value={totalAfterDiscount}
+                    onChange={handleTotalAfterDiscountChange}
+                    className="w-32 border rounded px-2 py-1 text-right"
+                  />
+                </div>
+              </div>
+
             </div>
+
             <div className="text-center text-xs text-[var(--color-muted-foreground)] mt-4 pt-2 border-t border-dashed border-[var(--color-border)] print:border-black">
               <p>Thank you for your business!</p>
             </div>
