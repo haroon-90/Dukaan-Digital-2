@@ -126,13 +126,37 @@ const SalesListPage = () => {
     }
   }
 
-  const filteredSales = sales.filter((sale) =>
-    (sale.customerName || "").toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredSales = sales.filter((sale) => {
+    const query = search.trim();
+    if (query.startsWith(">")) {
+      const num = parseFloat(query.slice(1));
+      return !isNaN(num) && sale.totalAmount > num;
+    }
+    if (query.startsWith("<")) {
+      const num = parseFloat(query.slice(1));
+      return !isNaN(num) && sale.totalAmount < num;
+    }
+    return (
+      sale.customerName?.toLowerCase().includes(query.toLowerCase()) ||
+      sale._id.toLowerCase().includes(query.toLowerCase())
+    );
+  });
 
-  const filteredPurchases = purchases.filter((purchase) =>
-    (purchase.suppliername || "").toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredPurchases = purchases.filter((purchase) => {
+    const query = search.trim();
+    if (query.startsWith(">")) {
+      const num = parseFloat(query.slice(1));
+      return !isNaN(num) && purchase.totalAmount > num;
+    }
+    if (query.startsWith("<")) {
+      const num = parseFloat(query.slice(1));
+      return !isNaN(num) && purchase.totalAmount < num;
+    }
+    return (
+      purchase.suppliername?.toLowerCase().includes(query.toLowerCase()) ||
+      purchase._id.toLowerCase().includes(query.toLowerCase())
+    );
+  });
 
   const RenderTable = ({ data }) => (
     <div>
@@ -146,6 +170,7 @@ const SalesListPage = () => {
           <table className="w-full text-sm text-left">
             <thead className={`bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)] ${data.length > 0 ? '' : 'hidden'}`}>
               <tr>
+                <th className="px-6 py-4 font-semibold">Invoice ID</th>
                 <th className="px-6 py-4 font-semibold">{type == "sale" ? "Customer" : "Supplier"}</th>
                 <th className="px-6 py-4 font-semibold">Date</th>
                 <th className="px-6 py-4 font-semibold">Total Amount</th>
@@ -159,6 +184,9 @@ const SalesListPage = () => {
                   key={item._id}
                   className="hover:bg-[var(--color-muted)] transition-colors duration-200"
                 >
+                  <td className="px-6 py-4 font-medium text-[var(--color-foreground)]">
+                    {item._id.slice(-6)}
+                  </td>
                   <td className="px-6 py-4 font-medium text-[var(--color-foreground)] flex items-center gap-2">
                     {type === "sale" ? <ArrowUpRight size={14} className="text-emerald-500" /> : <ArrowDownLeft size={14} className="text-rose-500" />}
                     {item.customerName ? item.customerName : item.suppliername}
