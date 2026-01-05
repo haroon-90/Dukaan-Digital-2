@@ -1,6 +1,6 @@
 import dukaanLogo from "../../assets/Dukaan_Digital.svg";
 import { QRCodeSVG } from 'qrcode.react';
-import { Trash2, Printer, X, Download, Copy, Share2 } from "lucide-react";
+import { Trash2, Printer, X, Download, Share2 } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import { toPng } from "html-to-image";
 import toast from "react-hot-toast";
@@ -13,7 +13,7 @@ const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
     const isPublic = window.location.pathname.includes("invoice");
 
     const baseUrl = window.location.origin;
-    const qrCodeUrl = `${baseUrl}/invoice/${selected?._id}`;
+    const qrCodeUrl = `${baseUrl}/invoice/${type}/${selected?._id}`;
 
     const handlePrint = useReactToPrint({
         contentRef: invoiceRef,

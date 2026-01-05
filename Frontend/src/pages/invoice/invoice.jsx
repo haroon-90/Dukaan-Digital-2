@@ -1,19 +1,18 @@
 import SaleInvoice from "../sales/saleInvoice";
-import { getsinglesale } from "../../services/saleService";
+import { getInvoice } from "../../services/invoiceServices";
 import { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 const Invoice = () => {
-    const { id } = useParams();
+    const { type, id } = useParams();
     const [selected, setSelected] = useState(null);
     const [loading, setLoading] = useState(true);
-    const type = "sale";
     const invoiceRef = useRef(null);
 
     const fetchsaleInvoice = async () => {
         setLoading(true);
         try {
-            const response = await getsinglesale(id);
+            const response = await getInvoice(type, id);
             if (response.status === 200 && response.data) {
                 setSelected(response.data);
             } else {
@@ -28,7 +27,7 @@ const Invoice = () => {
 
     useEffect(() => {
         fetchsaleInvoice();
-    }, [id]);
+    }, [id, type]);
 
     if (loading) {
         return <div className="flex items-center justify-center min-h-[60vh]">Loading...</div>;

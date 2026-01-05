@@ -65,7 +65,7 @@ export default function AppRouter() {
     <Routes path="/">
 
       {/* Public invoice Routes */}
-      <Route path="invoice/:id" element={<Invoice />} />
+      <Route path="invoice/:type/:id" element={<Invoice />} />
 
       {/* Auth Layout Routes */}
       <Route element={<AuthLayout />}>
