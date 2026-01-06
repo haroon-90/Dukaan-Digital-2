@@ -2,13 +2,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {
     User,
     Package,
-    TrendingUp,
-    BarChart2,
+    ShoppingCart,
+    BarChart3,
     HandCoins,
-    ReceiptIcon,
     LayoutDashboard,
     ShoppingBag,
-    Info
+    Info,
+    Banknote
 } from "lucide-react";
 
 const Sidebar = ({ toggleSidebar }) => {
@@ -29,7 +29,7 @@ const Sidebar = ({ toggleSidebar }) => {
         {
             label: "Sales",
             path: "/sales",
-            icon: <TrendingUp size={20} />,
+            icon: <ShoppingCart size={20} />,
         },
         {
             label: "Purchase",
@@ -39,7 +39,7 @@ const Sidebar = ({ toggleSidebar }) => {
         {
             label: "Expenses",
             path: "/expenses",
-            icon: <ReceiptIcon size={20} />,
+            icon: <Banknote size={20} />,
         },
         {
             label: "Credits",
@@ -49,7 +49,7 @@ const Sidebar = ({ toggleSidebar }) => {
         {
             label: "Reports",
             path: "/reports",
-            icon: <BarChart2 size={20} />,
+            icon: <BarChart3 size={20} />,
         },
     ];
 

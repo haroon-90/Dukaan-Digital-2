@@ -340,37 +340,37 @@ const PurchaseFormPage = () => {
         </div>
 
         {purchaseDetails.items.length > 0 && (
-          <div className=" w-full max-w-3xl bg-[var(--color-surface)] rounded-2xl shadow-2xl overflow-hidden">
+          <div className=" w-full max-w-3xl bg-white text-black border-black rounded-2xl shadow-2xl overflow-hidden">
 
             <div className="h-1 bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent" />
 
-            <div className="px-8 py-6 text-center border-b border-[var(--color-border)]">
+            <div className="px-8 py-6 text-center border-b">
               <div className="flex justify-center mb-3">
-                <div className="w-14 h-14 rounded-full bg-[var(--color-background)] border flex items-center justify-center">
+                <div className="w-14 h-14 rounded-full bg-gray-300 border flex items-center justify-center">
                   <img src={Dukaan_Digital} alt="Logo" className="w-7 h-7" />
                 </div>
               </div>
 
-              <h2 className="text-xl font-bold text-[var(--color-foreground)] tracking-wide">
+              <h2 className="text-xl font-bold text-blue-700 tracking-wide">
                 {JSON.parse(localStorage.getItem("user"))?.shopname}
               </h2>
 
-              <p className="text-sm text-[var(--color-muted-foreground)] mt-1">
+              <p className="text-sm mt-1">
                 Purchase Receipt
               </p>
             </div>
 
-            <div className="px-6 py-4 border-b border-dashed border-[var(--color-border)] text-sm">
+            <div className="px-6 py-4 border-b border-dashed text-sm">
               <div className="flex justify-around">
-                <span className="text-[var(--color-muted-foreground)]">Supplier</span>
-                <span className="font-medium text-[var(--color-foreground)]">
+                <span>Supplier</span>
+                <span className="font-medium">
                   {purchaseDetails.suppliername}
                 </span>
               </div>
 
               <div className="flex justify-around mt-2">
-                <span className="text-[var(--color-muted-foreground)]">Date</span>
-                <span className="text-[var(--color-foreground)]">
+                <span>Date</span>
+                <span>
                   {new Date().toLocaleDateString()}
                 </span>
               </div>
@@ -380,20 +380,20 @@ const PurchaseFormPage = () => {
               {purchaseDetails.items.map((item, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-start border-b border-dashed border-[var(--color-border)] pb-3 last:border-none"
+                  className="flex justify-between items-start border-b border-dashed pb-3 last:border-none"
                 >
                   <div>
-                    <p className="font-semibold text-[var(--color-foreground)]">
+                    <p className="font-semibold">
                       {item.itemname}
                     </p>
-                    <p className="text-sm text-[var(--color-muted-foreground)]">
+                    <p className="text-sm text-gray-700">
                       Price: {formatPrice(item.purchasePrice)}
                     </p>
                   </div>
 
                   <div className="text-right flex items-center gap-2">
                     <div className="flex items-center flex-col">
-                      <p className="text-sm font-medium text-[var(--color-foreground)]">
+                      <p className="text-sm font-medium">
                         Qty: {item.quantity}
                       </p>
                       <p className="text-sm font-semibold">
@@ -412,7 +412,7 @@ const PurchaseFormPage = () => {
               ))}
             </div>
 
-            <div className="px-6 py-5 border-t border-dashed border-[var(--color-border)]">
+            <div className="px-6 py-5 border-t border-dashed">
               <div className="flex justify-between text-lg font-bold">
                 <span>Total Amount</span>
                 <span>
@@ -426,8 +426,8 @@ const PurchaseFormPage = () => {
               </div>
             </div>
 
-            <div className="text-center text-xs text-[var(--color-muted-foreground)] py-4 border-t border-[var(--color-border)]">
-              Thank you for shopping with us
+            <div className="text-center text-xs text-gray-700 py-4 border-t border-[var(--color-border)]">
+              Best of luck!
             </div>
           </div>
         )}

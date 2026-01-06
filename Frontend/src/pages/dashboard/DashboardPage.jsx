@@ -8,7 +8,7 @@ import {
     ResponsiveContainer,
     CartesianGrid
 } from "recharts";
-import { TrendingUp, HandCoins, DollarSign, Receipt, MessageCircleWarning, Eye, EyeOff, CheckCircle2, LayoutDashboard } from "lucide-react";
+import { ShoppingCart, HandCoins, TrendingUp , Banknote, MessageCircleWarning, Eye, EyeOff, CheckCircle2, LayoutDashboard } from "lucide-react";
 import { getDashboard } from "../../services/dashboardServices.js";
 import Loader from "../loader/loader";
 import toast from "react-hot-toast";
@@ -93,7 +93,7 @@ const Dashboard = () => {
                     title="Total Sales"
                     value={loading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.sales.toLocaleString() || "---"}`}
-                    icon={TrendingUp}
+                    icon={ShoppingCart}
                     colorClass="bg-blue-500 shadow-blue-500/30 shadow-lg"
                     delay={100}
                 />
@@ -101,7 +101,7 @@ const Dashboard = () => {
                     title="Total Profit"
                     value={loading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.profit.toLocaleString() || "---"}`}
-                    icon={DollarSign}
+                    icon={TrendingUp}
                     colorClass="bg-emerald-500 shadow-emerald-500/30 shadow-lg"
                     delay={200}
                 />
@@ -109,7 +109,7 @@ const Dashboard = () => {
                     title="Expenses"
                     value={loading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.expenses.toLocaleString() || "---"}`}
-                    icon={Receipt}
+                    icon={Banknote}
                     colorClass="bg-rose-500 shadow-rose-500/30 shadow-lg"
                     delay={300}
                 />

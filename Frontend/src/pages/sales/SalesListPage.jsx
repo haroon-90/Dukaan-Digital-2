@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getsales, deletesale } from "../../services/saleService.js";
 import { getPurchases, deletePurchase } from "../../services/purchaseServices.js";
 import SaleInvoice from "./saleInvoice.jsx";
-import { TrendingUp, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Search } from "lucide-react";
+import { ShoppingCart, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Search } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx"
@@ -162,7 +162,7 @@ const SalesListPage = () => {
     <div>
       {data.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 text-[var(--color-muted-foreground)]">
-          {type === "sale" ? <TrendingUp size={40} /> : <ShoppingBag size={40} />}
+          {type === "sale" ? <ShoppingCart size={40} /> : <ShoppingBag size={40} />}
           <p>No {type === "sale" ? "sales" : "purchases"} found for this period.</p>
         </div>
       ) : (
@@ -226,7 +226,7 @@ const SalesListPage = () => {
     <div className="relative p-2 md:p-4 space-y-6 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
       <div className="flex md:justify-between items-center flex-wrap gap-4 w-full glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
         <div className="flex items-center gap-2">
-          {type === "sale" ? <TrendingUp className="text-[var(--color-primary)]" size={28} /> : <ShoppingBag className="text-[var(--color-primary)]" size={28} />}
+          {type === "sale" ? <ShoppingCart className="text-[var(--color-primary)]" size={28} /> : <ShoppingBag className="text-[var(--color-primary)]" size={28} />}
           <div className="flex flex-col">
             <h1 className="font-bold text-2xl">{type === "sale" ? "Sales Records" : "Purchase Records"}</h1>
             <p className="text-[var(--color-muted-foreground)] text-sm">Manage your {type === "sale" ? "sales" : "purchase"} records</p>
@@ -240,7 +240,7 @@ const SalesListPage = () => {
           }}
         >
           {
-            type == "sale" ? <TrendingUp size={18} /> : <ShoppingBag size={18} />
+            type == "sale" ? <ShoppingCart size={18} /> : <ShoppingBag size={18} />
           }
           {
             type == "sale" ? "New Sale" : "New Purchase"

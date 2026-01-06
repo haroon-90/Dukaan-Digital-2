@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getProducts, deleteProducts } from "../../services/productServices.js";
 import { createsale } from "../../services/saleService.js";
-import { Edit2, Trash2, TrendingUp, ShoppingCart, Eye, Package, PlusCircle, Search, X, EyeOff } from "lucide-react";
+import { Edit2, Trash2, ShoppingCart, Eye, Package, PlusCircle, Search, X, EyeOff } from "lucide-react";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx";
 
@@ -175,7 +175,7 @@ const ProductListPage = () => {
     setTotalAfterDiscount(value);
     const calculatedDiscount =
       ((TotalBill - value) / TotalBill) * 100;
-    setDiscount(Number(calculatedDiscount.toFixed(2)));
+    setDiscount(Number(calculatedDiscount));
   };
 
 
@@ -191,28 +191,32 @@ const ProductListPage = () => {
   return (
     <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-2 md:p-4 transition-colors duration-300">
       {showSaleModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="glass-panel p-8 max-h-[90vh] rounded-2xl overflow-auto shadow-2xl w-full max-w-lg font-mono text-[var(--color-foreground)] print:shadow-none print:border-0 print:rounded-none print:p-0 print:bg-white animate-scale-in">
+        <div
+          onClick={() => setShowSaleModal(false)}
+          className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 backdrop-blur-sm p-4 animate-fade-in">
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="p-8 max-h-[90vh] text-black rounded-2xl overflow-auto shadow-2xl lg:min-w-4xl min-w-[90vw] w-full max-w-lg font-mono print:shadow-none print:border-0 print:rounded-none print:p-0 bg-white animate-scale-in">
             <div className="flex justify-between items-start mb-4 print:hidden">
               <span className="text-xl font-bold">Checkout</span>
-              <button onClick={() => setShowSaleModal(false)} className="p-1 rounded-full hover:bg-[var(--color-muted)] transition-colors">
+              <button onClick={() => setShowSaleModal(false)} className="p-1 rounded-full hover:bg-gray-200 transition-colors">
                 <X size={20} />
               </button>
             </div>
 
             <div className="text-center pb-4 mb-4 border-b border-dashed border-[var(--color-border)] print:border-black print:mb-2">
-              <h2 className="text-2xl font-bold text-[var(--color-primary)] tracking-wide">
+              <h2 className="text-2xl font-bold text-blue-700 tracking-wide">
                 {JSON.parse(localStorage.getItem("user"))?.shopname}
               </h2>
-              <p className="text-sm font-semibold text-[var(--color-muted-foreground)] mt-1">
+              <p className="text-sm font-semibold text-black mt-1">
                 Sales Invoice
               </p>
-              <p className="text-xs text-[var(--color-muted-foreground)] mt-2">
+              <p className="text-xs text-black mt-2">
                 Date: {new Date().toLocaleDateString()}
               </p>
             </div>
             <div className="mb-6 flex flex-col sm:flex-row items-baseline gap-2">
-              <p className="text-sm font-semibold text-[var(--color-foreground)] whitespace-nowrap">
+              <p className="text-sm font-semibold text-black whitespace-nowrap">
                 Customer:
               </p>
               <input
@@ -220,28 +224,28 @@ const ProductListPage = () => {
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
                 placeholder={"Enter customer name"}
-                className="flex-1 w-full px-3 py-1 border-b border-[var(--color-border)] bg-transparent outline-none text-sm focus:border-[var(--color-primary)] transition placeholder:text-[var(--color-muted-foreground)]"
+                className="flex-1 w-full px-3 py-1 border-b border-[var(--color-border)] bg-transparent outline-none text-sm focus:border-[var(--color-primary)] transition placeholder:text-black"
               />
             </div>
             {cart.length === 0 ? (
-              <p className="text-[var(--color-muted-foreground)] text-center py-6">No items added to the cart.</p>
+              <p className="text-black text-center py-6">No items added to the cart.</p>
             ) : (
               <div className="max-h-60 overflow-y-auto pr-2 custom-scrollbar">
-                <div className="flex justify-between font-bold text-sm border-b border-dashed border-[var(--color-border)] py-2 sticky top-0 bg-[var(--color-surface)] print:border-black print:bg-white">
+                <div className="flex justify-between font-bold px-0.5 text-sm border-b border-dashed border-[var(--color-border)] py-2 sticky top-0 bg-gray-200 print:border-black print:bg-white">
                   <span className="flex-1">Item</span>
-                  <span className="w-16 text-right">Qty</span>
-                  <span className="w-20 text-right">Price</span>
-                  <span className="w-20 text-right">Total</span>
+                  <span className="w-16 pr-1 text-right">Qty</span>
+                  <span className="w-20 pr-1 text-right">Price</span>
+                  <span className="w-20 pr-1 text-right">Total</span>
                   <span className="w-8 text-right print:hidden"></span>
                 </div>
                 {cart.map((item) => (
-                  <div key={item.id} className="flex justify-between text-sm py-2 border-b border-dashed border-[var(--color-border)] print:border-black">
-                    <span className="flex-1 font-medium text-wrap text-[var(--color-foreground)]">
+                  <div key={item.id} className="flex justify-between px-0.5 text-sm py-2 border-b border-dashed border-[var(--color-border)] print:border-black">
+                    <span className="flex-1 font-medium text-wrap text-black">
                       {item.productname}
                     </span>
-                    <span className="w-16 text-right break-words">{item.quantity} {item.unit}</span>
-                    <span className="w-20 text-right">Rs {item.price.toLocaleString()}</span>
-                    <span className="w-20 text-right font-semibold">
+                    <span className="w-16 pr-1 text-right break-words">{item.quantity} {item.unit}</span>
+                    <span className="w-20 pr-1 text-right">Rs {item.price.toLocaleString()}</span>
+                    <span className="w-20 pr-1 text-right font-semibold">
                       Rs {(item.price * item.quantity).toLocaleString()}
                     </span>
                     <button className="w-8 flex justify-end text-red-500 hover:text-red-600 cursor-pointer print:hidden"
@@ -252,15 +256,15 @@ const ProductListPage = () => {
                 ))}
               </div>
             )}
-            <div className="border-t border-dashed border-[var(--color-border)] my-4 print:border-black"></div>
-            <div className="space-y-3">
+            <div className="space-y-3 mt-2">
 
               <div className="flex justify-between font-bold text-xl">
                 <span>Total</span>
-                <span className="text-[var(--color-primary)]">
+                <span className="text-black">
                   Rs {TotalBill.toLocaleString()}
                 </span>
               </div>
+            <div className="border-t border-dashed border-[var(--color-border)] my-4 print:border-black"></div>
 
               <div className="flex justify-between items-center text-lg">
                 <span>Discount</span>
@@ -268,7 +272,7 @@ const ProductListPage = () => {
                   <span className="text-right pr-1">%</span>
                   <input
                     type="number"
-                    value={discount}
+                    value={discount.toFixed(2)}
                     onChange={handleDiscountChange}
                     className="w-32 border rounded px-2 py-1 text-right"
                   />
@@ -276,7 +280,7 @@ const ProductListPage = () => {
               </div>
 
               <div className="flex justify-between font-bold text-xl">
-                <span>Total After Discount</span>
+                <span>Grand Total</span>
                 <div>
                   <span className="text-right pr-1">RS</span>
                   <input
@@ -290,16 +294,10 @@ const ProductListPage = () => {
 
             </div>
 
-            <div className="text-center text-xs text-[var(--color-muted-foreground)] mt-4 pt-2 border-t border-dashed border-[var(--color-border)] print:border-black">
-              <p>Thank you for your business!</p>
+            <div className="text-center text-xs text-black mt-4 pt-2 border-t border-dashed border-[var(--color-border)] print:border-black">
+              <p>Best of luck!</p>
             </div>
-            <div className="flex justify-end gap-3 mt-6 print:hidden">
-              <button
-                onClick={() => setShowSaleModal(false)}
-                className="px-6 py-2 rounded-xl border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition-colors text-[var(--color-foreground)]"
-              >
-                Cancel
-              </button>
+            <div className="flex justify-center mt-6 print:hidden">
               <button
                 onClick={confirmSaleOrPurchase}
                 className="px-6 py-2 bg-[var(--color-primary)] text-[var(--color-primary-foreground)] rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-lg shadow-[var(--color-primary)]/20"
@@ -317,7 +315,7 @@ const ProductListPage = () => {
           {isSale ?
             <>
               <div className="flex items-center gap-3">
-                <TrendingUp size={28} className="text-[var(--color-primary)]" />
+                <ShoppingCart size={28} className="text-[var(--color-primary)]" />
                 <div className="flex flex-col">
                   <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Sales</h1>
                   <p className="text-[var(--color-muted-foreground)] text-sm">Manage your sales.</p>
@@ -342,7 +340,7 @@ const ProductListPage = () => {
             onClick={ShowCart}
             className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-foreground)] text-[var(--color-background)] px-4 py-2.5 text-sm font-bold shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
           >
-            <TrendingUp size={18} /> Sale ({cart.length})
+            <ShoppingCart size={18} /> Sale ({cart.length})
           </button>
         )}
         {!isSale &&

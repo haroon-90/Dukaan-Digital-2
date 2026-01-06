@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getExpense, deleteExpense } from '../../services/expenseServices.js';
-import { Trash2, PlusCircle, Search, ReceiptIcon } from 'lucide-react';
+import { Trash2, Search, Banknote } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../loader/loader.jsx';
@@ -57,7 +57,7 @@ const ExpenseListPage = () => {
       <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
         <div>
           <div className="flex items-center gap-3">
-            <ReceiptIcon size={28} className="text-[var(--color-primary)]" />
+            <Banknote size={28} className="text-[var(--color-primary)]" />
             <div className="flex flex-col">
               <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Expense Records</h1>
               <p className="text-[var(--color-muted-foreground)] text-sm">Manage and track your business expenses.</p>
@@ -68,7 +68,7 @@ const ExpenseListPage = () => {
           onClick={() => navigate('/expenses/new')}
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
         >
-          <ReceiptIcon size={18} /> Add Expense
+          <Banknote size={18} /> Add Expense
         </button>
       </div>
 
@@ -130,7 +130,7 @@ const ExpenseListPage = () => {
                   <tr>
                     <td colSpan="5" className="px-6 py-12 text-center text-[var(--color-muted-foreground)]">
                       <div className="flex flex-col items-center justify-center gap-2 w-full">
-                        <ReceiptIcon size={40} />
+                        <Banknote size={40} />
                         <p className="text-sm">{query ? "No expenses found matching your search" : "No expense records found"}</p>
                       </div>
                     </td>

@@ -12,6 +12,7 @@ const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
     console.log(selected);
 
     const isPublic = window.location.pathname.includes("invoice");
+    const total = type === "sale" ? selected.items.reduce((acc, item) => acc + item.price * item.quantity, 0) : selected.total;
 
     const baseUrl = window.location.origin;
     const qrCodeUrl = `${baseUrl}/invoice/${type}/${selected?._id}`;
@@ -135,21 +136,45 @@ const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
                         </table>
                     </div>
 
-                    <div className="relative z-10 flex flex-col items-end justify-end px-8 py-6 border-t">
+                    <div className="relative z-10 flex flex-col items-end gap-4 px-8 py-6 border-t">
+
                         {type === "sale" && selected.discount && (
                             <div className="text-right">
-                                <p className="text-sm text-gray-500">Discount</p>
-                                <p className="text-2xl font-bold text-gray-900">
-                                    {selected.discount?.toLocaleString()} %
+                                <p className="text-xs uppercase tracking-wide text-gray-500">
+                                    Sub Total
+                                </p>
+                                <p className="text-xl font-semibold text-gray-800">
+                                    Rs {total.toLocaleString()}
                                 </p>
                             </div>
                         )}
-                        <div className="text-right">
-                            <p className="text-sm text-gray-500">Grand Total</p>
-                            <p className="text-2xl font-bold text-gray-900">
-                                Rs {type === "sale" ? selected.totalAmount.toLocaleString() : selected.total.toLocaleString()}
+
+                        {type === "sale" && selected.discount && (
+                            <div className="text-right">
+                                <p className="text-xs uppercase tracking-wide text-gray-500">
+                                    Discount
+                                </p>
+                                <p className="text-lg font-medium text-gray-700">
+                                    {(selected.discount ?? 0).toLocaleString(undefined, {
+                                        minimumFractionDigits: 0,
+                                        maximumFractionDigits: 1,
+                                    })} %
+                                </p>
+                            </div>
+                        )}
+
+                        <div className="text-right pt-2 border-t border-dashed border-gray-300 w-full">
+                            <p className="text-sm font-medium text-gray-600">
+                                Grand Total
+                            </p>
+                            <p className="text-3xl font-bold text-gray-900">
+                                Rs{" "}
+                                {type === "sale"
+                                    ? selected.totalAmount.toLocaleString()
+                                    : selected.total.toLocaleString()}
                             </p>
                         </div>
+
                     </div>
 
                     <div className="relative z-10 text-center text-xs text-gray-500 py-4 border-t">
