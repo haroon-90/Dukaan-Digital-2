@@ -21,6 +21,7 @@ const ProductListPage = () => {
   const [loading, setloading] = useState(true);
   const [discount, setDiscount] = useState(0);
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+  const [NoOfProducts, setNoOfProducts] = useState(0);
 
   const filteredProduct = products.filter((item) =>
     item.itemname.toLowerCase().includes(searchTerm.toLowerCase())
@@ -124,8 +125,8 @@ const ProductListPage = () => {
       setloading(true);
       const res = await getProducts();
       setProducts(res.data);
-      // toast.success("Products refreshed!")
       setloading(false);
+      setNoOfProducts(res.data.length);
     } catch (err) {
       toast.error("Failed to refresh products")
       console.error("Error fetching products:", err);
@@ -264,7 +265,7 @@ const ProductListPage = () => {
                   Rs {TotalBill.toLocaleString()}
                 </span>
               </div>
-            <div className="border-t border-dashed border-[var(--color-border)] my-4 print:border-black"></div>
+              <div className="border-t border-dashed border-[var(--color-border)] my-4 print:border-black"></div>
 
               <div className="flex justify-between items-center text-lg">
                 <span>Discount</span>
@@ -356,20 +357,27 @@ const ProductListPage = () => {
       </div>
 
       <div className="max-w-7xl mx-auto glass-panel rounded-2xl overflow-hidden animate-fade-in-up">
-
-        <div className="p-4 border-b border-[var(--color-border)]">
-          <div className="relative group flex-1 md:flex-none min-w-64">
-            <Search className="absolute left-3 top-2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
+        <div className="flex flex-wrap gap-3 items-center justify-between p-4 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+          <div className="relative group flex-1 min-w-[220px] md:max-w-sm">
+            <Search
+              size={18}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors"
+            />
             <input
               type="text"
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-1 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
+              className="w-full h-9 pl-10 pr-4 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] text-sm text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all"
             />
           </div>
+          <div className="flex items-center gap-2 px-3 h-9 text-xs font-medium border border-[var(--color-border)] rounded-xl bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
+            <span className="text-[var(--color-foreground)] font-semibold">
+              {NoOfProducts}
+            </span>
+            items
+          </div>
         </div>
-
 
         {loading ? (
           <div className="py-12 flex justify-center">

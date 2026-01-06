@@ -107,7 +107,7 @@ const ProfilePage = () => {
             )}
 
             {/* Profile Header Card */}
-            <div className="w-full max-w-4xl rounded-3xl glass-panel shadow-lg overflow-hidden animate-fade-in-up mb-6">
+            <div className="w-full max-w-4xl rounded-2xl glass-panel shadow-lg overflow-hidden animate-fade-in-up mb-6">
                 {/* Header Image */}
                 <div className="bg-blue-600 h-32 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-20 pointer-events-none"
@@ -162,20 +162,20 @@ const ProfilePage = () => {
                     <div className={`pt-4 ${showPersonalDetails ? 'block' : 'hidden'} md:flex gap-2`}>
                         <button
                             onClick={handleLogout}
-                            className="hidden md:flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 border border-red-500/30 text-red-500 font-semibold bg-transparent hover:bg-red-500 hover:text-white active:scale-[0.98] transition-all duration-200"
+                            className="hidden md:flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 border border-red-500/30 text-red-500 font-semibold bg-transparent hover:bg-red-500 hover:text-white active:scale-[0.98] transition-all duration-200"
                         >
                             <LogOut size={18} />
                             Logout
                         </button>
                         <button
                             onClick={handleEdit}
-                            className="w-full flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] px-6 py-3.5 text-[var(--color-primary-foreground)] font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
+                            className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[var(--color-primary)] px-6 py-3.5 text-[var(--color-primary-foreground)] font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
                         >
                             <Edit2 size={18} /> Edit Profile
                         </button>
                         <button
                             onClick={() => setConfirmDelete(true)}
-                            className="hidden md:flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3.5 border border-red-500/30 text-red-500 font-semibold bg-transparent hover:bg-red-500 hover:text-white active:scale-[0.98] transition-all duration-200"
+                            className="hidden md:flex w-full items-center justify-center gap-2 rounded-2xl px-6 py-3.5 border border-red-500/30 text-red-500 font-semibold bg-transparent hover:bg-red-500 hover:text-white active:scale-[0.98] transition-all duration-200"
                         >
                             <Trash2 size={18} />
                             Delete Account
