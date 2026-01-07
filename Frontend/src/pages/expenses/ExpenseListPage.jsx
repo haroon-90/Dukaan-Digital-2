@@ -143,28 +143,28 @@ const ExpenseListPage = () => {
             <table className="w-full text-sm text-left">
               <thead className={`bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs ${filteredExpenses.length > 0 ? '' : 'hidden'}`}>
                 <tr>
-                  <th className="px-6 py-4">Title</th>
-                  <th className="px-6 py-4">Amount</th>
-                  <th className="px-6 py-4">Description</th>
-                  <th className="px-6 py-4">Created At</th>
-                  <th className="px-6 py-4 text-center">Action</th>
+                  <th className="p-4">Title</th>
+                  <th className="p-4">Amount</th>
+                  <th className="p-4">Description</th>
+                  <th className="p-4">Created At</th>
+                  <th className="p-4 text-center">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--color-border)]">
                 {filteredExpenses.length > 0 ? (
                   filteredExpenses.map((expense) => (
                     <tr key={expense._id} className="hover:bg-[var(--color-muted)] transition-colors group">
-                      <td className="px-6 py-4 font-medium text-[var(--color-foreground)]">{expense.title}</td>
-                      <td className="px-6 py-4 font-bold text-red-600 dark:text-red-400">
+                      <td className="px-4 py-2 font-medium text-[var(--color-foreground)]">{expense.title}</td>
+                      <td className="px-4 py-2 font-bold text-red-600 dark:text-red-400">
                         ₨ {expense.amount.toLocaleString()}
                       </td>
-                      <td className="px-6 py-4 text-[var(--color-muted-foreground)] max-w-xs truncate">{expense.description || "-"}</td>
-                      <td className="px-6 py-4 text-[var(--color-muted-foreground)]">{new Date(expense.createdAt).toLocaleDateString()}</td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-2 text-[var(--color-muted-foreground)] max-w-xs truncate">{expense.description || "-"}</td>
+                      <td className="px-4 py-2 text-[var(--color-muted-foreground)]">{new Date(expense.createdAt).toLocaleDateString()}</td>
+                      <td className="px-4 py-2">
                         <div className="flex justify-center transition-opacity">
                           <button
                             onClick={() => handleDelete(expense)}
-                            className="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
+                            className="p-2 bg-red-500/10 md:bg-red-500/0 text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
                             title="Delete"
                           >
                             <Trash2 size={18} />

@@ -357,7 +357,7 @@ const ProductListPage = () => {
       </div>
 
       <div className="max-w-7xl mx-auto glass-panel rounded-2xl overflow-hidden animate-fade-in-up">
-        <div className="flex flex-wrap gap-3 items-center justify-between p-4 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+        <div className="flex flex-wrap gap-3 items-center justify-between p-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
           <div className="relative group flex-1 min-w-[220px] md:max-w-sm">
             <Search
               size={18}
@@ -399,7 +399,7 @@ const ProductListPage = () => {
                     ...(isSale ? [] : ["Created At"]),
                     ...(isSale ? [] : ["Actions"]),
                   ].map((header, i) => (
-                    <th key={i} className="px-6 py-4 font-semibold tracking-wider">
+                    <th key={i} className="p-4 font-semibold tracking-wider">
                       {header.toLowerCase() === "purchase price" ? (
                         <button className="flex gap-2 items-center uppercase hover:text-[var(--color-foreground)] transition-colors" onClick={() => setprprice(!prprice)}>
                           {header}
@@ -422,16 +422,16 @@ const ProductListPage = () => {
                 ) : (
                   filteredProduct.map((p) => (
                     <tr key={p._id} className="hover:bg-[var(--color-muted)] transition-colors group">
-                      <td className="px-6 py-4 font-medium text-[var(--color-foreground)]">{p.itemname}</td>
-                      <td className="px-6 py-4 text-[var(--color-muted-foreground)]">{p.category}</td>
-                      <td className="px-6 py-4 font-bold text-emerald-600 dark:text-emerald-400">
+                      <td className="px-4 py-2 font-medium text-[var(--color-foreground)]">{p.itemname}</td>
+                      <td className="px-4 py-2 text-[var(--color-muted-foreground)]">{p.category}</td>
+                      <td className="px-4 py-2 font-bold text-emerald-600 dark:text-emerald-400">
                         {prprice ? `Rs ${p.purchasePrice.toLocaleString()}` : "•••"}
                       </td>
-                      <td className="px-6 py-4 font-bold text-[var(--color-foreground)]">Rs {p.sellingPrice.toLocaleString()}</td>
-                      <td className="px-6 py-4 font-medium text-[var(--color-muted-foreground)]">{p.quantity}</td>
-                      <td className="px-6 py-4 text-[var(--color-muted-foreground)]">{p.unit}</td>
+                      <td className="px-4 py-2 font-bold text-[var(--color-foreground)]">Rs {p.sellingPrice.toLocaleString()}</td>
+                      <td className="px-4 py-2 font-medium text-[var(--color-muted-foreground)]">{p.quantity}</td>
+                      <td className="px-4 py-2 text-[var(--color-muted-foreground)]">{p.unit}</td>
                       {isSale && (
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-2">
                           <div className="flex items-center gap-2">
                             <input
                               type="number"
@@ -452,23 +452,23 @@ const ProductListPage = () => {
                         </td>
                       )}
                       {!isSale && (
-                        <td className="px-6 py-4 text-[var(--color-muted-foreground)]">
+                        <td className="px-4 py-2 text-[var(--color-muted-foreground)]">
                           {new Date(p.createdAt).toLocaleDateString()}
                         </td>
                       )}
                       {!isSale && (
-                        <td className="px-6 py-4">
+                        <td className="px-4 py-2">
                           <div className="flex gap-2 transition-opacity">
                             <button
                               onClick={() => navigate("/products/edit/" + p._id)}
-                              className="p-2 text-blue-600 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                              className="p-2 bg-blue-500/10 md:bg-blue-500/0 text-blue-600 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
                               title="Edit"
                             >
                               <Edit2 size={16} />
                             </button>
                             <button
                               onClick={() => handleDelete(p)}
-                              className="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                              className="p-2 bg-red-500/10 md:bg-red-500/0 text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                               title="Delete"
                             >
                               <Trash2 size={16} />

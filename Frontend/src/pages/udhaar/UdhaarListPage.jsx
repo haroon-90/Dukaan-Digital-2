@@ -161,13 +161,13 @@ const UdhaarListPage = () => {
             <table className="w-full text-sm text-left">
               <thead className={`bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)] ${filteredData.length > 0 ? '' : 'hidden'}`}>
                 <tr>
-                  <th className="px-6 py-4 font-semibold">Customer Name</th>
-                  <th className="px-6 py-4 font-semibold">Contact</th>
-                  <th className="px-6 py-4 font-semibold">Amount</th>
-                  <th className="px-6 py-4 font-semibold">Reason</th>
-                  <th className="px-6 py-4 font-semibold">Status</th>
-                  <th className="px-6 py-4 font-semibold">Created At</th>
-                  <th className="px-6 py-4 font-semibold text-center">Actions</th>
+                  <th className="p-4 font-semibold">Customer Name</th>
+                  <th className="p-4 font-semibold">Contact</th>
+                  <th className="p-4 font-semibold">Amount</th>
+                  <th className="p-4 font-semibold">Reason</th>
+                  <th className="p-4 font-semibold">Status</th>
+                  <th className="p-4 font-semibold">Created At</th>
+                  <th className="p-4 font-semibold text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--color-border)]">
@@ -177,15 +177,15 @@ const UdhaarListPage = () => {
                       key={item._id}
                       className="hover:bg-[var(--color-muted)] transition-colors duration-200"
                     >
-                      <td className="px-6 py-4 font-medium text-[var(--color-foreground)]">{item.customerName}</td>
-                      <td className="px-6 py-4 text-[var(--color-muted-foreground)]">{item.contact}</td>
-                      <td className="px-6 py-4 font-semibold text-[var(--color-foreground)]">
+                      <td className="px-4 py-2 font-medium text-[var(--color-foreground)]">{item.customerName}</td>
+                      <td className="px-4 py-2 text-[var(--color-muted-foreground)]">{item.contact}</td>
+                      <td className="px-4 py-2 font-semibold text-[var(--color-foreground)]">
                         Rs {item.amount.toLocaleString()}
                       </td>
-                      <td className="px-6 py-4 text-[var(--color-muted-foreground)] max-w-xs truncate">
+                      <td className="px-4 py-2 text-[var(--color-muted-foreground)] max-w-xs truncate">
                         {item.reason || "No reason provided"}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-2">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${item.status === "paid"
                             ? "bg-emerald-500/10 text-emerald-500"
@@ -195,15 +195,15 @@ const UdhaarListPage = () => {
                           {item.status}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-[var(--color-muted-foreground)]">
+                      <td className="px-4 py-2 text-[var(--color-muted-foreground)]">
                         {new Date(item.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 py-2">
                         <div className="flex justify-center items-center gap-2">
-                          <button onClick={() => handleEdit(item)} className="p-2 rounded-lg bg-blue-500/10 text-blue-500 hover:bg-blue-500 hover:text-white transition-all" title="Edit">
+                          <button onClick={() => handleEdit(item)} className="p-2 rounded-lg bg-blue-500/10 sm:bg-blue-500/0 text-blue-500 hover:bg-blue-500 hover:text-white transition-all" title="Edit">
                             <Edit2 size={16} />
                           </button>
-                          <button onClick={() => handleDelete(item)} className="p-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all" title="Delete">
+                          <button onClick={() => handleDelete(item)} className="p-2 rounded-lg bg-red-500/10 sm:bg-red-500/0 text-red-500 hover:bg-red-500 hover:text-white transition-all" title="Delete">
                             <Trash2 size={16} />
                           </button>
                         </div>

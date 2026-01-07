@@ -14,6 +14,8 @@ const SalesListPage = () => {
   const [purchases, setPurchases] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [NoOfSales, setNoOfSales] = useState(0);
+  const [NoOfPurchases, setNoOfPurchases] = useState(0);
 
   const [showDetails, setShowDetails] = useState(false);
   const [selectedSale, setSelectedSale] = useState(null);
@@ -37,6 +39,7 @@ const SalesListPage = () => {
         return;
       }
       setSales(res.data);
+      setNoOfSales(res.data.length);
     } catch (err) {
       if (err.response?.status === 404) {
         setSales([]);
@@ -62,6 +65,7 @@ const SalesListPage = () => {
         return;
       }
       setPurchases(res.data.reverse());
+      setNoOfPurchases(res.data.length);
     } catch (err) {
       if (err.response?.status === 404) {
         setSales([]);
@@ -170,11 +174,11 @@ const SalesListPage = () => {
           <table className="w-full text-sm text-left">
             <thead className={`bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)] ${data.length > 0 ? '' : 'hidden'}`}>
               <tr>
-                <th className="px-6 py-4 font-semibold">Invoice ID</th>
-                <th className="px-6 py-4 font-semibold">{type == "sale" ? "Customer" : "Supplier"}</th>
-                <th className="px-6 py-4 font-semibold">Date</th>
-                <th className="px-6 py-4 font-semibold">Total Amount</th>
-                <th className="px-6 py-4 text-center font-semibold">Action</th>
+                <th className="p-4 font-semibold">Invoice ID</th>
+                <th className="p-4 font-semibold">{type == "sale" ? "Customer" : "Supplier"}</th>
+                <th className="p-4 font-semibold">Date</th>
+                <th className="p-4 font-semibold">Total Amount</th>
+                <th className="p-4 text-center font-semibold">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-[var(--color-border)]">
@@ -184,30 +188,28 @@ const SalesListPage = () => {
                   key={item._id}
                   className="hover:bg-[var(--color-muted)] transition-colors duration-200"
                 >
-                  <td className="px-6 py-4 font-medium text-[var(--color-foreground)]">
+                  <td className="px-4 py-2 font-medium text-[var(--color-foreground)]">
                     {item._id.slice(-6)}
                   </td>
-                  <td className="px-6 py-4 font-medium text-[var(--color-foreground)] flex items-center gap-2">
-                    {type === "sale" ? <ArrowUpRight size={14} className="text-emerald-500" /> : <ArrowDownLeft size={14} className="text-rose-500" />}
-                    {item.customerName ? item.customerName : item.suppliername}
+                  <td className="px-4 py-2 font-medium text-[var(--color-foreground)]">
+                    <div className="flex items-center gap-2">
+                      {type === "sale"
+                        ? <ArrowUpRight size={14} className="text-emerald-500" />
+                        : <ArrowDownLeft size={14} className="text-rose-500" />
+                      }
+                      {item.customerName ? item.customerName : item.suppliername}
+                    </div>
                   </td>
-                  <td className="px-6 py-4 text-[var(--color-muted-foreground)]">
+                  <td className="px-4 py-2 text-[var(--color-muted-foreground)]">
                     {new Date(item.createdAt).toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 font-semibold text-[var(--color-foreground)]">
+                  <td className="px-4 py-2 font-semibold text-[var(--color-foreground)]">
                     Rs {item.totalAmount ? item.totalAmount.toLocaleString() : item.total.toLocaleString()}
                   </td>
-                  <td className="px-6 py-4 flex justify-center gap-3">
-                    {/* <button
-                      onClick={() => handleViewDetails(item)}
-                      className="p-2 rounded-lg bg-blue-500/10 text-blue-500 hover:bg-blue-500 hover:text-white transition-all"
-                      title="View Details"
-                    >
-                      <Eye size={16} />
-                    </button> */}
+                  <td className="px-4 py-2 flex justify-center gap-3">
                     <button
                       onClick={() => handleDelete(item)}
-                      className="p-2 rounded-lg bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-all"
+                      className="p-2 rounded-lg bg-red-500/10 md:bg-red-500/0 text-red-500 hover:bg-red-500 hover:text-white transition-all"
                       title="Delete Record"
                     >
                       <Trash2 size={16} />
@@ -249,9 +251,9 @@ const SalesListPage = () => {
       </div>
 
       <div className="relative glass-panel rounded-2xl shadow-xl animate-fade-in-up">
-        <div className="text-md p-4 border-b border-[var(--color-border)] text-[var(--color-foreground)] flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center justify-center flex-wrap gap-4">
-            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-2 rounded-xl border border-[var(--color-border)]">
+        <div className="text-md p-2 border-b border-[var(--color-border)] text-[var(--color-foreground)] flex items-center justify-between flex-wrap gap-3">
+          <div className="flex items-center justify-center flex-wrap w-full lg:w-auto gap-4">
+            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-1.5 rounded-xl border border-[var(--color-border)]">
               <Calendar size={16} className="text-[var(--color-primary)]" />
               <span className="text-sm font-medium text-[var(--color-muted-foreground)]">From:</span>
               <input
@@ -261,7 +263,7 @@ const SalesListPage = () => {
                 className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
               />
             </div>
-            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-2 rounded-xl border border-[var(--color-border)]">
+            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-1.5 rounded-xl border border-[var(--color-border)]">
               <Calendar size={16} className="text-[var(--color-primary)]" />
               <span className="text-sm font-medium text-[var(--color-muted-foreground)]">To:</span>
               <input
@@ -272,14 +274,22 @@ const SalesListPage = () => {
               />
             </div>
           </div>
-          <div className="relative group flex-1 md:flex-none min-w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search ..."
-              className="pl-10 pr-4 py-1 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
-            />
+          <div className="flex justify-center gap-3 flex-wrap w-full lg:w-auto">
+            <div className="relative group flex-1 md:flex-none min-w-40">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search ..."
+                className="pl-10 pr-4 py-1 w-full md:w-60 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
+              />
+            </div>
+            <div className="flex items-center gap-2 px-3  text-xs font-medium border border-[var(--color-border)] rounded-xl bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
+              <span className="text-[var(--color-foreground)] font-semibold">
+                {type == "sale" ? NoOfSales : NoOfPurchases}
+              </span>
+              {type == "sale" ? "sales" : "purchases"}
+            </div>
           </div>
         </div>
 
