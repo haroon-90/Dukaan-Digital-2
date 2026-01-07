@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getExpense, deleteExpense } from '../../services/expenseServices.js';
-import { Trash2, Search, Banknote } from 'lucide-react';
+import { Trash2, Search, Banknote, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../loader/loader.jsx';
@@ -10,13 +10,23 @@ const ExpenseListPage = () => {
   const [expenseList, setExpenseList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
+  const [NoOfExpenses, setNoOfExpenses] = useState(0);
+
+  const formatDate = (date) => date.toISOString().split('T')[0];
+  const [startDate, setStartDate] = useState(formatDate(new Date(new Date().setMonth(new Date().getMonth(), 1))));
+  const [endDate, setEndDate] = useState(formatDate(new Date()));
 
   const fetchExpenses = async () => {
     try {
-      const res = await getExpense();
+      setLoading(true);
+      const body = {
+        startDate,
+        endDate,
+      }
+      const res = await getExpense(body);
       if (res.data && res.data.length > 0) {
         setExpenseList(res.data.reverse());
-        // toast.success("Data refreshed!");
+        setNoOfExpenses(res.data.length);
       } else {
         setExpenseList([]);
       }
@@ -30,6 +40,10 @@ const ExpenseListPage = () => {
   useEffect(() => {
     fetchExpenses();
   }, []);
+
+  useEffect(() => {
+    fetchExpenses();
+  }, [startDate, endDate]);
 
   const handleDelete = async (e) => {
     try {
@@ -74,16 +88,49 @@ const ExpenseListPage = () => {
 
       <div className="max-w-7xl mx-auto glass-panel rounded-2xl overflow-hidden animate-fade-in-up">
 
-        <div className="p-4 border-b border-[var(--color-border)]">
-          <div className="relative group flex-1 md:flex-none min-w-64">
-            <Search className="absolute left-3 top-2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
-            <input
-              type="text"
-              placeholder="Search expenses..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="pl-10 pr-4 py-1 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
-            />
+        <div className="flex flex-wrap gap-3 items-center justify-between p-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+          <div className="flex items-center justify-center flex-wrap w-full lg:w-auto gap-4">
+            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-2 py-1.5 rounded-xl border border-[var(--color-border)]">
+              <Calendar size={16} className="text-[var(--color-primary)]" />
+              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">From:</span>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
+              />
+            </div>
+            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-1.5 rounded-xl border border-[var(--color-border)]">
+              <Calendar size={16} className="text-[var(--color-primary)]" />
+              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">To:</span>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
+              />
+            </div>
+          </div>
+          <div className="flex justify-center gap-3 flex-wrap w-full lg:w-auto">
+            <div className="relative group flex-1 min-w-[220px] md:max-w-sm">
+              <Search
+                size={18}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors"
+              />
+              <input
+                type="text"
+                placeholder="Search expenses..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                className="pl-10 pr-4 py-1 w-full md:w-96 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
+              />
+            </div>
+            <div className="flex items-center gap-2 px-3  text-xs font-medium border border-[var(--color-border)] rounded-xl bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
+              <span className="text-[var(--color-foreground)] font-semibold">
+                {NoOfExpenses}
+              </span>
+              expenses
+            </div>
           </div>
         </div>
 

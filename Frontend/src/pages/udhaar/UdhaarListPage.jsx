@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getUdhaarlist, deleteUdhaar } from "../../services/udhaarServices.js";
-import { Trash2, Edit2, HandCoins, Search, Filter, Loader2 } from "lucide-react";
+import { Trash2, Edit2, HandCoins, Search, Filter, Loader2, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx"
@@ -11,13 +11,22 @@ const UdhaarListPage = () => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [loading, setloading] = useState(true);
+  const [NoOfCredits, setNoOfCredits] = useState(0);
+
+  const formatDate = (date) => date.toISOString().split('T')[0];
+  const [startDate, setStartDate] = useState(formatDate(new Date(new Date().setMonth(new Date().getMonth(), 1))));
+  const [endDate, setEndDate] = useState(formatDate(new Date()));
 
   const getUdhaar = async () => {
     try {
       setloading(true);
-      const res = await getUdhaarlist();
+      const body = {
+        startDate,
+        endDate,
+      }
+      const res = await getUdhaarlist(body);
       setUdhaarList(res.data.reverse());
-      // toast.success("Data Refreshed")
+      setNoOfCredits(res.data.length);
       setloading(false);
     } catch (err) {
       toast.error("Failed to refresh Credit record");
@@ -29,6 +38,10 @@ const UdhaarListPage = () => {
   useEffect(() => {
     getUdhaar();
   }, []);
+
+  useEffect(() => {
+    getUdhaar();
+  }, [startDate, endDate]);
 
   const handleDelete = async (e) => {
     try {
@@ -80,30 +93,62 @@ const UdhaarListPage = () => {
       </div>
 
       <div className="glass-panel shadow-xl rounded-2xl border border-[var(--color-border)] animate-fade-in-up">
-        <div className="flex flex-wrap flex-1 gap-4 items-center p-4 border-b border-[var(--color-border)]">
-          <div className="relative group flex-1 md:flex-none min-w-64">
-            <Search className="absolute left-3 top-2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
-            <input
-              type="text"
-              placeholder="Search by name or contact..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 pr-4 py-1 w-full md:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
-            />
+        <div className="flex flex-wrap flex-1 gap-2 items-center justify-between p-2 border-b border-[var(--color-border)]">
+          <div className="flex items-center justify-center flex-wrap w-full lg:w-auto gap-2">
+            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-2 py-1.5 rounded-xl border border-[var(--color-border)]">
+              <Calendar size={16} className="text-[var(--color-primary)]" />
+              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">From:</span>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
+              />
+            </div>
+            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-1.5 rounded-xl border border-[var(--color-border)]">
+              <Calendar size={16} className="text-[var(--color-primary)]" />
+              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">To:</span>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
+              />
+            </div>
+          </div>
+          <div className="flex justify-center gap-2 flex-wrap w-full lg:w-auto">
+            <div className="relative group flex-1 md:flex-none min-w-52">
+              <Search className="absolute left-3 top-2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors" size={18} />
+              <input
+                type="text"
+                placeholder="Search by name or contact..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-10 pr-4 py-1 w-full lg:w-80 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
+              />
+            </div>
+            <div className="flex items-center justify-between w-full sm:w-auto gap-2">
+              <div className="relative flex-1 md:flex-none">
+                <Filter className="absolute left-3 top-2 text-[var(--color-muted-foreground)]" size={18} />
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="pl-10 pr-8 py-1 w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] appearance-none cursor-pointer"
+                >
+                  <option value="all">All Status</option>
+                  <option value="pending">Pending</option>
+                  <option value="paid">Paid</option>
+                </select>
+              </div>
+              <div className="flex items-center gap-2 px-3 h-full text-xs font-medium border border-[var(--color-border)] rounded-xl bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
+                <span className="text-[var(--color-foreground)] font-semibold">
+                  {NoOfCredits}
+                </span>
+                credits
+              </div>
+            </div>
           </div>
 
-          <div className="relative flex-1 md:flex-none">
-            <Filter className="absolute left-3 top-2 text-[var(--color-muted-foreground)]" size={18} />
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="pl-10 pr-8 py-1 w-full bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] appearance-none cursor-pointer"
-            >
-              <option value="all">All Status</option>
-              <option value="pending">Pending</option>
-              <option value="paid">Paid</option>
-            </select>
-          </div>
         </div>
         {loading &&
           <div className="flex justify-center py-12">
