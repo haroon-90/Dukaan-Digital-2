@@ -602,7 +602,7 @@ const ProductListPage = () => {
                 <ChevronDown size={16} className={`transition-transform ${showFilters ? 'rotate-180' : ''}`} />
               </button>
               {showFilters && (
-                <div className="absolute top-full mt-2 right-0 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-xl z-10 min-w-[160px] overflow-hidden">
+                <div className="absolute top-full mt-2 left-0 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-xl z-10 min-w-[160px] overflow-hidden">
                   {categories.map((cat) => (
                     <button
                       key={cat}

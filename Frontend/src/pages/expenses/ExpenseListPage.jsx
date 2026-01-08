@@ -112,7 +112,7 @@ const ExpenseListPage = () => {
             </div>
           </div>
           <div className="flex justify-center gap-3 flex-wrap w-full lg:w-auto">
-            <div className="relative group flex-1 min-w-[220px] md:max-w-sm">
+            <div className="relative group flex-1 md:max-w-sm">
               <Search
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors"
