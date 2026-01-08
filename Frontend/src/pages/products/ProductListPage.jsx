@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getProducts, deleteProducts } from "../../services/productServices.js";
 import { createsale } from "../../services/saleService.js";
-import { Edit2, Trash2, ShoppingCart, Eye, Package, PlusCircle, Search, X, EyeOff } from "lucide-react";
+import {
+  Edit2, Trash2, ShoppingCart, Eye, Package, PlusCircle,
+  Search, X, EyeOff, Grid3x3, List, Zap, Plus, Minus,
+  Filter, ChevronDown, ShoppingBag, AlertCircle
+} from "lucide-react";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx";
 
@@ -23,9 +27,18 @@ const ProductListPage = () => {
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
   const [NoOfProducts, setNoOfProducts] = useState(0);
 
-  const filteredProduct = products.filter((item) =>
-    item.itemname.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // New states for view modes
+  const [viewMode, setViewMode] = useState('grid'); // 'grid', 'list', 'quick'
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [showFilters, setShowFilters] = useState(false);
+
+  const filteredProduct = products.filter((item) => {
+    const matchesSearch = item.itemname.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
+
+  const categories = ['all', ...new Set(products.map(p => p.category))];
 
   const handleSaleChange = (p, value) => {
     if (isSale && p.quantity < value) {
@@ -38,10 +51,15 @@ const ProductListPage = () => {
     }
   };
 
-  const handleCartAdd = (product) => {
-    const quantity = Number(saleQuantities[product._id] || 0);
+  const handleCartAdd = (product, customQty = null) => {
+    const quantity = customQty || Number(saleQuantities[product._id] || 0);
     if (quantity <= 0) {
       toast.error('Please enter quantity');
+      return;
+    }
+
+    if (product.quantity < quantity) {
+      toast.error('Stock shortage');
       return;
     }
 
@@ -81,6 +99,20 @@ const ProductListPage = () => {
     toast.success("Added to cart");
   };
 
+  const incrementQuantity = (productId) => {
+    setSaleQuantities((prev) => ({
+      ...prev,
+      [productId]: (Number(prev[productId]) || 0) + 1
+    }));
+  };
+
+  const decrementQuantity = (productId) => {
+    setSaleQuantities((prev) => ({
+      ...prev,
+      [productId]: Math.max(0, (Number(prev[productId]) || 0) - 1)
+    }));
+  };
+
   const ShowCart = () => {
     setShowSaleModal(true);
   };
@@ -113,6 +145,8 @@ const ProductListPage = () => {
       setCustomerName("");
       setShowSaleModal(false);
       setTotalBill(0);
+      setDiscount(0);
+      setTotalAfterDiscount(0);
       loadProducts();
     } catch (err) {
       toast.error("Failed to create Sale")
@@ -151,16 +185,12 @@ const ProductListPage = () => {
     const itemToRemove = cart.find((item) => item.id === id);
     if (!itemToRemove) return;
 
-    // Total Bill update karo
     setTotalBill((prev) => prev - (itemToRemove.price * itemToRemove.quantity));
-
-    // Cart update karo
     const updatedCart = cart.filter((item) => item.id !== id);
     setCart(updatedCart);
 
-    // Agar cart empty ho gaya to back page (ya modal close) kar do
     if (updatedCart.length === 0) {
-      setShowSaleModal(false)  // <-- yeh user ko previous page pe le jayega
+      setShowSaleModal(false)
     }
   };
 
@@ -174,11 +204,9 @@ const ProductListPage = () => {
   const handleTotalAfterDiscountChange = (e) => {
     const value = Number(e.target.value) || 0;
     setTotalAfterDiscount(value);
-    const calculatedDiscount =
-      ((TotalBill - value) / TotalBill) * 100;
+    const calculatedDiscount = ((TotalBill - value) / TotalBill) * 100;
     setDiscount(Number(calculatedDiscount));
   };
-
 
   useEffect(() => {
     if (location.pathname === "/products") {
@@ -189,8 +217,187 @@ const ProductListPage = () => {
     loadProducts();
   }, [location]);
 
+  // Grid Card Component
+  const ProductCard = ({ product }) => {
+    const quantity = saleQuantities[product._id] || 0;
+    const isLowStock = product.quantity < 10;
+
+    return (
+      <div className="group relative bg-[var(--color-surface)] rounded-2xl p-4 border border-[var(--color-border)] hover:shadow-xl hover:shadow-[var(--color-primary)]/10 transition-all duration-300 hover:-translate-y-1">
+        {/* Stock Badge */}
+        {isLowStock && (
+          <div className="absolute top-2 right-2 z-10">
+            <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold bg-red-500 text-white rounded-full">
+              <AlertCircle size={12} />
+              Low Stock
+            </span>
+          </div>
+        )}
+
+        {/* Product Image Placeholder */}
+        {/* <div className="relative w-full h-40 bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-primary)]/5 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+          <Package size={48} className="text-[var(--color-primary)] opacity-30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+        </div> */}
+
+        {/* Product Info */}
+        <div className="space-y-2">
+          <div>
+            <h3 className="font-bold text-[var(--color-foreground)] text-lg truncate group-hover:text-[var(--color-primary)] transition-colors">
+              {product.itemname}
+            </h3>
+            <p className="text-xs text-[var(--color-muted-foreground)] font-medium">
+              {product.category}
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-2xl font-bold text-[var(--color-foreground)]">
+                Rs {product.sellingPrice.toLocaleString()}
+              </p>
+              {prprice && (
+                <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+                  Cost: Rs {product.purchasePrice.toLocaleString()}
+                </p>
+              )}
+            </div>
+            <div className="text-right">
+              <p className="text-sm font-bold text-[var(--color-muted-foreground)]">
+                {product.quantity} {product.unit}
+              </p>
+              <p className="text-xs text-[var(--color-muted-foreground)]">
+                in stock
+              </p>
+            </div>
+          </div>
+
+          {/* Sale Actions */}
+          {isSale && (
+            <div className="pt-3 border-t border-[var(--color-border)] space-y-2">
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => decrementQuantity(product._id)}
+                  className="p-2 rounded-lg bg-[var(--color-muted)] hover:bg-[var(--color-border)] transition-colors"
+                >
+                  <Minus size={16} />
+                </button>
+                <input
+                  type="number"
+                  min="0"
+                  value={quantity}
+                  onChange={(e) => handleSaleChange(product, e.target.value)}
+                  className="min-w-12 text-center px-3 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] focus:ring-2 focus:ring-[var(--color-primary)] outline-none font-bold"
+                />
+                <button
+                  onClick={() => incrementQuantity(product._id)}
+                  className="p-2 rounded-lg bg-[var(--color-muted)] hover:bg-[var(--color-border)] transition-colors"
+                >
+                  <Plus size={16} />
+                </button>
+              </div>
+              <button
+                onClick={() => handleCartAdd(product)}
+                disabled={quantity <= 0}
+                className="w-full py-2.5 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-[var(--color-primary)]/20"
+              >
+                <ShoppingCart size={18} />
+                Add to Cart
+              </button>
+            </div>
+          )}
+
+          {/* Product Actions */}
+          {!isSale && (
+            <div className="flex gap-2 pt-3 border-t border-[var(--color-border)]">
+              <button
+                onClick={() => navigate("/products/edit/" + product._id)}
+                className="flex-1 py-2 bg-blue-500/10 text-blue-600 rounded-lg hover:bg-blue-500/20 transition-colors font-medium flex items-center justify-center gap-2"
+              >
+                <Edit2 size={16} />
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(product)}
+                className="flex-1 py-2 bg-red-500/10 text-red-600 rounded-lg hover:bg-red-500/20 transition-colors font-medium flex items-center justify-center gap-2"
+              >
+                <Trash2 size={16} />
+                Delete
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
+  // Quick Sale Card Component
+  const QuickSaleCard = ({ product }) => {
+    const quantity = saleQuantities[product._id] || 0;
+
+    return (
+      <div className="group bg-[var(--color-surface)] rounded-xl p-3 border border-[var(--color-border)] hover:shadow-lg transition-all duration-200 hover:border-[var(--color-primary)]">
+        <div className="flex items-center gap-3">
+          {/* Icon */}
+          <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 hidden md:flex items-center justify-center flex-shrink-0">
+            <Package size={24} className="text-[var(--color-primary)]" />
+          </div>
+
+          {/* Info */}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-[var(--color-foreground)] truncate">
+              {product.itemname}
+            </h3>
+            <div className="flex items-center gap-2 text-sm">
+              <span className="font-bold text-[var(--color-primary)]">
+                Rs {product.sellingPrice.toLocaleString()}
+              </span>
+              <span className="text-[var(--color-muted-foreground)]">•</span>
+              <span className="text-[var(--color-muted-foreground)]">
+                {product.quantity} {product.unit}
+              </span>
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex items-center gap-1 bg-[var(--color-muted)] rounded-lg p-1">
+              <button
+                onClick={() => decrementQuantity(product._id)}
+                className="p-1 hover:bg-[var(--color-background)] rounded transition-colors"
+              >
+                <Minus size={14} />
+              </button>
+              <input
+                type="number"
+                min="0"
+                value={quantity}
+                onChange={(e) => handleSaleChange(product, e.target.value)}
+                className="w-12 text-center bg-transparent font-bold text-sm outline-none"
+              />
+              <button
+                onClick={() => incrementQuantity(product._id)}
+                className="p-1 hover:bg-[var(--color-background)] rounded transition-colors"
+              >
+                <Plus size={14} />
+              </button>
+            </div>
+            <button
+              onClick={() => handleCartAdd(product)}
+              disabled={quantity <= 0}
+              className="p-2 rounded-lg bg-[var(--color-primary)] text-[var(--color-primary-foreground)] hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <ShoppingCart size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-2 md:p-4 transition-colors duration-300">
+      {/* Sale Modal */}
       {showSaleModal && (
         <div
           onClick={() => setShowSaleModal(false)}
@@ -209,17 +416,12 @@ const ProductListPage = () => {
               <h2 className="text-2xl font-bold text-blue-700 tracking-wide">
                 {JSON.parse(localStorage.getItem("user"))?.shopname}
               </h2>
-              <p className="text-sm font-semibold text-black mt-1">
-                Sales Invoice
-              </p>
-              <p className="text-xs text-black mt-2">
-                Date: {new Date().toLocaleDateString()}
-              </p>
+              <p className="text-sm font-semibold text-black mt-1">Sales Invoice</p>
+              <p className="text-xs text-black mt-2">Date: {new Date().toLocaleDateString()}</p>
             </div>
+
             <div className="mb-6 flex flex-col sm:flex-row items-baseline gap-2">
-              <p className="text-sm font-semibold text-black whitespace-nowrap">
-                Customer:
-              </p>
+              <p className="text-sm font-semibold text-black whitespace-nowrap">Customer:</p>
               <input
                 type="text"
                 value={customerName}
@@ -228,6 +430,7 @@ const ProductListPage = () => {
                 className="flex-1 w-full px-3 py-1 border-b border-[var(--color-border)] bg-transparent outline-none text-sm focus:border-[var(--color-primary)] transition placeholder:text-black"
               />
             </div>
+
             {cart.length === 0 ? (
               <p className="text-black text-center py-6">No items added to the cart.</p>
             ) : (
@@ -241,14 +444,10 @@ const ProductListPage = () => {
                 </div>
                 {cart.map((item) => (
                   <div key={item.id} className="flex justify-between px-0.5 text-sm py-2 border-b border-dashed border-[var(--color-border)] print:border-black">
-                    <span className="flex-1 font-medium text-wrap text-black">
-                      {item.productname}
-                    </span>
+                    <span className="flex-1 font-medium text-wrap text-black">{item.productname}</span>
                     <span className="w-16 pr-1 text-right break-words">{item.quantity} {item.unit}</span>
                     <span className="w-20 pr-1 text-right">Rs {item.price.toLocaleString()}</span>
-                    <span className="w-20 pr-1 text-right font-semibold">
-                      Rs {(item.price * item.quantity).toLocaleString()}
-                    </span>
+                    <span className="w-20 pr-1 text-right font-semibold">Rs {(item.price * item.quantity).toLocaleString()}</span>
                     <button className="w-8 flex justify-end text-red-500 hover:text-red-600 cursor-pointer print:hidden"
                       onClick={() => handleCartDelete(item.id)}>
                       <Trash2 size={16} />
@@ -257,13 +456,11 @@ const ProductListPage = () => {
                 ))}
               </div>
             )}
-            <div className="space-y-3 mt-2">
 
+            <div className="space-y-3 mt-2">
               <div className="flex justify-between font-bold text-xl">
                 <span>Total</span>
-                <span className="text-black">
-                  Rs {TotalBill.toLocaleString()}
-                </span>
+                <span className="text-black">Rs {TotalBill.toLocaleString()}</span>
               </div>
               <div className="border-t border-dashed border-[var(--color-border)] my-4 print:border-black"></div>
 
@@ -292,12 +489,12 @@ const ProductListPage = () => {
                   />
                 </div>
               </div>
-
             </div>
 
             <div className="text-center text-xs text-black mt-4 pt-2 border-t border-dashed border-[var(--color-border)] print:border-black">
               <p>Best of luck!</p>
             </div>
+
             <div className="flex justify-center mt-6 print:hidden">
               <button
                 onClick={confirmSaleOrPurchase}
@@ -311,54 +508,74 @@ const ProductListPage = () => {
         </div>
       )}
 
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
         <div>
-          {isSale ?
-            <>
-              <div className="flex items-center gap-3">
-                <ShoppingCart size={28} className="text-[var(--color-primary)]" />
-                <div className="flex flex-col">
-                  <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Sales</h1>
-                  <p className="text-[var(--color-muted-foreground)] text-sm">Manage your sales.</p>
-                </div>
+          {isSale ? (
+            <div className="flex items-center gap-3">
+              <ShoppingCart size={28} className="text-[var(--color-primary)]" />
+              <div className="flex flex-col">
+                <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Point of Sales</h1>
+                <p className="text-[var(--color-muted-foreground)] text-sm">Manage your sales.</p>
               </div>
-            </>
-            :
-            <>
-              <div className="flex items-center gap-3">
-                <Package size={28} className="text-[var(--color-primary)]" />
-                <div className="flex flex-col">
-                  <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Products</h1>
-                  <p className="text-[var(--color-muted-foreground)] text-sm">Manage your products.</p>
-                </div>
+            </div>
+          ) : (
+            <div className="flex items-center gap-3">
+              <Package size={28} className="text-[var(--color-primary)]" />
+              <div className="flex flex-col">
+                <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Inventory</h1>
+                <p className="text-[var(--color-muted-foreground)] text-sm">Manage your products.</p>
               </div>
-            </>
-
-          }
+            </div>
+          )}
         </div>
-        {cart.length > 0 && (
-          <button
-            onClick={ShowCart}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-foreground)] text-[var(--color-background)] px-4 py-2.5 text-sm font-bold shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
-          >
-            <ShoppingCart size={18} /> Sale ({cart.length})
-          </button>
-        )}
-        {!isSale &&
-          <button
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
-            onClick={() => {
-              navigate("/products/new");
-            }}>
-            <PlusCircle size={18} />
-            Add Product
-          </button>
-        }
+
+        <div className="flex items-center gap-2 flex-wrap">
+          {isSale && (
+            <button
+              onClick={ShowCart}
+              disabled={cart.length === 0}
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-foreground)] disabled:opacity-50 disabled:cursor-not-allowed text-[var(--color-background)] px-4 py-2.5 text-sm font-bold shadow-lg hover:opacity-90 active:scale-[0.98] transition-all"
+            >
+              <ShoppingBag size={18} />
+              Cart ({cart.length})
+            </button>
+          )}
+          {!isSale && (
+            <button
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
+              onClick={() => navigate("/products/new")}
+            >
+              <PlusCircle size={18} />
+              Add Product
+            </button>
+          )}
+          {!isSale && (
+            <button
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
+              onClick={() => navigate("/sales/new")}
+            >
+              <ShoppingCart size={18} />
+              POS
+            </button>
+          )}
+          {isSale && (
+            <button
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
+              onClick={() => navigate("/products")}
+            >
+              <Package size={18} />
+              Products
+            </button>
+          )}
+        </div>
       </div>
 
-      <div className="max-w-7xl mx-auto glass-panel rounded-2xl overflow-hidden animate-fade-in-up">
-        <div className="flex flex-wrap gap-3 items-center justify-between p-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
-          <div className="relative group flex-1 min-w-[220px] md:max-w-sm">
+      {/* Filters & Search Bar */}
+      <div className="max-w-7xl mx-auto glass-panel rounded-2xl p-4 mb-4 animate-fade-in">
+        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+          {/* Search */}
+          <div className="relative group flex-1 w-full md:max-w-md">
             <Search
               size={18}
               className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-muted-foreground)] group-focus-within:text-[var(--color-primary)] transition-colors"
@@ -368,120 +585,222 @@ const ProductListPage = () => {
               placeholder="Search products..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full h-9 pl-10 pr-4 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] text-sm text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all"
+              className="w-full h-11 pl-10 pr-4 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] text-sm text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all"
             />
           </div>
-          <div className="flex items-center gap-2 px-3 h-9 text-xs font-medium border border-[var(--color-border)] rounded-xl bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
-            <span className="text-[var(--color-foreground)] font-semibold">
-              {NoOfProducts}
-            </span>
-            items
+
+          {/* View Mode & Filters */}
+          <div className="flex items-center gap-1 flex-wrap">
+            {/* Category Filter */}
+            <div className="relative">
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="flex items-center gap-2 px-4 h-11 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-colors text-sm font-medium"
+              >
+                <Filter size={16} />
+                {selectedCategory === 'all' ? 'All' : selectedCategory}
+                <ChevronDown size={16} className={`transition-transform ${showFilters ? 'rotate-180' : ''}`} />
+              </button>
+              {showFilters && (
+                <div className="absolute top-full mt-2 right-0 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl shadow-xl z-10 min-w-[160px] overflow-hidden">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => {
+                        setSelectedCategory(cat);
+                        setShowFilters(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-sm hover:bg-[var(--color-muted)] transition-colors ${selectedCategory === cat ? 'bg-[var(--color-primary)] text-[var(--color-primary-foreground)] font-bold' : ''
+                        }`}
+                    >
+                      {cat === 'all' ? 'All Categories' : cat}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* View Mode Buttons */}
+            {isSale && (
+              <div className="flex items-center gap-1 p-1 rounded-xl bg-[var(--color-surface)] border border-[var(--color-border)]">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`p-2 rounded-lg transition-all ${viewMode === 'grid'
+                    ? 'bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-lg'
+                    : 'hover:bg-[var(--color-muted)]'
+                    }`}
+                  title="Grid View"
+                >
+                  <Grid3x3 size={18} />
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`p-2 rounded-lg transition-all ${viewMode === 'list'
+                    ? 'bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-lg'
+                    : 'hover:bg-[var(--color-muted)]'
+                    }`}
+                  title="List View"
+                >
+                  <List size={18} />
+                </button>
+                <button
+                  onClick={() => setViewMode('quick')}
+                  className={`p-2 rounded-lg transition-all ${viewMode === 'quick'
+                    ? 'bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-lg'
+                    : 'hover:bg-[var(--color-muted)]'
+                    }`}
+                  title="Quick Sale"
+                >
+                  <Zap size={18} />
+                </button>
+              </div>
+            )}
+
+            {/* Product Count */}
+            <div className="flex items-center gap-2 px-4 h-11 text-sm font-medium border border-[var(--color-border)] rounded-xl bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
+              <span className="text-[var(--color-foreground)] font-bold">
+                {filteredProduct.length}
+              </span>
+              / {NoOfProducts} items
+            </div>
           </div>
         </div>
+      </div>
 
+      {/* Products Display */}
+      <div className="max-w-7xl mx-auto animate-fade-in-up">
         {loading ? (
           <div className="py-12 flex justify-center">
             <Loader />
           </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs">
-                <tr>
-                  {[
-                    "Item Name",
-                    "Category",
-                    "Purchase Price",
-                    "Selling Price",
-                    "Quantity",
-                    "Unit",
-                    ...(isSale ? ["Sale"] : []),
-                    ...(isSale ? [] : ["Created At"]),
-                    ...(isSale ? [] : ["Actions"]),
-                  ].map((header, i) => (
-                    <th key={i} className="p-4 font-semibold tracking-wider">
-                      {header.toLowerCase() === "purchase price" ? (
-                        <button className="flex gap-2 items-center uppercase hover:text-[var(--color-foreground)] transition-colors" onClick={() => setprprice(!prprice)}>
-                          {header}
-                          {prprice ? <EyeOff size={14} /> : <Eye size={14} />}
-                        </button>
-                      ) : (
-                        header
-                      )}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[var(--color-border)]">
-                {filteredProduct.length === 0 ? (
-                  <tr>
-                    <td colSpan={9} className="px-6 py-12 text-center text-[var(--color-muted-foreground)]">
-                      {searchTerm ? "No products found matching your search" : "No products available"}
-                    </td>
-                  </tr>
-                ) : (
-                  filteredProduct.map((p) => (
-                    <tr key={p._id} className="hover:bg-[var(--color-muted)] transition-colors group">
-                      <td className="px-4 py-2 font-medium text-[var(--color-foreground)]">{p.itemname}</td>
-                      <td className="px-4 py-2 text-[var(--color-muted-foreground)]">{p.category}</td>
-                      <td className="px-4 py-2 font-bold text-emerald-600 dark:text-emerald-400">
-                        {prprice ? `Rs ${p.purchasePrice.toLocaleString()}` : "•••"}
-                      </td>
-                      <td className="px-4 py-2 font-bold text-[var(--color-foreground)]">Rs {p.sellingPrice.toLocaleString()}</td>
-                      <td className="px-4 py-2 font-medium text-[var(--color-muted-foreground)]">{p.quantity}</td>
-                      <td className="px-4 py-2 text-[var(--color-muted-foreground)]">{p.unit}</td>
-                      {isSale && (
-                        <td className="px-4 py-2">
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="number"
-                              min="1"
-                              placeholder="Qty"
-                              value={saleQuantities[p._id] || ""}
-                              onChange={(e) => handleSaleChange(p, e.target.value)}
-                              className="w-20 px-3 py-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] focus:ring-2 focus:ring-[var(--color-primary)] outline-none text-sm transition-all"
-                            />
-                            <button
-                              onClick={() => handleCartAdd(p)}
-                              className="p-2 rounded-lg bg-[var(--color-primary)] text-[var(--color-primary-foreground)] hover:brightness-110 shadow-md transition-all active:scale-95"
-                              title="Add to Sale"
-                            >
-                              <ShoppingCart size={16} />
-                            </button>
-                          </div>
-                        </td>
-                      )}
-                      {!isSale && (
-                        <td className="px-4 py-2 text-[var(--color-muted-foreground)]">
-                          {new Date(p.createdAt).toLocaleDateString()}
-                        </td>
-                      )}
-                      {!isSale && (
-                        <td className="px-4 py-2">
-                          <div className="flex gap-2 transition-opacity">
-                            <button
-                              onClick={() => navigate("/products/edit/" + p._id)}
-                              className="p-2 bg-blue-500/10 md:bg-blue-500/0 text-blue-600 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
-                              title="Edit"
-                            >
-                              <Edit2 size={16} />
-                            </button>
-                            <button
-                              onClick={() => handleDelete(p)}
-                              className="p-2 bg-red-500/10 md:bg-red-500/0 text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                              title="Delete"
-                            >
-                              <Trash2 size={16} />
-                            </button>
-                          </div>
-                        </td>
-                      )}
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+        ) : filteredProduct.length === 0 ? (
+          <div className="glass-panel rounded-2xl p-12 text-center">
+            <Package size={64} className="mx-auto text-[var(--color-muted-foreground)] opacity-50 mb-4" />
+            <h3 className="text-xl font-bold text-[var(--color-foreground)] mb-2">
+              No products found
+            </h3>
+            <p className="text-[var(--color-muted-foreground)]">
+              {searchTerm || selectedCategory !== 'all'
+                ? "Try adjusting your filters or search term"
+                : "Start by adding your first product"}
+            </p>
           </div>
+        ) : (
+          <>
+            {/* Grid View */}
+            {(viewMode === 'grid' && isSale) && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                {filteredProduct.map((product) => (
+                  <ProductCard key={product._id} product={product} />
+                ))}
+              </div>
+            )}
+
+            {/* Quick Sale View */}
+            {(viewMode === 'quick' && isSale) && (
+              <div className="glass-panel rounded-2xl p-4 space-y-3">
+                {filteredProduct.map((product) => (
+                  <QuickSaleCard key={product._id} product={product} />
+                ))}
+              </div>
+            )}
+
+            {/* List/Table View */}
+            {(viewMode === 'list' || !isSale) && (
+              <div className="glass-panel rounded-2xl overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-left">
+                    <thead className="bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)] font-medium uppercase text-xs">
+                      <tr>
+                        {[
+                          "Item Name",
+                          "Category",
+                          "Purchase Price",
+                          "Selling Price",
+                          "Quantity",
+                          "Unit",
+                          ...(isSale ? ["Sale"] : []),
+                          ...(isSale ? [] : ["Created At"]),
+                          ...(isSale ? [] : ["Actions"]),
+                        ].map((header, i) => (
+                          <th key={i} className="p-4 font-semibold tracking-wider">
+                            {header.toLowerCase() === "purchase price" ? (
+                              <button className="flex gap-2 items-center uppercase hover:text-[var(--color-foreground)] transition-colors" onClick={() => setprprice(!prprice)}>
+                                {header}
+                                {prprice ? <EyeOff size={14} /> : <Eye size={14} />}
+                              </button>
+                            ) : (
+                              header
+                            )}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[var(--color-border)]">
+                      {filteredProduct.map((p) => (
+                        <tr key={p._id} className="hover:bg-[var(--color-muted)] transition-colors group">
+                          <td className="px-4 py-3 font-medium text-[var(--color-foreground)]">{p.itemname}</td>
+                          <td className="px-4 py-3 text-[var(--color-muted-foreground)]">{p.category}</td>
+                          <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">
+                            {prprice ? `Rs ${p.purchasePrice.toLocaleString()}` : "•••"}
+                          </td>
+                          <td className="px-4 py-3 font-bold text-[var(--color-foreground)]">Rs {p.sellingPrice.toLocaleString()}</td>
+                          <td className="px-4 py-3 font-medium text-[var(--color-muted-foreground)]">{p.quantity}</td>
+                          <td className="px-4 py-3 text-[var(--color-muted-foreground)]">{p.unit}</td>
+                          {isSale && (
+                            <td className="px-4 py-3">
+                              <div className="flex items-center gap-2">
+                                <input
+                                  type="number"
+                                  min="1"
+                                  placeholder="Qty"
+                                  value={saleQuantities[p._id] || ""}
+                                  onChange={(e) => handleSaleChange(p, e.target.value)}
+                                  className="w-20 px-3 py-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] focus:ring-2 focus:ring-[var(--color-primary)] outline-none text-sm transition-all"
+                                />
+                                <button
+                                  onClick={() => handleCartAdd(p)}
+                                  className="p-2 rounded-lg bg-[var(--color-primary)] text-[var(--color-primary-foreground)] hover:brightness-110 shadow-md transition-all active:scale-95"
+                                  title="Add to Sale"
+                                >
+                                  <ShoppingCart size={16} />
+                                </button>
+                              </div>
+                            </td>
+                          )}
+                          {!isSale && (
+                            <td className="px-4 py-3 text-[var(--color-muted-foreground)]">
+                              {new Date(p.createdAt).toLocaleDateString()}
+                            </td>
+                          )}
+                          {!isSale && (
+                            <td className="px-4 py-3">
+                              <div className="flex gap-2 transition-opacity">
+                                <button
+                                  onClick={() => navigate("/products/edit/" + p._id)}
+                                  className="p-2 bg-blue-500/10 md:bg-blue-500/0 text-blue-600 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
+                                  title="Edit"
+                                >
+                                  <Edit2 size={16} />
+                                </button>
+                                <button
+                                  onClick={() => handleDelete(p)}
+                                  className="p-2 bg-red-500/10 md:bg-red-500/0 text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                                  title="Delete"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              </div>
+                            </td>
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
