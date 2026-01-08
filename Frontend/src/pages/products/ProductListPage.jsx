@@ -5,7 +5,8 @@ import { createsale } from "../../services/saleService.js";
 import {
   Edit2, Trash2, ShoppingCart, Eye, Package, PlusCircle,
   Search, X, EyeOff, Grid3x3, List, Zap, Plus, Minus,
-  Filter, ChevronDown, ShoppingBag, AlertCircle
+  Filter, ChevronDown, ShoppingBag, AlertCircle, AlertOctagonIcon,
+  MessageCircleWarning
 } from "lucide-react";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx";
@@ -220,16 +221,16 @@ const ProductListPage = () => {
   // Grid Card Component
   const ProductCard = ({ product }) => {
     const quantity = saleQuantities[product._id] || 0;
-    const isLowStock = product.quantity < 10;
+    const isLowStock = product.quantity < 3;
 
     return (
       <div className="group relative bg-[var(--color-surface)] rounded-2xl p-4 border border-[var(--color-border)] hover:shadow-xl hover:shadow-[var(--color-primary)]/10 transition-all duration-300 hover:-translate-y-1">
         {/* Stock Badge */}
         {isLowStock && (
-          <div className="absolute top-2 right-2 z-10">
+          <div className="absolute group top-2 right-2 z-10">
             <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold bg-red-500 text-white rounded-full">
-              <AlertCircle size={12} />
-              Low Stock
+              <MessageCircleWarning size={12} />
+              <span className="text-xs font-medium hidden group-hover:block">Low Stock</span>
             </span>
           </div>
         )}
@@ -253,14 +254,14 @@ const ProductListPage = () => {
 
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-2xl font-bold text-[var(--color-foreground)]">
+              <p className="text-xl font-bold text-[var(--color-foreground)]">
                 Rs {product.sellingPrice.toLocaleString()}
               </p>
-              {prprice && (
+              {/* {product.purchasePrice && (
                 <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">
                   Cost: Rs {product.purchasePrice.toLocaleString()}
                 </p>
-              )}
+              )} */}
             </div>
             <div className="text-right">
               <p className="text-sm font-bold text-[var(--color-muted-foreground)]">
@@ -278,7 +279,7 @@ const ProductListPage = () => {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => decrementQuantity(product._id)}
-                  className="p-2 rounded-lg bg-[var(--color-muted)] hover:bg-[var(--color-border)] transition-colors"
+                  className="p-2 py-3 rounded-lg bg-[var(--color-muted)] hover:bg-[var(--color-border)] transition-colors"
                 >
                   <Minus size={16} />
                 </button>
@@ -287,11 +288,11 @@ const ProductListPage = () => {
                   min="0"
                   value={quantity}
                   onChange={(e) => handleSaleChange(product, e.target.value)}
-                  className="min-w-12 text-center px-3 py-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] focus:ring-2 focus:ring-[var(--color-primary)] outline-none font-bold"
+                  className="min-w-12 text-center p-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] focus:ring-2 focus:ring-[var(--color-primary)] outline-none font-bold"
                 />
                 <button
                   onClick={() => incrementQuantity(product._id)}
-                  className="p-2 rounded-lg bg-[var(--color-muted)] hover:bg-[var(--color-border)] transition-colors"
+                  className="p-2 py-3 rounded-lg bg-[var(--color-muted)] hover:bg-[var(--color-border)] transition-colors"
                 >
                   <Plus size={16} />
                 </button>
