@@ -11,7 +11,7 @@ const Navbar = () => {
     const shopName = user?.shopname;
 
     return (
-        <nav className="sticky top-0 z-50 border-b border-[var(--glass-border)] shadow-[var(--glass-shadow)] transition-transform duration-300">
+        <nav className="sticky top-0 z-50 transition-transform duration-300">
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     <div className="flex items-center gap-4">

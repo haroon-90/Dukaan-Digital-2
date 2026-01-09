@@ -30,7 +30,7 @@ const AdminSidebar = ({ toggleSidebar }) => {
     };
 
     return (
-        <aside className="group md:w-20 md:hover:w-64 w-64 h-full bg-[var(--color-surface)] border-r border-[var(--color-border)] flex flex-col p-4 transition-all duration-300 z-40">
+        <aside className="group md:w-20 md:hover:w-64 w-64 h-full border-r border-[var(--color-border)] flex flex-col p-4 transition-all duration-300 z-40">
             <nav className="flex-1 space-y-1">
                 {menuItems.map((item, index) => {
                     const active = isActive(item.path);
@@ -42,7 +42,7 @@ const AdminSidebar = ({ toggleSidebar }) => {
                                     relative flex items-center gap-3 p-3 w-full text-left rounded-xl transition-all duration-200 outline-none
                                     ${active
                                         ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-md"
-                                        : "text-[var(--color-muted-foreground)] hover:bg-[var(--color-muted)] hover:text-[var(--color-foreground)]"
+                                        : "text-[var(--color-muted-foreground)] hover:bg-[var(--color-surface)] hover:text-[var(--color-foreground)]"
                                     }
                                 `}
                             >
@@ -65,7 +65,7 @@ const AdminSidebar = ({ toggleSidebar }) => {
                         flex items-center gap-3 p-3 w-full text-left rounded-xl transition-all duration-200
                         ${isActive("/adminprofile")
                             ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] shadow-md"
-                            : "text-[var(--color-muted-foreground)] hover:bg-[var(--color-muted)] hover:text-[var(--color-foreground)]"
+                            : "text-[var(--color-muted-foreground)] hover:bg-[var(--color-surface)] hover:text-[var(--color-foreground)]"
                         }
                     `}
                 >

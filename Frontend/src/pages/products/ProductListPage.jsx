@@ -510,7 +510,7 @@ const ProductListPage = () => {
       )}
 
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between gap-4 mb-6 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
+      <div className="flex flex-col md:flex-row justify-between gap-4 mb-3 w-full glass-panel p-4 rounded-2xl animate-fade-in-down">
         <div>
           {isSale ? (
             <div className="flex items-center gap-3">

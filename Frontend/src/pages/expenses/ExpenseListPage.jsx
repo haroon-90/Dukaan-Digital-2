@@ -25,7 +25,7 @@ const ExpenseListPage = () => {
       }
       const res = await getExpense(body);
       if (res.data && res.data.length > 0) {
-        setExpenseList(res.data.reverse());
+        setExpenseList(res.data);
         setNoOfExpenses(res.data.length);
       } else {
         setExpenseList([]);

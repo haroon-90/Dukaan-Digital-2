@@ -8,7 +8,7 @@ import {
     ResponsiveContainer,
     CartesianGrid
 } from "recharts";
-import { ShoppingCart, HandCoins, TrendingUp , Banknote, MessageCircleWarning, Eye, EyeOff, CheckCircle2, LayoutDashboard } from "lucide-react";
+import { ShoppingCart, HandCoins, TrendingUp, Banknote, MessageCircleWarning, Eye, EyeOff, CheckCircle2, LayoutDashboard } from "lucide-react";
 import { getDashboard } from "../../services/dashboardServices.js";
 import Loader from "../loader/loader";
 import toast from "react-hot-toast";
@@ -18,14 +18,14 @@ const Card = ({ children, className = "" }) => (
 );
 
 const CardContent = ({ children, className = "" }) => (
-    <div className={`p-6 ${className}`}>{children}</div>
+    <div className={`p-4 ${className}`}>{children}</div>
 );
 
 const StatCard = ({ title, value, icon: Icon, colorClass, delay }) => (
     <Card className={`animate-fade-in-up ${colorClass}`} style={{ animationDelay: `${delay}ms` }}>
         <CardContent className="h-full flex flex-col justify-between relative overflow-hidden group">
             <div className={`absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity transform group-hover:scale-110 duration-500`}>
-                <Icon size={80} />
+                <Icon size={60} />
             </div>
 
             <div className="relative z-10 flex justify-between items-start">
@@ -67,7 +67,7 @@ const Dashboard = () => {
     return (
         <div className="space-y-2 md:space-y-6 min-h-[calc(100vh-15rem)]">
             {/* Header */}
-            <div className="flex flex-row flex-wrap justify-between items-center p-4 border border-[var(--color-border)] shadow-sm rounded-2xl bg-[var(--color-surface)] md:gap-4 gap-2">
+            <div className="relative flex flex-row flex-wrap justify-between items-center p-4 border border-[var(--color-border)] shadow-sm rounded-2xl bg-[var(--color-surface)] md:gap-4 gap-2">
                 <div className="flex items-center gap-3">
                     <LayoutDashboard size={28} className="text-[var(--color-primary)]" />
                     <div className="flex flex-col">
@@ -76,10 +76,10 @@ const Dashboard = () => {
                     </div>
                 </div>
 
-                <div className="flex items-center gap-3 w-auto justify-end">
+                <div className="absolute top-1 md:top-auto right-1 flex items-center gap-3 w-auto justify-end">
                     <button
                         onClick={() => setishide(!ishide)}
-                        className="flex items-center gap-2 px-2 md:px-4 py-2 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:border-[var(--color-muted-foreground)] transition-all"
+                        className="flex items-center gap-2 px-2 md:px-4 py-2 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:border-[var(--color-muted-foreground)] transition-all"
                     >
                         {ishide ? <EyeOff size={18} /> : <Eye size={18} />}
                         <span className="text-sm font-medium hidden md:block">{ishide ? "Hidden" : "Visible"}</span>

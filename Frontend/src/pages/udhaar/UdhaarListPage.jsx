@@ -25,7 +25,7 @@ const UdhaarListPage = () => {
         endDate,
       }
       const res = await getUdhaarlist(body);
-      setUdhaarList(res.data.reverse());
+      setUdhaarList(res.data);
       setNoOfCredits(res.data.length);
       setloading(false);
     } catch (err) {
