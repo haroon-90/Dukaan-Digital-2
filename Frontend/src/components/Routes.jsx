@@ -2,6 +2,9 @@
 import { Routes, Route } from "react-router-dom"
 import ProtectedRoute from "./ProtectedRoute.jsx"
 
+// Landing Page
+import Landingpage from "../pages/Landingpage/landingpage.jsx"
+
 // Layouts
 import DashboardLayout from "./layout/DashboardLayout.jsx"
 import AuthLayout from "./layout/AuthLayout.jsx"
@@ -69,9 +72,8 @@ export default function AppRouter() {
 
       {/* Auth Layout Routes */}
       <Route element={<AuthLayout />}>
-        <Route path="/" element={user?.role === "manager" ? <Navigate to="/manager" replace /> : <Navigate to="/admin" replace />} />
-        {/* <Route path="/" element={<ProtectedRoute role="manager" />} /> */}
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={!user ? <Landingpage /> : (user?.role === "manager" ? <Navigate to="/manager" replace /> : <Navigate to="/admin" replace />)} />
+        <Route path="/login" element={!user ? <LoginPage /> : (user?.role === "manager" ? <Navigate to="/manager" replace /> : <Navigate to="/admin" replace />)} />
       </Route>
 
       {/* Auth Layout Routes */}

@@ -17,7 +17,7 @@ const AboutUs = () => {
           </p>
         </div>
 
-        <section>
+        <section id="story">
           <h2 className="text-2xl font-semibold text-[var(--color-primary)] mb-4 flex items-center gap-2">
             Our Story
           </h2>
@@ -26,7 +26,7 @@ const AboutUs = () => {
           </p>
         </section>
 
-        <section>
+        <section id="mission">
           <h2 className="text-2xl font-semibold text-[var(--color-primary)] mb-4">
             Our Mission
           </h2>
@@ -35,7 +35,7 @@ const AboutUs = () => {
           </p>
         </section>
 
-        <section className="space-y-6">
+        <section id="features" className="space-y-6">
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold text-[var(--color-primary)]">
               Key Features

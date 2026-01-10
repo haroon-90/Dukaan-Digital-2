@@ -7,7 +7,6 @@ import {
     HandCoins,
     LayoutDashboard,
     ShoppingBag,
-    Info,
     Banknote
 } from "lucide-react";
 
@@ -61,7 +60,7 @@ const Sidebar = ({ toggleSidebar }) => {
     };
 
     return (
-        <aside className="group md:w-20 md:hover:w-64 w-64 h-full border-r border-[var(--color-border)] flex flex-col p-4 transition-all duration-300 z-40">
+        <aside className="group md:w-20 md:hover:w-46 w-64 h-full border-r border-[var(--color-border)] flex flex-col p-4 transition-all duration-300 z-40">
             <nav className="flex-1 space-y-1">
                 {menuItems.map((item, index) => {
                     const active = isActive(item.path);
