@@ -66,7 +66,7 @@ const ProfilePage = () => {
 
     const handleLogout = () => {
         localStorage.clear();
-        navigate('/login');
+        navigate('/');
     };
 
     const [showPersonalDetails, setShowPersonalDetails] = useState(false);
