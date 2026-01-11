@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
-import { getReport } from "../../services/reportServices.js";
+// Added getPreviousReports and getPreviousOneReport to imports
+import { getReport, getPreviousReports, getPreviousOneReport } from "../../services/reportServices.js";
 import ReportReceipt from "./ReportReceipt.jsx";
 import toast from "react-hot-toast";
-import { BarChart3, Download, FileText, Loader2, Calendar, CalendarDays } from "lucide-react";
+import { BarChart3, Download, FileText, Loader2, Calendar, CalendarDays, History, ChevronRight } from "lucide-react";
 import { toPng } from 'html-to-image';
-import { useReactToPrint } from 'react-to-print'
+import { useReactToPrint } from 'react-to-print';
 
 const Reporthomepage = () => {
   const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
@@ -15,6 +16,11 @@ const Reporthomepage = () => {
   const [selectedType, setSelectedType] = useState("date");
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState(null);
+
+  // --- New State for Previous Reports ---
+  const [previousReports, setPreviousReports] = useState([]);
+  const [loadingPrevList, setLoadingPrevList] = useState(false);
+  const [showPrevSection, setShowPrevSection] = useState(false);
 
   const receiptRef = useRef(null);
 
@@ -74,6 +80,39 @@ const Reporthomepage = () => {
     setLoading(false);
   };
 
+  // --- New Functions for Previous Reports ---
+  const fetchPreviousList = async () => {
+    setLoadingPrevList(true);
+    setShowPrevSection(true);
+    try {
+      const res = await getPreviousReports({ limit: 5 });
+      if (res && res.data) {
+        setPreviousReports(res.data);
+      }
+    } catch (err) {
+      toast.error("Failed to load history");
+    } finally {
+      setLoadingPrevList(false);
+    }
+  };
+
+  const fetchSingleOldReport = async (reportId) => {
+    setLoading(true); // Reuse main loader
+    setReport(null);
+    try {
+      const res = await getPreviousOneReport(reportId);
+      if (res && res.data) {
+        setReport(res.data);
+        // Scroll to the report receipt
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }
+    } catch (err) {
+      toast.error("Failed to fetch report details");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[var(--color-background)] flex flex-col items-center p-6 transition-colors duration-300">
       <div className="glass-panel w-full max-w-lg overflow-hidden flex flex-col md:flex-row shadow-2xl rounded-3xl animate-fade-in-up">
@@ -91,7 +130,7 @@ const Reporthomepage = () => {
 
           <div className="flex justify-center gap-4 mb-6 bg-[var(--color-surface)] p-1 rounded-full border border-[var(--color-border)]">
             <button
-              onClick={() => { setSelectedType("date"); setReport() }}
+              onClick={() => { setSelectedType("date"); setReport(null) }}
               className={`flex-1 py-2 px-4 rounded-full text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${selectedType === "date"
                 ? "bg-[var(--color-background)] text-[var(--color-foreground)] shadow-sm"
                 : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
@@ -100,7 +139,7 @@ const Reporthomepage = () => {
               <Calendar size={16} /> Date
             </button>
             <button
-              onClick={() => { setSelectedType("month"); setReport() }}
+              onClick={() => { setSelectedType("month"); setReport(null) }}
               className={`flex-1 py-2 px-4 rounded-full text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${selectedType === "month"
                 ? "bg-[var(--color-background)] text-[var(--color-foreground)] shadow-sm"
                 : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
@@ -148,16 +187,75 @@ const Reporthomepage = () => {
         </div>
       </div>
 
+      {/* --- Previous Reports Section --- */}
+      <div className="w-full max-w-lg mt-6">
+        {!showPrevSection ? (
+          <button
+            onClick={fetchPreviousList}
+            className="w-full flex items-center justify-center gap-2 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] transition-colors py-4 font-medium"
+          >
+            <History size={18} /> View Previous Reports
+          </button>
+        ) : (
+          <div className="glass-panel p-6 rounded-3xl animate-fade-in-up max-h-[calc(100vh-200px)] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-[var(--color-foreground)] flex items-center gap-2">
+                <History size={20} className="text-[var(--color-primary)]" /> Recent Reports
+              </h3>
+              <button
+                onClick={() => setShowPrevSection(false)}
+                className="text-xs text-[var(--color-muted-foreground)] hover:underline"
+              >
+                Hide
+              </button>
+            </div>
+
+            {loadingPrevList ? (
+              <div className="flex flex-col items-center py-8">
+                <Loader2 className="animate-spin text-[var(--color-primary)]" size={32} />
+                <p className="text-sm mt-2 text-[var(--color-muted-foreground)]">Fetching records...</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {previousReports.length > 0 ? (
+                  previousReports.map((item) => (
+                    <div
+                      key={item._id}
+                      onClick={() => fetchSingleOldReport(item._id)}
+                      className="group flex items-center justify-between p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl cursor-pointer hover:border-[var(--color-primary)] hover:bg-[var(--color-background)] transition-all duration-200"
+                    >
+                      <div className="flex items-center gap-4">
+                        <CalendarDays size={20} className="text-[var(--color-primary)]" />
+                        <div className="flex flex-col">
+                          <span className="text-sm font-semibold text-[var(--color-foreground)]">
+                            {item.type == 'daily' ? item.period.slice(0, 10) : item.period.slice(0, 7)}
+                          </span>
+                          <span className="text-xs text-[var(--color-muted-foreground)] capitalize">
+                            {item.type || 'Report'}
+                          </span>
+                        </div>
+                      </div>
+                      <ChevronRight size={18} className="text-[var(--color-muted-foreground)] group-hover:text-[var(--color-primary)] group-hover:translate-x-1 transition-all" />
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-[var(--color-muted-foreground)] py-4 text-sm">No previous reports found.</p>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
       {report && (
         <div className="flex flex-col items-center pt-8 gap-4 w-full max-w-lg animate-fade-in-up">
           <div ref={receiptRef}>
             <ReportReceipt
               report={report}
-              period={selectedType === "date" ? date : month}
             />
           </div>
 
-          <div className="flex gap-4 w-full">
+          <div className="flex gap-4 w-full mb-10">
             <button
               onClick={downloadReceipt}
               className="flex-1 bg-[var(--color-surface)] hover:bg-[var(--color-muted)] text-[var(--color-foreground)] border border-[var(--color-border)] font-bold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-sm"

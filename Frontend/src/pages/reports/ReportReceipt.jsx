@@ -1,6 +1,6 @@
 import Dukaan_Digital from '../../assets/Dukaan_Digital.svg'
 
-const ReportReceipt = ({ report, period }) => {
+const ReportReceipt = ({ report }) => {
     if (!report) {
         return null;
     }
@@ -35,9 +35,12 @@ const ReportReceipt = ({ report, period }) => {
                     <div className="border-t border-dashed border-black py-2 print:border-solid"></div>
                     <h4 className="text-black mx-auto mb-2 font-bold">{JSON.parse(localStorage.getItem("user"))?.shopname}</h4>
                     <div className="border-t border-dashed border-black py-2 print:border-solid"></div>
-                    <h2 className="text-2xl font-bold text-black">{period.length == 7 ? "Monthly" : "Daily"} Report</h2>
+                    <h2 className="text-2xl font-bold text-black">{report?.type == "daily" ? "Daily" : "Monthly"} Report</h2>
                     <p className="text-xs text-black mt-1">
-                        {period}
+                        {report?.period
+                            ? (report.type === "daily" ? report.period.slice(0, 10) : report.period.slice(0, 7))
+                            : (report.type === "daily" ? new Date().toISOString().slice(0, 10) : new Date().toISOString().slice(0, 7))
+                        }
                     </p>
                 </div>
 
@@ -85,7 +88,7 @@ const ReportReceipt = ({ report, period }) => {
                 </div>
 
                 <div className="text-center text-xs urdu-font leading-8 text-black mt-6 pt-4 border-t border-dashed border-black print:border-solid">
-                    {period.length == 7 ? " اس مہینے " : " آج "}
+                    {report.type == "daily" ? " اس دن " : " اس مہینے "}
                     <span className="underline text-blue-700 mx-1">{report.totalSale.toLocaleString()}</span>
                     کی فروخت ہوئی،
                     <span className="underline text-orange-500 mx-1">{report.totalExpense.toLocaleString()}</span>
@@ -116,7 +119,7 @@ const ReportReceipt = ({ report, period }) => {
                     <h4 className="text-black text-sm mb-2">Address: {JSON.parse(localStorage.getItem("user"))?.address}</h4>
                 </div>
                 <div className="text-center text-xs text-black mt-6">
-                    Generated at : {new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()}
+                    Generated at : {report.updatedAt ? new Date(report.updatedAt).toLocaleDateString() + " " + new Date(report.updatedAt).toLocaleTimeString() : new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString()}
                 </div>
                 <div className="text-center text-xs text-black pt-4">
                     Powered by <span className="text-blue-700">Dukaan Digital</span>
