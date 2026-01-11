@@ -2,7 +2,7 @@
 html {
   scroll-behavior: smooth;
 }
-  
+
 .Logo-font {
   font-family: cursive;
 }
@@ -15,7 +15,7 @@ html {
   height: 100%;
   width: 100%;
   background: #2563eb;
-  animation: loadingMove 1.2s linear infinite;
+  animation: loadingMove 1s linear infinite;
 }
 
 @keyframes loadingMove {

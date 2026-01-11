@@ -1,23 +1,22 @@
 import { useState, useRef } from "react";
-// Added getPreviousReports and getPreviousOneReport to imports
 import { getReport, getPreviousReports, getPreviousOneReport } from "../../services/reportServices.js";
 import ReportReceipt from "./ReportReceipt.jsx";
 import toast from "react-hot-toast";
-import { BarChart3, Download, FileText, Loader2, Calendar, CalendarDays, History, ChevronRight } from "lucide-react";
+import { Download, FileText, Loader2, Calendar, CalendarDays, History, ChevronRight, ReceiptText } from "lucide-react";
 import { toPng } from 'html-to-image';
 import { useReactToPrint } from 'react-to-print';
+import { useLoading } from "../../components/Context/LoadingContext.jsx";
 
 const Reporthomepage = () => {
   const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
   const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
 
+  const { isLoading, setIsLoading } = useLoading();
   const [date, setDate] = useState(today);
   const [month, setMonth] = useState(currentMonth);
   const [selectedType, setSelectedType] = useState("date");
-  const [loading, setLoading] = useState(false);
   const [report, setReport] = useState(null);
 
-  // --- New State for Previous Reports ---
   const [previousReports, setPreviousReports] = useState([]);
   const [loadingPrevList, setLoadingPrevList] = useState(false);
   const [showPrevSection, setShowPrevSection] = useState(false);
@@ -52,7 +51,7 @@ const Reporthomepage = () => {
   });
 
   const handleSubmit = async () => {
-    setLoading(true);
+    setIsLoading(true);
     setReport(null);
 
     try {
@@ -66,6 +65,12 @@ const Reporthomepage = () => {
       if (res && res.data) {
         setReport(res.data);
         toast.success("Report generated")
+        setTimeout(() => {
+          const element = document.getElementById("ReportReceipt");
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
       } else {
         toast.error("Failed to generate report")
       }
@@ -77,12 +82,11 @@ const Reporthomepage = () => {
         toast.error("Failed to generate report")
       }
     }
-    setLoading(false);
+    setIsLoading(false);
   };
 
-  // --- New Functions for Previous Reports ---
   const fetchPreviousList = async () => {
-    setLoadingPrevList(true);
+    setIsLoading(true);
     setShowPrevSection(true);
     try {
       const res = await getPreviousReports({ limit: 5 });
@@ -93,23 +97,28 @@ const Reporthomepage = () => {
       toast.error("Failed to load history");
     } finally {
       setLoadingPrevList(false);
+      setIsLoading(false);
     }
   };
 
   const fetchSingleOldReport = async (reportId) => {
-    setLoading(true); // Reuse main loader
+    setIsLoading(true);
     setReport(null);
     try {
       const res = await getPreviousOneReport(reportId);
       if (res && res.data) {
         setReport(res.data);
-        // Scroll to the report receipt
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        setTimeout(() => {
+          const element = document.getElementById("ReportReceipt");
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
       }
     } catch (err) {
       toast.error("Failed to fetch report details");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -122,7 +131,7 @@ const Reporthomepage = () => {
         {/* 1. Generate Report Card */}
         <div className="glass-panel flex-1 w-full h-[500px] overflow-hidden flex flex-col md:flex-row shadow-2xl rounded-3xl animate-fade-in-up">
           <div className="md:w-1/3 bg-[var(--color-primary)] rounded-b-3xl md:rounded-bl-3xl md:rounded-tr-none md:rounded-l-3xl flex items-center justify-center p-8">
-            <BarChart3 className="h-24 w-24 text-[var(--color-primary-foreground)]" />
+            <ReceiptText className="h-24 w-24 text-[var(--color-primary-foreground)]" />
           </div>
 
           <div className="md:w-2/3 p-8 flex flex-col justify-center gap-1">
@@ -177,13 +186,13 @@ const Reporthomepage = () => {
 
             <button
               onClick={handleSubmit}
-              disabled={loading}
+              disabled={isLoading}
               className="w-full bg-[var(--color-primary)] hover:brightness-110 text-[var(--color-primary-foreground)] font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-[var(--color-primary)]/20 transition-all duration-300 transform active:scale-[0.98] disabled:opacity-70 disabled:shadow-none disabled:transform-none disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
-              {loading ? (
+              {isLoading ? (
                 <>
                   <Loader2 className="animate-spin" size={20} />
-                  Generating...
+                  Loading...
                 </>
               ) : (
                 "Get Report"
@@ -231,7 +240,7 @@ const Reporthomepage = () => {
                         className="group flex items-center justify-between p-4 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl cursor-pointer hover:border-[var(--color-primary)] hover:bg-[var(--color-background)] transition-all duration-200"
                       >
                         <div className="flex items-center gap-4">
-                          <CalendarDays size={20} className="text-[var(--color-primary)]" />
+                          <ReceiptText size={20} className="text-[var(--color-primary)]" />
                           <div className="flex flex-col">
                             <span className="text-sm font-semibold text-[var(--color-foreground)]">
                               {item.type == 'daily' ? item.period?.slice(0, 10) : item.period?.slice(0, 7)}
@@ -256,7 +265,7 @@ const Reporthomepage = () => {
 
       {/* --- Report Display Section (Below) --- */}
       {report && (
-        <div className="flex flex-col items-center pt-8 gap-4 w-full max-w-lg animate-fade-in-up">
+        <div id="ReportReceipt" className="flex flex-col items-center pt-8 gap-4 w-full max-w-lg animate-fade-in-up">
           <div ref={receiptRef}>
             <ReportReceipt
               report={report}

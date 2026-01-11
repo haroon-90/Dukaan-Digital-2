@@ -74,7 +74,7 @@ const Navbar = () => {
                     </div>
                 </div>
                 {isLoading && (
-                    <div className='absolute -bottom-1 left-0 h-[4px] w-full overflow-hidden'>
+                    <div className='absolute -bottom-1 left-0 h-[2px] w-full overflow-hidden'>
                         <div className='loading-line' />
                     </div>
                 )}
