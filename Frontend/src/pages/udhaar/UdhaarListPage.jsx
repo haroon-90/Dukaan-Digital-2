@@ -4,13 +4,14 @@ import { Trash2, Edit2, HandCoins, Search, Filter, Loader2, Calendar } from "luc
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx"
+import { useLoading } from "../../components/Context/LoadingContext";
 
 const UdhaarListPage = () => {
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useLoading();
   const [udhaarList, setUdhaarList] = useState([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
-  const [loading, setloading] = useState(true);
   const [NoOfCredits, setNoOfCredits] = useState(0);
 
   const formatDate = (date) => date.toISOString().split('T')[0];
@@ -19,7 +20,7 @@ const UdhaarListPage = () => {
 
   const getUdhaar = async () => {
     try {
-      setloading(true);
+      setIsLoading(true);
       const body = {
         startDate,
         endDate,
@@ -27,11 +28,11 @@ const UdhaarListPage = () => {
       const res = await getUdhaarlist(body);
       setUdhaarList(res.data);
       setNoOfCredits(res.data.length);
-      setloading(false);
+      setIsLoading(false);
     } catch (err) {
       toast.error("Failed to refresh Credit record");
       console.error("Error fetching udhaar list", err);
-      setloading(false);
+      setIsLoading(false);
     }
   };
 
@@ -150,13 +151,13 @@ const UdhaarListPage = () => {
           </div>
 
         </div>
-        {loading &&
+        {isLoading &&
           <div className="flex justify-center py-12">
             <Loader />
           </div>
         }
 
-        {!loading &&
+        {!isLoading &&
           <div className="overflow-x-auto">
             <table className="w-full text-sm text-left">
               <thead className={`bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)] ${filteredData.length > 0 ? '' : 'hidden'}`}>

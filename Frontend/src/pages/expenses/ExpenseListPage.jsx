@@ -4,11 +4,12 @@ import { Trash2, Search, Banknote, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../loader/loader.jsx';
+import { useLoading } from '../../components/Context/LoadingContext';
 
 const ExpenseListPage = () => {
   const navigate = useNavigate();
+  const { isLoading, setIsLoading } = useLoading();
   const [expenseList, setExpenseList] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [NoOfExpenses, setNoOfExpenses] = useState(0);
 
@@ -18,7 +19,7 @@ const ExpenseListPage = () => {
 
   const fetchExpenses = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const body = {
         startDate,
         endDate,
@@ -34,7 +35,7 @@ const ExpenseListPage = () => {
       toast.error("Failed to refresh expenses")
       console.error("Failed to refresh expenses", err);
     }
-    setLoading(false);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const ExpenseListPage = () => {
           </div>
         </div>
 
-        {loading ? (
+        {isLoading ? (
           <div className="py-12 flex justify-center">
             <Loader />
           </div>

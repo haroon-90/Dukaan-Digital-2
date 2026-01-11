@@ -6,13 +6,14 @@ import { ShoppingCart, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLef
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx"
+import { useLoading } from "../../components/Context/LoadingContext";
 
 const SalesListPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
   const [sales, setSales] = useState([]);
   const [purchases, setPurchases] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [NoOfSales, setNoOfSales] = useState(0);
   const [NoOfPurchases, setNoOfPurchases] = useState(0);
@@ -28,7 +29,7 @@ const SalesListPage = () => {
 
   const fetchSales = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const body = {
         startDate,
         endDate,
@@ -48,13 +49,13 @@ const SalesListPage = () => {
         toast.error(err.response?.data?.msg || "Error fetching data")
       }
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   const fetchPurchase = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const body = {
         startDate,
         endDate,
@@ -74,7 +75,7 @@ const SalesListPage = () => {
         toast.error(err.response?.data?.msg || "Error fetching data")
       }
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -293,12 +294,12 @@ const SalesListPage = () => {
           </div>
         </div>
 
-        {loading &&
+        {isLoading &&
           <div className="flex justify-center py-12">
             <Loader />
           </div>
         }
-        {!loading && (
+        {!isLoading && (
           <>
             {type === "sale" && (
               <RenderTable data={filteredSales} />

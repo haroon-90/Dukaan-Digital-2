@@ -1,7 +1,8 @@
 import Dukaan_Digital from '../../assets/Dukaan_Digital.svg';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, Menu, Sun, Moon } from 'lucide-react';
+import { Sun, Moon } from 'lucide-react';
 import { useTheme } from '../Context/ThemeContext';
+import { useLoading } from '../Context/LoadingContext';
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -9,6 +10,7 @@ const Navbar = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const role = user?.role;
     const shopName = user?.shopname;
+    const { isLoading } = useLoading();
 
     return (
         <nav className="sticky top-0 z-50 transition-transform duration-300">
@@ -69,17 +71,13 @@ const Navbar = () => {
                                 {(user?.name?.[0] || 'U').toUpperCase()}
                             </div>
                         </div>
-
-                        {/* <button
-                            onClick={() => { localStorage.clear(); navigate('/login') }}
-                            title="Logout"
-                            className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-[var(--color-foreground)] bg-[var(--color-surface)] border border-[var(--color-border)] hover:bg-[var(--color-muted)] hover:text-red-500 transition-all shadow-sm"
-                        >
-                            <LogOut size={18} />
-                            <span className="hidden md:inline">Logout</span>
-                        </button> */}
                     </div>
                 </div>
+                {isLoading && (
+                    <div className='absolute -bottom-1 left-0 h-[4px] w-full overflow-hidden'>
+                        <div className='loading-line' />
+                    </div>
+                )}
             </div>
         </nav>
     );

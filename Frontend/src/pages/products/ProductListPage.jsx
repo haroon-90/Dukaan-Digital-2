@@ -5,15 +5,17 @@ import { createsale } from "../../services/saleService.js";
 import {
   Edit2, Trash2, ShoppingCart, Eye, Package, PlusCircle,
   Search, X, EyeOff, Grid3x3, List, Zap, Plus, Minus,
-  Filter, ChevronDown, ShoppingBag, AlertCircle, AlertOctagonIcon,
+  Filter, ChevronDown, ShoppingBag,
   MessageCircleWarning
 } from "lucide-react";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx";
+import { useLoading } from "../../components/Context/LoadingContext";
 
 const ProductListPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { isLoading, setIsLoading } = useLoading();
   const [products, setProducts] = useState([]);
   const [saleQuantities, setSaleQuantities] = useState({});
   const [cart, setCart] = useState([]);
@@ -23,7 +25,6 @@ const ProductListPage = () => {
   const [TotalBill, setTotalBill] = useState(0);
   const [prprice, setprprice] = useState(false);
   const [isSale, setisSale] = useState(false);
-  const [loading, setloading] = useState(true);
   const [discount, setDiscount] = useState(0);
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
   const [NoOfProducts, setNoOfProducts] = useState(0);
@@ -138,7 +139,7 @@ const ProductListPage = () => {
     };
 
     try {
-      setloading(true);
+      setIsLoading(true);
       await createsale(payload);
       toast.success("Sale Created")
       setCart([]);
@@ -151,21 +152,21 @@ const ProductListPage = () => {
       loadProducts();
     } catch (err) {
       toast.error("Failed to create Sale")
-      setloading(false);
+      setIsLoading(false);
     }
   };
 
   const loadProducts = async () => {
     try {
-      setloading(true);
+      setIsLoading(true);
       const res = await getProducts();
       setProducts(res.data);
-      setloading(false);
+      setIsLoading(false);
       setNoOfProducts(res.data.length);
     } catch (err) {
       toast.error("Failed to refresh products")
       console.error("Error fetching products:", err);
-      setloading(false);
+      setIsLoading(false);
     }
   };
 
@@ -500,9 +501,9 @@ const ProductListPage = () => {
               <button
                 onClick={confirmSaleOrPurchase}
                 className="px-6 py-2 bg-[var(--color-primary)] text-[var(--color-primary-foreground)] rounded-xl hover:brightness-110 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium shadow-lg shadow-[var(--color-primary)]/20"
-                disabled={cart.length === 0 || loading}
+                disabled={cart.length === 0 || isLoading}
               >
-                {loading ? 'Processing...' : 'Confirm Sale'}
+                {isLoading ? 'Processing...' : 'Confirm Sale'}
               </button>
             </div>
           </div>
@@ -670,7 +671,7 @@ const ProductListPage = () => {
 
       {/* Products Display */}
       <div className="max-w-7xl mx-auto animate-fade-in-up">
-        {loading ? (
+        {isLoading ? (
           <div className="py-12 flex justify-center">
             <Loader />
           </div>

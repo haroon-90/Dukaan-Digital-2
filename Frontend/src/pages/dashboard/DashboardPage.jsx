@@ -12,6 +12,7 @@ import { ShoppingCart, HandCoins, TrendingUp, Banknote, MessageCircleWarning, Ey
 import { getDashboard } from "../../services/dashboardServices.js";
 import Loader from "../loader/loader";
 import toast from "react-hot-toast";
+import { useLoading } from "../../components/Context/LoadingContext.jsx";
 
 const Card = ({ children, className = "" }) => (
     <div className={`glass-panel rounded-2xl p-0 overflow-hidden transition-all duration-300 hover:shadow-lg ${className}`}>{children}</div>
@@ -41,22 +42,23 @@ const StatCard = ({ title, value, icon: Icon, colorClass, delay }) => (
 );
 
 const Dashboard = () => {
+    const { isLoading, setIsLoading } = useLoading();
     const [ishide, setishide] = useState(true);
-    const [loading, setloading] = useState(true);
     const [summary, setsummary] = useState()
     const [salesData, setsalesData] = useState([])
     const [lowStock, setLowStock] = useState([])
 
     const fetchData = async () => {
         try {
+            setIsLoading(true);
             const res = await getDashboard();
             setsummary(res.data.summary);
             setsalesData(res.data.salesData);
             setLowStock(res.data.lowStock);
-            setloading(false);
+            setIsLoading(false);
         } catch (err) {
             toast.error("Failed to refresh data!")
-            setloading(false);
+            setIsLoading(false);
         }
     }
 
@@ -91,7 +93,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-6">
                 <StatCard
                     title="Total Sales"
-                    value={loading ? "*****"
+                    value={isLoading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.sales.toLocaleString() || "---"}`}
                     icon={ShoppingCart}
                     colorClass="bg-blue-500 shadow-blue-500/30 shadow-lg"
@@ -99,7 +101,7 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Total Profit"
-                    value={loading ? "*****"
+                    value={isLoading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.profit.toLocaleString() || "---"}`}
                     icon={TrendingUp}
                     colorClass="bg-emerald-500 shadow-emerald-500/30 shadow-lg"
@@ -107,7 +109,7 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Expenses"
-                    value={loading ? "*****"
+                    value={isLoading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.expenses.toLocaleString() || "---"}`}
                     icon={Banknote}
                     colorClass="bg-rose-500 shadow-rose-500/30 shadow-lg"
@@ -115,7 +117,7 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Total Credit"
-                    value={loading ? "*****"
+                    value={isLoading ? "*****"
                         : ishide ? "*****" : `₨ ${summary?.credit.toLocaleString() || "---"}`}
                     icon={HandCoins}
                     colorClass="bg-amber-500 shadow-amber-500/30 shadow-lg"
@@ -129,7 +131,7 @@ const Dashboard = () => {
                 <Card>
                     <CardContent>
                         <h2 className="text-lg font-semibold mb-6 text-[var(--color-foreground)]">Sales vs Expenses</h2>
-                        {loading ? (
+                        {isLoading ? (
                             <Loader />
                         ) : !salesData || salesData.length === 0 ? (
                             <div className="flex items-center justify-center h-[300px] text-[var(--color-muted-foreground)]">
@@ -177,7 +179,7 @@ const Dashboard = () => {
                             <h2 className="text-lg font-semibold text-[var(--color-foreground)]">Low Stock Alerts</h2>
                         </div>
 
-                        {loading ?
+                        {isLoading ?
                             <Loader />
                             :
                             <div className="space-y-3">
