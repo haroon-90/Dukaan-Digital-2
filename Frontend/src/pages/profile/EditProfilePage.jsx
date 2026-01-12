@@ -85,39 +85,39 @@ const EditProfilePage = () => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
-                <InputField
-                  name="name"
-                  label="Name"
-                  icon={User}
-                  type="text"
-                  placeholder="Enter your full name"
-                  value={form.name}
-                  onChange={handleChange}
-                  disabled={loading}
-                />
+              <InputField
+                name="name"
+                label="Name"
+                icon={User}
+                type="text"
+                placeholder="Enter your full name"
+                value={form.name}
+                onChange={handleChange}
+                disabled={loading}
+              />
 
-                <InputField
-                  name="phone"
-                  label="Phone"
-                  icon={Phone}
-                  type="tel"
-                  placeholder="Enter your phone number"
-                  value={form.phone}
-                  onChange={handleChange}
-                  disabled={loading}
-                />
+              <InputField
+                name="phone"
+                label="Phone"
+                icon={Phone}
+                type="tel"
+                placeholder="Enter your phone number"
+                value={form.phone}
+                onChange={handleChange}
+                disabled={loading}
+              />
 
-                <InputField
-                  name="password"
-                  label="New Password"
-                  icon={Lock}
-                  type="password"
-                  placeholder="Leave blank to keep current password"
-                  value={form.password}
-                  onChange={handleChange}
-                  disabled={loading}
-                  required={false}
-                />
+              <InputField
+                name="password"
+                label="New Password"
+                icon={Lock}
+                type="password"
+                placeholder="Leave blank to keep current password"
+                value={form.password}
+                onChange={handleChange}
+                disabled={loading}
+                required={false}
+              />
 
               <button
                 type="submit"
@@ -132,8 +132,7 @@ const EditProfilePage = () => {
           <div className="mt-8 text-center bg-[var(--color-surface)] p-3 rounded-lg border border-[var(--color-border)]">
             <span className="text-xs text-[var(--color-muted-foreground)] font-medium">To make any other changes, please contact the administrator.</span>
             <div className="flex items-center justify-center mt-2 text-sm">
-              {/* whatsapp link */}
-              <a href="https://wa.me/923279351337?text=Hello%20Dukaan%20Digital%20Team%2C%20I%20need%20to%20make%20some%20changes%20to%20my%20profile." target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+              <a href={`https://wa.me/923279351337?text=Hello%20Dukaan%20Digital%20Team!%0AI%20need%20to%20make%20some%20changes%20to%20my%20Account%20*${user?.shopname}*%20with%20email%20*${user?.email}*`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                 <Send size={20} className="text-[var(--color-primary)]" />
                 <span className="text-[var(--color-primary)] underline">WhatsApp</span>
               </a>
