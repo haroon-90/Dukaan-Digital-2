@@ -13,9 +13,9 @@ import Loader from "../loader/loader.jsx";
 import { useLoading } from "../../components/Context/LoadingContext";
 
 const DUMMY_PRODUCTS = [
-  { _id: '1', itemname: 'Sample Product A', sellingPrice: 100, quantity: 50, category: 'Electronics', unit: 'pcs' },
-  { _id: '2', itemname: 'Sample Product B', sellingPrice: 200, quantity: 30, category: 'Groceries', unit: 'kg' },
-  { _id: '3', itemname: 'Sample Product C', sellingPrice: 150, quantity: 10, category: 'Electronics', unit: 'pcs' },
+  { _id: '1', itemname: 'Sample Product A', sellingPrice: 100, purchasePrice: 50, quantity: 50, category: 'Electronics', unit: 'pcs', createdAt: '2022-01-01' },
+  { _id: '2', itemname: 'Sample Product B', sellingPrice: 200, purchasePrice: 100, quantity: 30, category: 'Groceries', unit: 'kg', createdAt: '2022-01-02' },
+  { _id: '3', itemname: 'Sample Product C', sellingPrice: 150, purchasePrice: 75, quantity: 10, category: 'Electronics', unit: 'pcs', createdAt: '2022-01-03' },
 ];
 
 const ProductListPage = () => {
