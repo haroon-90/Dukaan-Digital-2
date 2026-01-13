@@ -137,7 +137,7 @@ const LandingPage = () => {
                 </section>
 
                 {/* Features Section */}
-                <section id="features" className="py-32 bg-background relative">
+                <section id="features" className="py-12 bg-background relative">
                     <div className="container mx-auto px-6">
                         <div className="text-center mb-20 max-w-3xl mx-auto">
                             <h2 className="text-3xl md:text-5xl font-black text-foreground mb-6">Built for speed, <br />designed for growth.</h2>
@@ -177,7 +177,7 @@ const LandingPage = () => {
                 </section>
 
                 {/* Benefits / Split Sections */}
-                <section id="benefits" className="py-24 bg-muted/20">
+                <section id="benefits" className="py-6 bg-muted/20">
                     <div className="container mx-auto px-6">
                         <div className="flex flex-col md:flex-row items-center gap-16 mb-24">
                             <div className="flex-1 order-2 md:order-1">
@@ -225,7 +225,7 @@ const LandingPage = () => {
                                         <div className="flex justify-between items-end">
                                             <div>
                                                 <div className="text-xs text-muted-foreground uppercase font-bold tracking-wider">Today's Sales</div>
-                                                <div className="text-xl md:text-2xl font-black text-foreground">$1,240.50</div>
+                                                <div className="text-xl md:text-2xl font-black text-foreground">RS 25,500</div>
                                             </div>
                                             <div className="text-green-500 text-sm font-bold">+12%</div>
                                         </div>

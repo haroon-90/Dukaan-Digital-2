@@ -4,6 +4,7 @@ import { User, Mail, Phone, Banknote, Store, Calendar, Edit2, Trash2, MapPinned,
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useTheme } from '../../components/Context/ThemeContext';
+import { useLoading } from "../../components/Context/LoadingContext";
 
 const ProfileDetail = ({ icon, label, value }) => (
     <div className="flex items-center gap-4 rounded-2xl bg-[var(--color-surface)] px-5 py-4 shadow-sm border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition-colors">
@@ -36,7 +37,7 @@ const ProfilePage = () => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const { isLoading, setIsLoading } = useLoading();
     const user = JSON.parse(localStorage.getItem("user")) || {};
 
     const isDemo = user?.isdemo === true;
@@ -46,7 +47,7 @@ const ProfilePage = () => {
             toast.success("Demo Mode: Profile deleted successfully!");
             return;
         }
-        setLoading(true);
+        setIsLoading(true);
         try {
             const deleted = await deleteProfile();
             if (deleted) {
@@ -57,7 +58,7 @@ const ProfilePage = () => {
         } catch (err) {
             toast.error('Failed to delete profile!');
         } finally {
-            setLoading(false);
+            setIsLoading(false);
             setConfirmDelete(false);
         }
     };
@@ -71,8 +72,12 @@ const ProfilePage = () => {
     };
 
     const handleLogout = () => {
+        setIsLoading(true);
         localStorage.clear();
-        navigate('/');
+        setTimeout(() => {
+            setIsLoading(false);
+            navigate('/');
+        }, 100);
     };
 
     const [showPersonalDetails, setShowPersonalDetails] = useState(false);
@@ -102,10 +107,10 @@ const ProfilePage = () => {
                             <button
                                 onClick={handleDelete}
                                 className="w-full rounded-xl bg-red-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red-700 disabled:opacity-50 flex items-center justify-center gap-2"
-                                disabled={loading}
+                                disabled={isLoading}
                             >
-                                {loading && <Loader2 className="animate-spin" size={16} />}
-                                {loading ? 'Deleting...' : 'Yes, delete my account'}
+                                {isLoading && <Loader2 className="animate-spin" size={16} />}
+                                {isLoading ? 'Deleting...' : 'Yes, delete my account'}
                             </button>
                         </div>
                     </div>

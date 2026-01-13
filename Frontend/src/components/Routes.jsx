@@ -73,8 +73,8 @@ export default function AppRouter() {
 
       {/* Auth Layout Routes */}
       <Route element={<AuthLayout />}>
-        <Route path="/" element={!user ? <Landingpage /> : (user?.role === "manager" ? <Navigate to="/manager" replace /> : <Navigate to="/admin" replace />)} />
-        <Route path="/login" element={!user ? <LoginPage /> : (user?.role === "manager" ? <Navigate to="/manager" replace /> : <Navigate to="/admin" replace />)} />
+        <Route path="/" element={!user ? <Landingpage /> : (user?.role === "admin" ? <Navigate to="/admin" replace /> : (user.role === "manager" ? <Navigate to="/manager" replace /> : <Landingpage />))} />
+        <Route path="/login" element={!user ? <LoginPage /> : (user?.role === "admin" ? <Navigate to="/admin" replace /> : (user.role === "manager" ? <Navigate to="/manager" replace /> : <LoginPage />))} />
       </Route>
 
       {/* Auth Layout Routes */}
