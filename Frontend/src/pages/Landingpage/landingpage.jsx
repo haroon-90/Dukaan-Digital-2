@@ -4,6 +4,7 @@ import dashboard from "../../assets/dashboard.png";
 import Footer from '../../components/parts/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../components/Context/ThemeContext';
+import grid from '../../assets/grid.svg'
 
 const LandingPage = () => {
     const navigate = useNavigate();
@@ -43,46 +44,62 @@ const LandingPage = () => {
                 </div>
             </nav>
 
-            <main className="pt-10">
+            <main className="pt-6">
                 {/* Hero Section */}
-                <section className="relative px-6 pb-20 pt-10 md:pt-16 overflow-hidden">
-                    {/* Background Gradients */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -z-10 w-full h-full opacity-30 pointer-events-none">
-                        <div className="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px] animate-pulse"></div>
-                        <div className="absolute top-[20%] right-[10%] w-[400px] h-[400px] bg-indigo-500/20 rounded-full blur-[100px]"></div>
-                    </div>
+                <section className="relative pb-20 pt-10 overflow-hidden">
 
                     <div className="container mx-auto max-w-6xl text-center">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-xs font-bold tracking-wide text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
-                            <span className="relative flex h-2 w-2">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                            </span>
-                            #1 Shop Management Platform
-                        </div>
+                        <div className="relative overflow-hidden">
+                            {/* Background Grid */}
+                            <div className="absolute inset-0 z-1">
+                                <img
+                                    src={grid}
+                                    alt="grid_background"
+                                    className="w-full h-full object-cover opacity-15"
+                                />
+                            </div>
 
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1] text-foreground">
-                            Smart Business, <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-indigo-600">
-                                Digital Future
-                            </span>
-                        </h1>
+                            {/* Content */}
+                            <div className="px-2 relative z-10 flex flex-col items-center text-center">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 mt-2 text-xs font-bold tracking-wide text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
+                                    <span className="relative flex h-2 w-2">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                                    </span>
+                                    #1 Shop Management Platform
+                                </div>
 
-                        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
-                            The all-in-one solution for modern shopkeepers. Manage inventory, track credits, and visualize sales, all from one beautiful dashboard.
-                        </p>
+                                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1] text-foreground">
+                                    Smart Business, <br />
+                                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-indigo-600">
+                                        Digital Future
+                                    </span>
+                                </h1>
 
-                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20 animate-fade-in-up">
-                            <button onClick={() => navigate('/contactus')} className="w-full sm:w-auto bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 active:scale-95 flex items-center justify-center gap-2">
-                                Start Free Trial <ArrowRight size={20} />
-                            </button>
-                            <button onClick={() => navigate('/demo')} className="w-full sm:w-auto bg-surface text-foreground border border-border px-8 py-4 rounded-xl font-bold text-lg hover:bg-muted transition-all active:scale-95 flex items-center justify-center gap-2">
-                                View Demo <ArrowRight size={20} />
-                            </button>
+                                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed mb-10 max-w-2xl mx-auto">
+                                    The all-in-one solution for modern shopkeepers. Manage inventory, track credits, and visualize sales, all from one beautiful dashboard.
+                                </p>
+
+                                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+                                    <button
+                                        onClick={() => navigate('/contactus')}
+                                        className="w-full sm:w-auto bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-xl active:scale-95 flex items-center gap-2"
+                                    >
+                                        Start Free Trial <ArrowRight size={20} />
+                                    </button>
+
+                                    <button
+                                        onClick={() => navigate('/demo')}
+                                        className="w-full sm:w-auto bg-surface text-foreground border border-border px-8 py-4 rounded-xl font-bold text-lg hover:bg-muted transition-all active:scale-95 flex items-center gap-2"
+                                    >
+                                        View Demo <ArrowRight size={20} />
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         {/* Dashboard Mockup */}
-                        <div className="relative mx-auto max-w-5xl perspective-1000 group">
+                        <div className="relative mx-auto px-2 max-w-5xl perspective-1000 group">
                             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
                             <div className="relative bg-surface rounded-xl shadow-2xl border border-border overflow-hidden ring-1 ring-white/10 dark:ring-white/5 transform transition-transform duration-500 hover:scale-[1.01]">
                                 <div className="h-10 bg-muted/50 border-b border-border flex items-center px-4 gap-2">
