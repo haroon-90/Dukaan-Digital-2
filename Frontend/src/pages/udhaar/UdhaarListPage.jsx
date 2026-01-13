@@ -6,6 +6,25 @@ import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx"
 import { useLoading } from "../../components/Context/LoadingContext";
 
+const dummyUdhaarData = [
+  {
+    _id: 1,
+    customerName: "John Doe",
+    contact: "1234567890",
+    amount: 1000,
+    status: "paid",
+    createdAt: "2022-01-01",
+  },
+  {
+    _id: 2,
+    customerName: "Jane Smith",
+    contact: "0987654321",
+    amount: 2000,
+    status: "pending",
+    createdAt: "2022-01-02",
+  },
+];
+
 const UdhaarListPage = () => {
   const navigate = useNavigate();
   const { isLoading, setIsLoading } = useLoading();
@@ -18,7 +37,15 @@ const UdhaarListPage = () => {
   const [startDate, setStartDate] = useState(formatDate(new Date(new Date().setMonth(new Date().getMonth(), 1))));
   const [endDate, setEndDate] = useState(formatDate(new Date()));
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isDemo = user?.isdemo;
+
   const getUdhaar = async () => {
+    if (isDemo) {
+      setUdhaarList(dummyUdhaarData);
+      setNoOfCredits(dummyUdhaarData.length);
+      return;
+    }
     try {
       setIsLoading(true);
       const body = {
@@ -35,10 +62,6 @@ const UdhaarListPage = () => {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    getUdhaar();
-  }, []);
 
   useEffect(() => {
     getUdhaar();
@@ -85,6 +108,7 @@ const UdhaarListPage = () => {
         </h1>
 
         <button
+          disabled={isDemo}
           onClick={() => navigate("/udhaar/new")}
           className="w-full md:w-auto bg-[var(--color-primary)] hover:brightness-110 text-[var(--color-primary-foreground)] px-6 py-2 rounded-xl transition-all shadow-lg hover:shadow-[var(--color-primary)]/20 active:scale-95 flex items-center justify-center gap-2 font-bold"
         >
@@ -97,7 +121,7 @@ const UdhaarListPage = () => {
         <div className="flex flex-wrap flex-1 gap-2 items-center justify-between p-2 border-b border-[var(--color-border)]">
           <div className="flex items-center justify-center flex-wrap w-full lg:w-auto gap-2">
             <div className="flex items-center gap-2 bg-[var(--color-surface)] px-2 py-1.5 rounded-xl border border-[var(--color-border)]">
-              <Calendar size={16} className="text-[var(--color-primary)]" />
+              <Calendar disabled={isDemo} size={16} className="text-[var(--color-primary)]" />
               <span className="text-sm font-medium text-[var(--color-muted-foreground)]">From:</span>
               <input
                 type="date"
@@ -107,7 +131,7 @@ const UdhaarListPage = () => {
               />
             </div>
             <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-1.5 rounded-xl border border-[var(--color-border)]">
-              <Calendar size={16} className="text-[var(--color-primary)]" />
+              <Calendar disabled={isDemo} size={16} className="text-[var(--color-primary)]" />
               <span className="text-sm font-medium text-[var(--color-muted-foreground)]">To:</span>
               <input
                 type="date"
@@ -201,10 +225,10 @@ const UdhaarListPage = () => {
                       </td>
                       <td className="px-4 py-2">
                         <div className="flex justify-center items-center gap-2">
-                          <button onClick={() => handleEdit(item)} className="p-2 rounded-lg bg-blue-500/10 sm:bg-blue-500/0 text-blue-500 hover:bg-blue-500 hover:text-white transition-all" title="Edit">
+                          <button disabled={isDemo} onClick={() => handleEdit(item)} className="p-2 rounded-lg bg-blue-500/10 sm:bg-blue-500/0 text-blue-500 hover:bg-blue-500 hover:text-white transition-all" title="Edit">
                             <Edit2 size={16} />
                           </button>
-                          <button onClick={() => handleDelete(item)} className="p-2 rounded-lg bg-red-500/10 sm:bg-red-500/0 text-red-500 hover:bg-red-500 hover:text-white transition-all" title="Delete">
+                          <button disabled={isDemo} onClick={() => handleDelete(item)} className="p-2 rounded-lg bg-red-500/10 sm:bg-red-500/0 text-red-500 hover:bg-red-500 hover:text-white transition-all" title="Delete">
                             <Trash2 size={16} />
                           </button>
                         </div>

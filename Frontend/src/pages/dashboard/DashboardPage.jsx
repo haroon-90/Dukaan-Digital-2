@@ -48,6 +48,8 @@ const Dashboard = () => {
     const [salesData, setsalesData] = useState([])
     const [lowStock, setLowStock] = useState([])
 
+    const user = JSON.parse(localStorage.getItem("user"));
+
     const fetchData = async () => {
         try {
             setIsLoading(true);
@@ -63,7 +65,26 @@ const Dashboard = () => {
     }
 
     useEffect(() => {
-        fetchData();
+        if (user?.isdemo) {
+            setsummary({
+                sales: 10000,
+                profit: 5000,
+                expenses: 2000,
+                credit: 1000,
+            })
+            setsalesData([
+                { month: "Jan", sales: 1000, expenses: 200 },
+                { month: "Feb", sales: 2000, expenses: 300 },
+                { month: "Mar", sales: 1500, expenses: 400 },
+            ])
+            setLowStock([
+                { item: "Item 1", qty: 2 },
+                { item: "Item 2", qty: 1 },
+                { item: "Item 3", qty: 2 },
+            ])
+        } else {
+            fetchData();
+        }
     }, [])
 
     return (

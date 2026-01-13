@@ -10,7 +10,7 @@ import {
     Banknote
 } from "lucide-react";
 
-const Sidebar = ({ toggleSidebar }) => {
+const Sidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -67,7 +67,7 @@ const Sidebar = ({ toggleSidebar }) => {
                     return (
                         <div key={index}>
                             <button
-                                onClick={() => { navigate(item.path); toggleSidebar && toggleSidebar(); }}
+                                onClick={() => navigate(item.path)}
                                 className={`
                                     relative flex items-center gap-3 p-3 w-full text-left rounded-xl transition-all duration-200 outline-none
                                     ${active

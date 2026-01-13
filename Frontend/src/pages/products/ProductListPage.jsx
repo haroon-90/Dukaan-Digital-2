@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getProducts, deleteProducts } from "../../services/productServices.js";
 import { createsale } from "../../services/saleService.js";
@@ -11,6 +11,12 @@ import {
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx";
 import { useLoading } from "../../components/Context/LoadingContext";
+
+const DUMMY_PRODUCTS = [
+  { _id: '1', itemname: 'Sample Product A', sellingPrice: 100, quantity: 50, category: 'Electronics', unit: 'pcs' },
+  { _id: '2', itemname: 'Sample Product B', sellingPrice: 200, quantity: 30, category: 'Groceries', unit: 'kg' },
+  { _id: '3', itemname: 'Sample Product C', sellingPrice: 150, quantity: 10, category: 'Electronics', unit: 'pcs' },
+];
 
 const ProductListPage = () => {
   const navigate = useNavigate();
@@ -40,7 +46,14 @@ const ProductListPage = () => {
     return matchesSearch && matchesCategory;
   });
 
-  const categories = ['all', ...new Set(products.map(p => p.category))];
+  // const categories = ['all', ...new Set(products.map(p => p.category))];
+  const categories = useMemo(() =>
+    ['all', ...new Set(products.map(p => p.category))],
+    [products]
+  );
+
+  const user = useMemo(() => JSON.parse(localStorage.getItem('user')), []);
+  const isDemo = user?.isdemo === true; // Demo check
 
   const handleSaleChange = (p, value) => {
     if (isSale && p.quantity < value) {
@@ -73,13 +86,11 @@ const ProductListPage = () => {
       unit: product.unit
     };
 
-    setTotalBill(
-      TotalBill + (product.sellingPrice * quantity)
-    );
+    const lineTotal = product.sellingPrice * quantity;
 
-    setTotalAfterDiscount(
-      TotalBill + (product.sellingPrice * quantity)
-    );
+    // Use functional updates to avoid dependency on current state values
+    setTotalBill(prev => prev + lineTotal);
+    setTotalAfterDiscount(prev => prev + lineTotal);
 
     setCart((prev) => {
       const existing = prev.find((item) => item.id === product._id);
@@ -138,6 +149,16 @@ const ProductListPage = () => {
       customerName: customerName.trim()
     };
 
+    if (isDemo) {
+      toast.success("Demo Mode: Sale Created (Not saved to DB)");
+      resetSaleStates();
+      setProducts(prev => prev.map(p => {
+        const cartItem = cart.find(c => c.id === p._id);
+        return cartItem ? { ...p, quantity: p.quantity - cartItem.quantity } : p;
+      }));
+      return;
+    }
+
     try {
       setIsLoading(true);
       await createsale(payload);
@@ -156,7 +177,23 @@ const ProductListPage = () => {
     }
   };
 
-  const loadProducts = async () => {
+  const resetSaleStates = () => {
+    setCart([]);
+    setSaleQuantities({});
+    setCustomerName("");
+    setShowSaleModal(false);
+    setTotalBill(0);
+    setDiscount(0);
+    setTotalAfterDiscount(0);
+    setIsLoading(false);
+  };
+
+  const loadProducts = useCallback(async () => {
+    if (isDemo) {
+      setProducts(DUMMY_PRODUCTS);
+      setNoOfProducts(DUMMY_PRODUCTS.length);
+      return;
+    }
     try {
       setIsLoading(true);
       const res = await getProducts();
@@ -168,18 +205,24 @@ const ProductListPage = () => {
       console.error("Error fetching products:", err);
       setIsLoading(false);
     }
-  };
+  }, [isDemo, setIsLoading]);
 
   const handleDelete = async (e) => {
-    try {
-      if (confirm(`Are you sure you want to delete "${e.itemname}"?`)) {
+    if (confirm(`Are you sure you want to delete "${e.itemname}"?`)) {
+      if (isDemo) {
+        setProducts(prev => prev.filter(item => item._id !== e._id));
+        toast.success('Demo Mode: Product deleted successfully!');
+        return;
+      }
+      try {
         await deleteProducts(e._id);
         toast.success('Product deleted successfully!');
         loadProducts();
       }
-    } catch (err) {
-      toast.error("Failed to delete product!")
-      console.log(err);
+      catch (err) {
+        toast.error("Failed to delete product!")
+        console.log(err);
+      }
     }
   };
 
@@ -197,10 +240,9 @@ const ProductListPage = () => {
   };
 
   const handleDiscountChange = (e) => {
-    const value = Number(e.target.value) || 0;
-    setDiscount(value);
-    const discountedTotal = TotalBill - (TotalBill * value) / 100;
-    setTotalAfterDiscount(discountedTotal);
+    const val = Number(e.target.value) || 0;
+    setDiscount(val);
+    setTotalAfterDiscount(TotalBill - (TotalBill * val) / 100);
   };
 
   const handleTotalAfterDiscountChange = (e) => {
@@ -217,7 +259,7 @@ const ProductListPage = () => {
       setisSale(true);
     }
     loadProducts();
-  }, [location]);
+  }, [location.pathname]);
 
   // Grid Card Component
   const ProductCard = ({ product }) => {
@@ -545,6 +587,7 @@ const ProductListPage = () => {
           )}
           {!isSale && (
             <button
+              disabled={isDemo}
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
               onClick={() => navigate("/products/new")}
             >
@@ -779,6 +822,7 @@ const ProductListPage = () => {
                             <td className="px-4 py-3">
                               <div className="flex gap-2 transition-opacity">
                                 <button
+                                  disabled={isDemo}
                                   onClick={() => navigate("/products/edit/" + p._id)}
                                   className="p-2 bg-blue-500/10 md:bg-blue-500/0 text-blue-600 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors"
                                   title="Edit"
@@ -786,6 +830,7 @@ const ProductListPage = () => {
                                   <Edit2 size={16} />
                                 </button>
                                 <button
+                                  disabled={isDemo}
                                   onClick={() => handleDelete(p)}
                                   className="p-2 bg-red-500/10 md:bg-red-500/0 text-red-600 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                                   title="Delete"

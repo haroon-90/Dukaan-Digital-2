@@ -7,6 +7,20 @@ import { toPng } from 'html-to-image';
 import { useReactToPrint } from 'react-to-print';
 import { useLoading } from "../../components/Context/LoadingContext.jsx";
 
+const dummyReport = {
+  totalPurchase: 1000,
+  totalSale: 2000,
+  totalProfit: 1000,
+  totalExpense: 500,
+  totalUdhaar: 200,
+  totalPaidUdhaar: 100,
+  totalQuantitySold: 100,
+  numberOfSales: 10,
+  numberOfPurchase: 5,
+  numberOfExpenses: 2,
+  numberOfUdhaar: 1,
+};
+
 const Reporthomepage = () => {
   const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
   const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM
@@ -22,6 +36,9 @@ const Reporthomepage = () => {
   const [showPrevSection, setShowPrevSection] = useState(false);
 
   const receiptRef = useRef(null);
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isDemo = user?.isdemo;
 
   const downloadReceipt = async () => {
     if (!receiptRef.current) {
@@ -51,6 +68,11 @@ const Reporthomepage = () => {
   });
 
   const handleSubmit = async () => {
+    if (isDemo) {
+      toast.error("Demo mode is enabled");
+      setReport(dummyReport);
+      return;
+    }
     setIsLoading(true);
     setReport(null);
 
@@ -86,6 +108,10 @@ const Reporthomepage = () => {
   };
 
   const fetchPreviousList = async () => {
+    if (isDemo) {
+      toast.error("Demo mode is enabled");
+      return;
+    }
     setIsLoading(true);
     setShowPrevSection(true);
     try {
@@ -269,7 +295,7 @@ const Reporthomepage = () => {
           <div ref={receiptRef}>
             <ReportReceipt
               report={report}
-              period={report?.period ? (report.type === "daily" ? report.period.slice(0, 10) : report.period.slice(0, 7)) : (selectedType === "date" ? date : month)}
+            // period={report?.period ? (report.type === "daily" ? report.period.slice(0, 10) : report.period.slice(0, 7)) : (selectedType === "date" ? date : month)}
             />
           </div>
 

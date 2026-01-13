@@ -60,6 +60,7 @@ import MobileAboutLayout from "./layout/MobileAboutLayout.jsx"
 import Invoice from "../pages/invoice/invoice.jsx"
 
 import { Navigate } from "react-router-dom"
+import DemoLayout from "./layout/DemoLayout.jsx"
 
 export default function AppRouter() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -82,6 +83,11 @@ export default function AppRouter() {
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="/termsandconditions" element={<TermaAndConditions />} />
         <Route path="/contactus" element={<ContactUs />} />
+      </Route>
+
+      {/* Demo Routes */}
+      <Route element={<DemoLayout />}>
+        <Route path="/demo" element={<DashboardPage />} />
       </Route>
 
       {/* Admin Routes */}

@@ -76,7 +76,7 @@ const LandingPage = () => {
                             <button onClick={() => navigate('/contactus')} className="w-full sm:w-auto bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-xl shadow-primary/30 hover:shadow-2xl hover:shadow-primary/40 active:scale-95 flex items-center justify-center gap-2">
                                 Start Free Trial <ArrowRight size={20} />
                             </button>
-                            <button onClick={() => alert("Demo is not available yet, contact us for more details")} className="w-full sm:w-auto bg-surface text-foreground border border-border px-8 py-4 rounded-xl font-bold text-lg hover:bg-muted transition-all active:scale-95 flex items-center justify-center gap-2">
+                            <button onClick={() => navigate('/demo')} className="w-full sm:w-auto bg-surface text-foreground border border-border px-8 py-4 rounded-xl font-bold text-lg hover:bg-muted transition-all active:scale-95 flex items-center justify-center gap-2">
                                 View Demo <ArrowRight size={20} />
                             </button>
                         </div>

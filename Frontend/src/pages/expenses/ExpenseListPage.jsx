@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getExpense, deleteExpense } from '../../services/expenseServices.js';
 import { Trash2, Search, Banknote, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,13 @@ import toast from 'react-hot-toast';
 import Loader from '../loader/loader.jsx';
 import { useLoading } from '../../components/Context/LoadingContext';
 
+
 const ExpenseListPage = () => {
+  const demoData = [
+    { _id: 1, title: "Demo Expense 1", amount: 100, description: "Demo Expense", createdAt: new Date() },
+    { _id: 2, title: "Demo Expense 2", amount: 200, description: "Demo Expense", createdAt: new Date() },
+    { _id: 3, title: "Demo Expense 3", amount: 300, description: "Demo Expense", createdAt: new Date() },
+  ];
   const navigate = useNavigate();
   const { isLoading, setIsLoading } = useLoading();
   const [expenseList, setExpenseList] = useState([]);
@@ -17,7 +23,15 @@ const ExpenseListPage = () => {
   const [startDate, setStartDate] = useState(formatDate(new Date(new Date().setMonth(new Date().getMonth(), 1))));
   const [endDate, setEndDate] = useState(formatDate(new Date()));
 
-  const fetchExpenses = async () => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isDemo = user?.isdemo;
+
+  const fetchExpenses = useCallback(async () => {
+    if (isDemo) {
+      setExpenseList(demoData);
+      setNoOfExpenses(demoData.length);
+      return;
+    }
     try {
       setIsLoading(true);
       const body = {
@@ -36,17 +50,24 @@ const ExpenseListPage = () => {
       console.error("Failed to refresh expenses", err);
     }
     setIsLoading(false);
-  };
+  }, [startDate, endDate, isDemo]);
 
-  useEffect(() => {
-    fetchExpenses();
-  }, []);
+  // useEffect(() => {
+  //   if (isDemo) {
+  //     return;
+  //   }
+  //   fetchExpenses();
+  // }, []);
 
   useEffect(() => {
     fetchExpenses();
   }, [startDate, endDate]);
 
   const handleDelete = async (e) => {
+    if (isDemo) {
+      toast.error("In demo mode, can't delete expense")
+      return;
+    }
     try {
       if (confirm("Are you really want to delete this?")) {
         const res = await deleteExpense(e._id);
@@ -81,6 +102,7 @@ const ExpenseListPage = () => {
         </div>
         <button
           onClick={() => navigate('/expenses/new')}
+          disabled={isDemo}
           className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2.5 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
         >
           <Banknote size={18} /> Add Expense
@@ -92,7 +114,7 @@ const ExpenseListPage = () => {
         <div className="flex flex-wrap gap-3 items-center justify-between p-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
           <div className="flex items-center justify-center flex-wrap w-full lg:w-auto gap-4">
             <div className="flex items-center gap-2 bg-[var(--color-surface)] px-2 py-1.5 rounded-xl border border-[var(--color-border)]">
-              <Calendar size={16} className="text-[var(--color-primary)]" />
+              <Calendar disabled={isDemo} size={16} className="text-[var(--color-primary)]" />
               <span className="text-sm font-medium text-[var(--color-muted-foreground)]">From:</span>
               <input
                 type="date"
@@ -102,7 +124,7 @@ const ExpenseListPage = () => {
               />
             </div>
             <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-1.5 rounded-xl border border-[var(--color-border)]">
-              <Calendar size={16} className="text-[var(--color-primary)]" />
+              <Calendar disabled={isDemo} size={16} className="text-[var(--color-primary)]" />
               <span className="text-sm font-medium text-[var(--color-muted-foreground)]">To:</span>
               <input
                 type="date"

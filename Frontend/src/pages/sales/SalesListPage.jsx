@@ -8,6 +8,84 @@ import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx"
 import { useLoading } from "../../components/Context/LoadingContext";
 
+const dummySaleData = [
+  {
+    _id: "1",
+    customerName: "Haroon",
+    createdAt: "2022-01-01",
+    totalAmount: 70,
+    items: [
+      {
+        name: "Product 1",
+        price: 10,
+        quantity: 5,
+      },
+      {
+        name: "Product 2",
+        price: 20,
+        quantity: 1,
+      },
+    ],
+  },
+  {
+    _id: "2",
+    customerName: "Fahad",
+    createdAt: "2022-01-02",
+    totalAmount: 140,
+    items: [
+      {
+        name: "Product 1",
+        price: 10,
+        quantity: 2,
+      },
+      {
+        name: "Product 2",
+        price: 20,
+        quantity: 5,
+      },
+    ],
+  },
+];
+
+const dummyPurchaseData = [
+  {
+    _id: "1",
+    supplierName: "Haroon",
+    createdAt: "2022-01-01",
+    items: [
+      {
+        name: "Product 1",
+        purchasePrice: 10,
+        quantity: 5,
+      },
+      {
+        name: "Product 2",
+        purchasePrice: 20,
+        quantity: 1,
+      },
+    ],
+    total: 70,
+  },
+  {
+    _id: "2",
+    supplierName: "Fahad",
+    createdAt: "2022-01-02",
+    items: [
+      {
+        name: "Product 1",
+        purchasePrice: 10,
+        quantity: 2,
+      },
+      {
+        name: "Product 2",
+        purchasePrice: 20,
+        quantity: 5,
+      },
+    ],
+    total: 140,
+  },
+];
+
 const SalesListPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,7 +105,14 @@ const SalesListPage = () => {
 
   const [type, setType] = useState();
 
+  const user = JSON.parse(localStorage.getItem("user"));
+  const isDemo = user?.isdemo === true;
+
   const fetchSales = async () => {
+    if (isDemo) {
+      setSales(dummySaleData);
+      return;
+    }
     try {
       setIsLoading(true);
       const body = {
@@ -54,6 +139,10 @@ const SalesListPage = () => {
   };
 
   const fetchPurchase = async () => {
+    if (isDemo) {
+      setPurchases(dummyPurchaseData);
+      return;
+    }
     try {
       setIsLoading(true);
       const body = {
@@ -98,6 +187,10 @@ const SalesListPage = () => {
   }, [startDate, endDate]);
 
   const handleViewDetails = (sale) => {
+    // if (isDemo) {
+    //   toast.error("Demo mode is enabled");
+    //   return;
+    // }
     setSelectedSale(sale);
     setShowDetails(true);
   };
@@ -186,6 +279,7 @@ const SalesListPage = () => {
               {data.map((item) => (
                 <tr
                   onClick={() => handleViewDetails(item)}
+                  // disabled={isDemo}
                   key={item._id}
                   className="hover:bg-[var(--color-muted)] transition-colors duration-200"
                 >
@@ -210,6 +304,7 @@ const SalesListPage = () => {
                   <td className="px-4 py-2 flex justify-center gap-3">
                     <button
                       onClick={() => handleDelete(item)}
+                      disabled={isDemo}
                       className="p-2 rounded-lg bg-red-500/10 md:bg-red-500/0 text-red-500 hover:bg-red-500 hover:text-white transition-all"
                       title="Delete Record"
                     >
@@ -236,6 +331,7 @@ const SalesListPage = () => {
           </div>
         </div>
         <button
+          disabled={isDemo}
           className="px-6 py-2.5 w-full md:w-auto bg-[var(--color-primary)] hover:brightness-110 transition-all text-[var(--color-primary-foreground)] rounded-xl flex items-center justify-center gap-2 font-bold shadow-lg shadow-[var(--color-primary)]/20 active:scale-95"
           onClick={() => {
             type === "sale" && navigate("/sales/new")

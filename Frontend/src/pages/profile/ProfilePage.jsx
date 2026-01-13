@@ -39,7 +39,13 @@ const ProfilePage = () => {
     const [loading, setLoading] = useState(false);
     const user = JSON.parse(localStorage.getItem("user")) || {};
 
+    const isDemo = user?.isdemo === true;
+
     const handleDelete = async () => {
+        if (isDemo) {
+            toast.success("Demo Mode: Profile deleted successfully!");
+            return;
+        }
         setLoading(true);
         try {
             const deleted = await deleteProfile();
@@ -169,6 +175,7 @@ const ProfilePage = () => {
                         </button>
                         <button
                             onClick={handleEdit}
+                            disabled={isDemo}
                             className="w-full flex items-center justify-center gap-2 rounded-2xl bg-[var(--color-primary)] px-6 py-3.5 text-[var(--color-primary-foreground)] font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
                         >
                             <Edit2 size={18} /> Edit Profile

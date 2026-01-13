@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useRef } from "react";
 
 const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
+    const isDemo = JSON.parse(localStorage.getItem("user"))?.isdemo;
     if (!selected) return null;
     const invoiceRef = useRef();
     console.log(selected);
@@ -196,6 +197,7 @@ const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
                         <Download size={16} title="Download" /> Download
                     </button>
                     <button
+                        disabled={isDemo}
                         onClick={() => { navigator.clipboard.writeText(qrCodeUrl); toast.success("Invoice link copied to clipboard") }}
                         className="px-5 py-2 flex items-center gap-2 rounded-lg bg-yellow-100 text-yellow-600 hover:bg-yellow-500 hover:text-white transition"
                     >
@@ -204,6 +206,7 @@ const SaleInvoice = ({ selected, handleClose, type, handleDelete }) => {
                     <div className={`flex gap-2 ${isPublic ? "hidden" : ""}`}>
                         <button
                             onClick={handleDelete}
+                            disabled={isDemo}
                             className="px-5 py-2 flex items-center gap-2 rounded-lg bg-red-100 text-red-600 hover:bg-red-500 hover:text-white transition"
                         >
                             <Trash2 size={16} title="Delete" /> Delete

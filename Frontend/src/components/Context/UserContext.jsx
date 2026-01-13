@@ -14,7 +14,8 @@ export const UserProvider = ({ children }) => {
             shopname: "",
             address: "",
             phone: "",
-            createdAt: ""
+            createdAt: "",
+            isdemo: false
         };
     });
 
