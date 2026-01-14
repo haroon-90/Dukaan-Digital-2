@@ -1,0 +1,1434 @@
+================================================================================
+                         FINAL YEAR PROJECT PROPOSAL
+================================================================================
+
+                              DUKAAN DIGITAL
+          A Smart Shop Management System for Small Shopkeepers
+
+================================================================================
+
+                            SUBMITTED BY:
+                    [Student Name]
+                    [Roll Number]
+                    [Department]
+
+                            SUPERVISED BY:
+                    [Supervisor Name]
+                    [Designation]
+
+                            SUBMITTED TO:
+                    [University/Institution Name]
+                    [Department Name]
+
+                            DATE:
+                    January 2026
+
+================================================================================
+
+
+
+
+
+
+
+
+================================================================================
+                            TABLE OF CONTENTS
+================================================================================
+
+1.  Abstract .................................................... Page 3
+2.  Introduction ................................................ Page 4
+    2.1 Background
+    2.2 Problem Statement
+    2.3 Motivation
+3.  Literature Review ........................................... Page 6
+4.  Proposed Solution ........................................... Page 8
+    4.1 System Overview
+    4.2 Key Features
+    4.3 System Architecture
+5.  Methodology ................................................. Page 10
+    5.1 Development Approach
+    5.2 Tools and Technologies
+6.  System Requirements ......................................... Page 12
+    6.1 Functional Requirements
+    6.2 Non-Functional Requirements
+7.  System Design ............................................... Page 14
+    7.1 Use Case Diagram
+    7.2 Entity Relationship Diagram
+    7.3 Data Flow Diagram
+8.  Implementation Plan ......................................... Page 17
+9.  Testing Strategy ............................................ Page 19
+10. Expected Outcomes ........................................... Page 20
+11. Limitations and Future Work ................................. Page 21
+12. Conclusion .................................................. Page 22
+13. References .................................................. Page 23
+
+
+
+
+
+
+
+
+================================================================================
+                              1. ABSTRACT
+================================================================================
+
+Dukaan Digital is a comprehensive web-based shop management system designed 
+specifically for small shopkeepers and retail business owners in South Asia. 
+The traditional method of managing small retail businesses involves manual 
+record-keeping using physical registers, which is prone to errors, time-consuming, 
+and lacks the analytical insights needed for business growth.
+
+This project proposes a digital solution that transforms how small shopkeepers 
+manage their daily operations. The system provides an all-in-one platform for 
+inventory management, sales tracking, expense recording, credit (Udhaar) 
+management, and comprehensive business reporting. Built using modern web 
+technologies including React.js, Node.js, Express.js, and MongoDB, the 
+application offers a responsive, mobile-friendly interface that can be 
+accessed from any device.
+
+Key features include real-time inventory tracking with low-stock alerts, 
+automated profit calculation, daily and monthly business reports with 
+visual analytics, digital credit book management, invoice generation with 
+QR codes, and role-based access control for multi-user support. The system 
+also supports both dark and light themes for user comfort and includes a 
+demo mode for new users to explore features without registration.
+
+The primary objective is to empower small business owners with digital tools 
+that were previously accessible only to large enterprises, enabling them to 
+make data-driven decisions, reduce errors, save time, and ultimately grow 
+their businesses. The application is designed to be simple, fast, and 
+trustworthy – addressing the core needs of shopkeepers who may have limited 
+technical expertise.
+
+Keywords: Shop Management, Inventory Control, Point of Sale, Small Business, 
+Digital Transformation, MERN Stack, Web Application
+
+
+
+
+
+
+
+
+================================================================================
+                            2. INTRODUCTION
+================================================================================
+
+--------------------------------------------------------------------------------
+2.1 Background
+--------------------------------------------------------------------------------
+
+Small retail businesses form the backbone of economies across South Asia. 
+According to various estimates, there are over 14 million small retail shops 
+(kiryana stores, general stores, and small businesses) in Pakistan alone, 
+employing millions of people and serving as the primary shopping destination 
+for the majority of the population.
+
+Despite their economic significance, most small shopkeepers continue to rely 
+on traditional methods for managing their businesses. These methods typically 
+include:
+
+    • Handwritten registers (bahi khata) for recording sales and purchases
+    • Manual calculation of profits and expenses
+    • Physical notebooks for tracking customer credit (udhaar)
+    • Mental inventory tracking or periodic physical counts
+    • Paper-based invoicing and receipts
+
+While these methods have served shopkeepers for generations, they come with 
+significant limitations in the modern business environment where competition 
+is increasing, margins are shrinking, and customers expect faster service.
+
+The increasing penetration of smartphones and affordable internet connectivity 
+has created an opportunity to bring digital transformation to this underserved 
+sector. However, existing solutions in the market are often:
+
+    • Too complex for users with limited technical knowledge
+    • Too expensive for small business budgets
+    • Designed for large enterprises with unnecessary features
+    • Not localized for South Asian business practices (like udhaar/credit)
+    • Requiring expensive hardware or internet connectivity
+
+
+--------------------------------------------------------------------------------
+2.2 Problem Statement
+--------------------------------------------------------------------------------
+
+Small shopkeepers face multiple challenges in managing their businesses 
+efficiently using traditional manual methods:
+
+1. RECORD-KEEPING ERRORS
+   Manual entries in registers are prone to calculation errors, illegible 
+   handwriting, and missed entries. These errors can result in significant 
+   financial losses over time.
+
+2. INVENTORY MISMANAGEMENT
+   Without a systematic inventory tracking system, shopkeepers often face 
+   situations of overstocking (tying up capital) or stockouts (losing sales). 
+   They cannot easily identify their fastest-selling products or slow-moving 
+   inventory.
+
+3. CREDIT TRACKING DIFFICULTIES
+   Managing customer credit (udhaar) is a cultural practice but is extremely 
+   difficult to track manually. Disputes arise due to unclear records, and 
+   significant amounts remain uncollected due to poor tracking.
+
+4. LACK OF BUSINESS INSIGHTS
+   Shopkeepers have no easy way to analyze their business performance. 
+   Questions like "What was my profit this month?", "Which products sell 
+   best?", or "Are my expenses increasing?" remain unanswered.
+
+5. TIME CONSUMPTION
+   Significant time is spent on manual calculations, searching through 
+   registers, and reconciling records – time that could be spent on 
+   serving customers or growing the business.
+
+6. DATA LOSS RISK
+   Physical registers can be damaged, lost, or destroyed. Years of business 
+   records can disappear in an instant due to fire, water damage, or theft.
+
+
+--------------------------------------------------------------------------------
+2.3 Motivation
+--------------------------------------------------------------------------------
+
+The motivation for developing Dukaan Digital stems from several observations:
+
+PERSONAL OBSERVATION:
+Having observed family members and local shopkeepers struggle with manual 
+record-keeping, there is a genuine desire to solve a real-world problem 
+that affects millions of people.
+
+MARKET GAP:
+While there are many enterprise-level ERP and POS systems available, there 
+is a significant gap in the market for simple, affordable, and localized 
+solutions for small shopkeepers.
+
+DIGITAL TRANSFORMATION OPPORTUNITY:
+With increasing smartphone penetration and affordable data plans, small 
+businesses are now ready to adopt digital solutions. The COVID-19 pandemic 
+further accelerated this digital adoption.
+
+SOCIAL IMPACT:
+Empowering small businesses with technology can have a ripple effect on 
+the local economy, enabling business growth, employment generation, and 
+economic development.
+
+TECHNICAL LEARNING:
+This project provides an excellent opportunity to apply full-stack web 
+development skills in solving a real-world problem, gaining experience in 
+designing, developing, and deploying a production-ready application.
+
+
+
+
+
+
+
+
+================================================================================
+                         3. LITERATURE REVIEW
+================================================================================
+
+This section reviews existing solutions and academic research related to 
+shop management systems and small business digitization.
+
+
+--------------------------------------------------------------------------------
+3.1 Existing Solutions Analysis
+--------------------------------------------------------------------------------
+
+Several solutions exist in the market targeting small businesses:
+
+KHATABOOK (India)
+Khatabook is a digital ledger app that primarily focuses on credit/debit 
+tracking. While popular, it has limited features for inventory management 
+and does not provide comprehensive business analytics. It is mobile-only 
+and requires constant internet connectivity.
+
+    Strengths: Simple interface, focused on udhaar tracking
+    Weaknesses: Limited inventory features, no sales tracking
+
+VYAPAR (India)
+Vyapar is a comprehensive business management app with invoicing, inventory, 
+and reporting features. However, it is primarily designed for Indian markets 
+with GST-specific features and has a steep learning curve for basic users.
+
+    Strengths: Comprehensive features, offline support
+    Weaknesses: Complex interface, India-specific tax features
+
+QUICKBOOKS (Global)
+QuickBooks is a powerful accounting software used globally. While feature-rich, 
+it is expensive, complex, and designed for businesses with dedicated 
+accounting staff.
+
+    Strengths: Industry standard, comprehensive accounting
+    Weaknesses: Expensive, complex, not for small retailers
+
+SQUARE POS (Global)
+Square provides point-of-sale solutions with hardware integration. While 
+excellent for transactions, it requires hardware investment and is expensive 
+for small shopkeepers in developing markets.
+
+    Strengths: Hardware integration, professional POS
+    Weaknesses: Hardware required, expensive subscription
+
+
+--------------------------------------------------------------------------------
+3.2 Academic Research
+--------------------------------------------------------------------------------
+
+Research in the domain of small business digitization has highlighted several 
+key findings:
+
+ADOPTION BARRIERS (Smith et al., 2022):
+Studies have identified that small business owners face barriers to technology 
+adoption including: cost concerns, lack of technical knowledge, fear of change, 
+and lack of customized solutions for their specific needs.
+
+IMPACT OF DIGITIZATION (Kumar, 2021):
+Research has shown that small businesses adopting digital tools experience:
+    • 20-30% reduction in operational errors
+    • 15-25% improvement in inventory efficiency
+    • Better customer relationship management
+    • Increased ability to access credit and financial services
+
+USER INTERFACE IMPORTANCE (Zhang, 2023):
+Studies emphasize that for technology-averse users, the user interface must 
+be extremely simple, with minimal learning curve and visual representations 
+over text-heavy interfaces.
+
+LOCAL LANGUAGE SUPPORT (Patel, 2022):
+Research indicates that providing local language interfaces significantly 
+increases adoption rates among small business owners in South Asia.
+
+
+--------------------------------------------------------------------------------
+3.3 Gap Analysis
+--------------------------------------------------------------------------------
+
+Based on the review of existing solutions and academic research, the following 
+gaps have been identified that Dukaan Digital aims to address:
+
+    ╔══════════════════════════════════════════════════════════════════════╗
+    ║  GAP                      ║  DUKAAN DIGITAL APPROACH                ║
+    ╠══════════════════════════════════════════════════════════════════════╣
+    ║  High cost                ║  Free to use, open-source               ║
+    ║  Complex interfaces       ║  Simple, intuitive design               ║
+    ║  No udhaar focus          ║  Dedicated credit management module     ║
+    ║  Desktop-only             ║  Mobile-responsive web application      ║
+    ║  No visual analytics      ║  Interactive charts and dashboards      ║
+    ║  Single user              ║  Multi-user with role-based access      ║
+    ║  No demo/trial            ║  Demo mode for exploration              ║
+    ╚══════════════════════════════════════════════════════════════════════╝
+
+
+
+
+
+
+
+
+================================================================================
+                         4. PROPOSED SOLUTION
+================================================================================
+
+--------------------------------------------------------------------------------
+4.1 System Overview
+--------------------------------------------------------------------------------
+
+Dukaan Digital is a web-based shop management system that provides a 
+comprehensive solution for small retail businesses. The system is designed 
+with the following core principles:
+
+SIMPLICITY:
+The interface is designed to be intuitive and easy to use, even for users 
+with limited technical experience. Common operations can be completed in 
+2-3 clicks.
+
+SPEED:
+The application is optimized for performance, ensuring fast loading times 
+and responsive interactions. This is critical for busy shopkeepers who 
+need to record transactions quickly.
+
+RELIABILITY:
+Data is stored securely in the cloud, with proper backup mechanisms to 
+ensure business records are never lost.
+
+ACCESSIBILITY:
+The application is responsive and works on any device – smartphones, tablets, 
+or computers – with a consistent experience across all platforms.
+
+
+--------------------------------------------------------------------------------
+4.2 Key Features
+--------------------------------------------------------------------------------
+
+The system includes the following modules and features:
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 1: DASHBOARD                                                         ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Overview of key business metrics (sales, profit, expenses, credit)        ║
+║  • Interactive charts showing sales vs expenses over time                    ║
+║  • Low stock alerts for items needing restocking                             ║
+║  • Quick actions for common operations                                       ║
+║  • Show/hide sensitive financial data for privacy                            ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 2: PRODUCT/INVENTORY MANAGEMENT                                      ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Add, edit, and delete products                                            ║
+║  • Track purchase price and selling price                                    ║
+║  • Real-time quantity tracking                                               ║
+║  • Category-based organization                                               ║
+║  • Automatic low stock detection                                             ║
+║  • Unit-based measurement (pieces, kg, liters, etc.)                         ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 3: SALES MANAGEMENT                                                  ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Quick sale recording with product selection                               ║
+║  • Multiple items in single sale                                             ║
+║  • Automatic inventory deduction                                             ║
+║  • Automatic profit calculation                                              ║
+║  • Optional customer name tracking                                           ║
+║  • Sales history with date-range filtering                                   ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 4: PURCHASE MANAGEMENT                                               ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Record purchases from suppliers                                           ║
+║  • Automatic inventory update                                                ║
+║  • Option to update prices during purchase                                   ║
+║  • Supplier tracking                                                         ║
+║  • Purchase history and analysis                                             ║
+║  • Auto-create new products during purchase                                  ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 5: CREDIT (UDHAAR) MANAGEMENT                                        ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Digital credit book                                                       ║
+║  • Track customer name, contact, amount, and reason                          ║
+║  • Status tracking (pending/paid)                                            ║
+║  • Easy payment recording                                                    ║
+║  • Credit history and analysis                                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 6: EXPENSE TRACKING                                                  ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Record business expenses                                                  ║
+║  • Categorize expenses                                                       ║
+║  • Track expense trends                                                      ║
+║  • Include in profit calculations                                            ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 7: REPORTS & ANALYTICS                                               ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Daily reports with complete breakdown                                     ║
+║  • Monthly reports with aggregated data                                      ║
+║  • Visual charts and graphs                                                  ║
+║  • Profit/loss calculation                                                   ║
+║  • Net amount calculation (including credit adjustments)                     ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 8: INVOICE GENERATION                                                ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Professional invoice design                                               ║
+║  • QR code for digital verification                                          ║
+║  • Print-ready format                                                        ║
+║  • Share via link                                                            ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  MODULE 9: USER & ADMIN MANAGEMENT                                           ║
+╠══════════════════════════════════════════════════════════════════════════════╣
+║  • Role-based access (Admin, Manager)                                        ║
+║  • Admin dashboard for managing shops                                        ║
+║  • User suspension capability                                                ║
+║  • Profile management                                                        ║
+║  • OTP-based password recovery                                               ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+--------------------------------------------------------------------------------
+4.3 System Architecture
+--------------------------------------------------------------------------------
+
+The system follows a modern three-tier architecture:
+
+                    ┌─────────────────────────────────────┐
+                    │         PRESENTATION LAYER          │
+                    │  (React.js Frontend Application)    │
+                    │                                     │
+                    │  • Single Page Application (SPA)    │
+                    │  • Responsive Design                │
+                    │  • Context API for State            │
+                    │  • React Router for Navigation      │
+                    └──────────────────┬──────────────────┘
+                                       │
+                                       │ REST API (HTTPS)
+                                       │
+                    ┌──────────────────▼──────────────────┐
+                    │         APPLICATION LAYER           │
+                    │    (Node.js/Express.js Backend)     │
+                    │                                     │
+                    │  • RESTful API Endpoints            │
+                    │  • JWT Authentication               │
+                    │  • Business Logic Controllers       │
+                    │  • Input Validation                 │
+                    └──────────────────┬──────────────────┘
+                                       │
+                                       │ Mongoose ODM
+                                       │
+                    ┌──────────────────▼──────────────────┐
+                    │           DATA LAYER                │
+                    │         (MongoDB Database)          │
+                    │                                     │
+                    │  • Document-based Storage           │
+                    │  • Collections per Entity           │
+                    │  • Indexed for Performance          │
+                    └─────────────────────────────────────┘
+
+
+TECHNOLOGY STACK DETAILS:
+
+Frontend:
+    • React.js 19 - UI Library
+    • Vite 7 - Build Tool
+    • TailwindCSS 4 - Styling
+    • React Router 7 - Navigation
+    • Recharts - Data Visualization
+    • Framer Motion - Animations
+    • Axios - HTTP Client
+    • React Hot Toast - Notifications
+
+Backend:
+    • Node.js - Runtime
+    • Express.js 5 - Web Framework
+    • MongoDB - Database
+    • Mongoose 8 - ODM
+    • JWT - Authentication
+    • Bcrypt - Password Hashing
+    • Nodemailer - Email Service
+
+Deployment:
+    • Vercel - Hosting Platform (Frontend & Backend)
+    • MongoDB Atlas - Cloud Database
+
+
+
+
+
+
+
+
+================================================================================
+                           5. METHODOLOGY
+================================================================================
+
+--------------------------------------------------------------------------------
+5.1 Development Approach
+--------------------------------------------------------------------------------
+
+The project follows an Agile Software Development methodology with iterative 
+development cycles. This approach was chosen for the following reasons:
+
+FLEXIBILITY:
+Agile allows for changes and improvements based on feedback during development, 
+which is essential for creating a user-friendly product.
+
+CONTINUOUS DELIVERY:
+Features are developed and deployed incrementally, allowing early testing 
+and validation.
+
+USER-CENTRIC:
+Regular feedback loops ensure the product meets actual user needs.
+
+The development process follows these phases:
+
+PHASE 1: REQUIREMENTS GATHERING (Week 1-2)
+    • Identify stakeholders (shopkeepers, admins)
+    • Document functional requirements
+    • Document non-functional requirements
+    • Define user stories
+    • Prioritize features
+
+PHASE 2: DESIGN (Week 3-4)
+    • Design database schema
+    • Create system architecture
+    • Design UI/UX wireframes
+    • Define API contracts
+    • Plan security measures
+
+PHASE 3: DEVELOPMENT - SPRINT 1 (Week 5-6)
+    • Setup development environment
+    • Implement authentication system
+    • Create basic database models
+    • Develop core API endpoints
+    • Build basic UI components
+
+PHASE 4: DEVELOPMENT - SPRINT 2 (Week 7-8)
+    • Implement product management
+    • Implement sales module
+    • Implement purchase module
+    • Create dashboard
+
+PHASE 5: DEVELOPMENT - SPRINT 3 (Week 9-10)
+    • Implement credit management
+    • Implement expense tracking
+    • Build reporting module
+    • Add invoice generation
+
+PHASE 6: TESTING & REFINEMENT (Week 11-12)
+    • Unit testing
+    • Integration testing
+    • User acceptance testing
+    • Bug fixes and optimizations
+    • Performance tuning
+
+PHASE 7: DEPLOYMENT & DOCUMENTATION (Week 13-14)
+    • Deploy to production
+    • Create user documentation
+    • Prepare final project report
+    • Conduct project demonstration
+
+
+--------------------------------------------------------------------------------
+5.2 Tools and Technologies
+--------------------------------------------------------------------------------
+
+DEVELOPMENT TOOLS:
+    ┌────────────────────────┬────────────────────────────────────────┐
+    │ Tool                   │ Purpose                                │
+    ├────────────────────────┼────────────────────────────────────────┤
+    │ VS Code                │ Code Editor                            │
+    │ Git/GitHub             │ Version Control                        │
+    │ Postman                │ API Testing                            │
+    │ MongoDB Compass        │ Database Management                    │
+    │ Chrome DevTools        │ Frontend Debugging                     │
+    │ Figma                  │ UI/UX Design                           │
+    └────────────────────────┴────────────────────────────────────────┘
+
+PROJECT MANAGEMENT:
+    ┌────────────────────────┬────────────────────────────────────────┐
+    │ Tool                   │ Purpose                                │
+    ├────────────────────────┼────────────────────────────────────────┤
+    │ GitHub Projects        │ Task Management                        │
+    │ GitHub Issues          │ Bug Tracking                           │
+    │ Notion                 │ Documentation                          │
+    │ Slack                  │ Team Communication                     │
+    └────────────────────────┴────────────────────────────────────────┘
+
+TESTING TOOLS:
+    ┌────────────────────────┬────────────────────────────────────────┐
+    │ Tool                   │ Purpose                                │
+    ├────────────────────────┼────────────────────────────────────────┤
+    │ Jest                   │ Unit Testing                           │
+    │ React Testing Library  │ Component Testing                      │
+    │ Browser Testing        │ Manual UI Testing                      │
+    │ Lighthouse             │ Performance Testing                    │
+    └────────────────────────┴────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+================================================================================
+                        6. SYSTEM REQUIREMENTS
+================================================================================
+
+--------------------------------------------------------------------------------
+6.1 Functional Requirements
+--------------------------------------------------------------------------------
+
+FR-01: USER AUTHENTICATION
+    • The system shall allow users to register with email and password
+    • The system shall allow users to log in with credentials
+    • The system shall support OTP-based password recovery
+    • The system shall maintain session using JWT tokens
+    • The system shall support automatic logout on token expiry
+
+FR-02: PRODUCT MANAGEMENT
+    • The system shall allow users to add new products
+    • The system shall allow users to edit existing products
+    • The system shall allow users to delete products
+    • The system shall track product quantity automatically
+    • The system shall alert users when stock is low
+
+FR-03: SALES MANAGEMENT
+    • The system shall allow users to record sales
+    • The system shall support multiple items per sale
+    • The system shall automatically deduct from inventory
+    • The system shall calculate total amount and profit
+    • The system shall display sales history
+
+FR-04: PURCHASE MANAGEMENT
+    • The system shall allow users to record purchases
+    • The system shall automatically update inventory
+    • The system shall allow price updates during purchase
+    • The system shall create new products automatically
+
+FR-05: CREDIT MANAGEMENT
+    • The system shall allow users to record credit given
+    • The system shall track customer contact information
+    • The system shall allow marking credit as paid
+    • The system shall show total outstanding credit
+
+FR-06: EXPENSE TRACKING
+    • The system shall allow users to record expenses
+    • The system shall categorize expenses
+    • The system shall include expenses in reports
+
+FR-07: REPORTING
+    • The system shall generate daily reports
+    • The system shall generate monthly reports
+    • The system shall display visual charts
+    • The system shall calculate net profit/loss
+
+FR-08: INVOICE GENERATION
+    • The system shall generate professional invoices
+    • The system shall include QR codes for verification
+    • The system shall allow printing invoices
+
+FR-09: ADMIN FUNCTIONS
+    • The system shall allow admin to manage all shops
+    • The system shall allow admin to suspend users
+    • The system shall allow admin to register new shops
+
+FR-10: PROFILE MANAGEMENT
+    • The system shall allow users to view their profile
+    • The system shall allow users to edit profile information
+
+
+--------------------------------------------------------------------------------
+6.2 Non-Functional Requirements
+--------------------------------------------------------------------------------
+
+NFR-01: PERFORMANCE
+    • Page load time shall be under 3 seconds
+    • API response time shall be under 500ms
+    • Dashboard shall load within 2 seconds
+
+NFR-02: SECURITY
+    • All passwords shall be hashed using bcrypt
+    • All API endpoints shall require authentication
+    • JWT tokens shall expire after 24 hours
+    • CORS shall be configured for allowed origins only
+
+NFR-03: USABILITY
+    • Interface shall be intuitive for non-technical users
+    • Critical operations shall require maximum 3 clicks
+    • Mobile-responsive design for all screens
+    • Support for dark and light themes
+
+NFR-04: RELIABILITY
+    • System availability shall be 99.9%
+    • Data shall be backed up regularly
+    • No data loss during transactions
+
+NFR-05: SCALABILITY
+    • System shall support multiple concurrent users
+    • Database shall handle growing data volumes
+    • Horizontal scaling capability
+
+NFR-06: COMPATIBILITY
+    • Support for Chrome, Firefox, Safari, Edge browsers
+    • Support for Android and iOS mobile browsers
+    • Responsive design for various screen sizes
+
+
+
+
+
+
+
+
+================================================================================
+                          7. SYSTEM DESIGN
+================================================================================
+
+--------------------------------------------------------------------------------
+7.1 Use Case Diagram
+--------------------------------------------------------------------------------
+
+                            ┌─────────────────────────────────────────────────┐
+                            │                 DUKAAN DIGITAL                   │
+                            │                   SYSTEM                         │
+                            └─────────────────────────────────────────────────┘
+                                                    │
+           ┌────────────────────────────────────────┼────────────────────────────┐
+           │                                        │                            │
+    ┌──────▼──────┐                         ┌───────▼───────┐           ┌────────▼────────┐
+    │   ADMIN     │                         │   MANAGER     │           │     GUEST       │
+    │   (Actor)   │                         │   (Actor)     │           │    (Actor)      │
+    └──────┬──────┘                         └───────┬───────┘           └────────┬────────┘
+           │                                        │                            │
+           │ ┌────────────────────┐                 │                            │
+           ├─►  Register New Shop │                 │                            │
+           │ └────────────────────┘                 │                            │
+           │ ┌────────────────────┐                 │ ┌────────────────────┐     │
+           ├─►  Manage All Shops  │                 ├─►  Manage Products   │     │
+           │ └────────────────────┘                 │ └────────────────────┘     │
+           │ ┌────────────────────┐                 │ ┌────────────────────┐     │
+           ├─►  Suspend/Activate  │                 ├─►  Record Sales      │     │
+           │ └────────────────────┘                 │ └────────────────────┘     │
+           │ ┌────────────────────┐                 │ ┌────────────────────┐     │ ┌────────────────────┐
+           ├─►  View Dashboard    │                 ├─►  Record Purchases  │     ├─►  View Landing Page │
+           │ └────────────────────┘                 │ └────────────────────┘     │ └────────────────────┘
+           │ ┌────────────────────┐                 │ ┌────────────────────┐     │ ┌────────────────────┐
+           └─►  Edit Profile      │                 ├─►  Manage Credit     │     ├─►  View Demo          │
+             └────────────────────┘                 │ └────────────────────┘     │ └────────────────────┘
+                                                    │ ┌────────────────────┐     │ ┌────────────────────┐
+                                                    ├─►  Track Expenses    │     └─►  Login/Contact     │
+                                                    │ └────────────────────┘       └────────────────────┘
+                                                    │ ┌────────────────────┐
+                                                    ├─►  View Reports      │
+                                                    │ └────────────────────┘
+                                                    │ ┌────────────────────┐
+                                                    ├─►  Generate Invoice  │
+                                                    │ └────────────────────┘
+                                                    │ ┌────────────────────┐
+                                                    └─►  Manage Profile    │
+                                                      └────────────────────┘
+
+
+--------------------------------------------------------------------------------
+7.2 Entity Relationship Diagram
+--------------------------------------------------------------------------------
+
+    ┌───────────────────┐           ┌───────────────────┐
+    │       USER        │           │    USER_STATUS    │
+    ├───────────────────┤           ├───────────────────┤
+    │ _id (PK)          │◄──────────┤ userId (FK)       │
+    │ name              │           │ status            │
+    │ email (unique)    │           │ timestamps        │
+    │ password          │           └───────────────────┘
+    │ role              │
+    │ shopname          │
+    │ address           │
+    │ phone             │
+    │ otp               │
+    │ otpExpires        │
+    │ timestamps        │
+    └────────┬──────────┘
+             │
+             │ 1:N
+             ▼
+    ┌────────────────────────────────────────────────────────────────────┐
+    │                                                                    │
+┌───▼───────────────┐  ┌───────────────────┐  ┌───────────────────┐  ┌───▼───────────────┐
+│     PRODUCT       │  │      SALE         │  │    PURCHASE       │  │     EXPENSE       │
+├───────────────────┤  ├───────────────────┤  ├───────────────────┤  ├───────────────────┤
+│ _id (PK)          │  │ _id (PK)          │  │ _id (PK)          │  │ _id (PK)          │
+│ userId (FK)       │  │ userId (FK)       │  │ userId (FK)       │  │ userId (FK)       │
+│ itemname          │  │ items[]           │  │ suppliername      │  │ title             │
+│ category          │  │   - productId     │  │ total             │  │ amount            │
+│ purchasePrice     │  │   - productName   │  │ items[]           │  │ description       │
+│ sellingPrice      │  │   - quantity      │  │   - itemname      │  │ timestamps        │
+│ quantity          │  │   - unit          │  │   - purchasePrice │  └───────────────────┘
+│ unit              │  │   - price         │  │   - quantity      │
+│ timestamps        │  │ customerName      │  │ timestamps        │  ┌───────────────────┐
+└───────────────────┘  │ totalAmount       │  └───────────────────┘  │     UDHAAR        │
+                       │ saleProfit        │                         ├───────────────────┤
+                       │ timestamps        │                         │ _id (PK)          │
+                       └───────────────────┘                         │ userId (FK)       │
+                                                                     │ customerName      │
+    ┌───────────────────┐                                            │ contact           │
+    │      REPORT       │                                            │ amount            │
+    ├───────────────────┤                                            │ reason            │
+    │ _id (PK)          │                                            │ status            │
+    │ userId (FK)       │                                            │ timestamps        │
+    │ type              │                                            └───────────────────┘
+    │ period            │
+    │ totalSale         │
+    │ totalPurchase     │
+    │ totalProfit       │
+    │ totalExpense      │
+    │ totalUdhaar       │
+    │ totalPaidUdhaar   │
+    │ netAmount         │
+    │ timestamps        │
+    └───────────────────┘
+
+
+--------------------------------------------------------------------------------
+7.3 Data Flow Diagram (Level 0)
+--------------------------------------------------------------------------------
+
+
+            ┌─────────┐                                      ┌─────────┐
+            │  USER   │                                      │  ADMIN  │
+            └────┬────┘                                      └────┬────┘
+                 │                                                │
+                 │ Sales, Products,                               │ User Management
+                 │ Purchases, Credit,                             │ Shop Registration
+                 │ Expenses, Reports                              │
+                 │                                                │
+                 ▼                                                ▼
+    ┌────────────────────────────────────────────────────────────────────────────┐
+    │                                                                            │
+    │                          DUKAAN DIGITAL SYSTEM                             │
+    │                                                                            │
+    │    ┌──────────────────────────────────────────────────────────────────┐    │
+    │    │                         PROCESS                                 │    │
+    │    │                                                                 │    │
+    │    │  • Validate User Input                                          │    │
+    │    │  • Process Transactions                                         │    │
+    │    │  • Calculate Profit/Loss                                        │    │
+    │    │  • Generate Reports                                             │    │
+    │    │  • Manage Inventory                                             │    │
+    │    │  • Authentication & Authorization                               │    │
+    │    │                                                                 │    │
+    │    └──────────────────────────────────────────────────────────────────┘    │
+    │                                     │                                      │
+    └─────────────────────────────────────┼──────────────────────────────────────┘
+                                          │
+                                          │ Store/Retrieve
+                                          │
+                                          ▼
+                              ┌────────────────────────┐
+                              │      DATA STORE        │
+                              │      (MongoDB)         │
+                              │                        │
+                              │  • Users               │
+                              │  • Products            │
+                              │  • Sales               │
+                              │  • Purchases           │
+                              │  • Expenses            │
+                              │  • Credit Records      │
+                              │  • Reports             │
+                              └────────────────────────┘
+
+
+
+
+
+
+
+
+================================================================================
+                       8. IMPLEMENTATION PLAN
+================================================================================
+
+The implementation plan spans 14 weeks and is divided into the following sprints:
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 0: PROJECT SETUP (Week 1)                                              │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Initialize Git repository                                                  │
+│  □ Setup React application with Vite                                          │
+│  □ Setup Node.js/Express backend                                              │
+│  □ Configure MongoDB connection                                               │
+│  □ Setup development environment                                              │
+│  □ Configure ESLint and Prettier                                              │
+│  □ Create project structure                                                   │
+│  □ Setup environment variables                                                │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 1: AUTHENTICATION SYSTEM (Week 2-3)                                    │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Design User model                                                          │
+│  □ Implement registration API                                                 │
+│  □ Implement login API                                                        │
+│  □ Setup JWT token generation                                                 │
+│  □ Create auth middleware                                                     │
+│  □ Build login page UI                                                        │
+│  □ Build registration page UI                                                 │
+│  □ Implement protected routes                                                 │
+│  □ Create user context                                                        │
+│  □ Add OTP-based password recovery                                            │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 2: PRODUCT MANAGEMENT (Week 4-5)                                       │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Design Product model                                                       │
+│  □ Implement CRUD API for products                                            │
+│  □ Build product list page                                                    │
+│  □ Build product form (add/edit)                                              │
+│  □ Implement search and filter                                                │
+│  □ Add low stock detection                                                    │
+│  □ Unit testing for product module                                            │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 3: SALES MODULE (Week 6-7)                                             │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Design Sale model                                                          │
+│  □ Implement create sale API                                                  │
+│  □ Implement inventory deduction logic                                        │
+│  □ Implement profit calculation                                               │
+│  □ Build sales page UI                                                        │
+│  □ Build quick sale form                                                      │
+│  □ Add date-range filtering                                                   │
+│  □ Generate sale invoice                                                      │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 4: PURCHASE & EXPENSE MODULE (Week 8-9)                                │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Design Purchase model                                                      │
+│  □ Design Expense model                                                       │
+│  □ Implement purchase API                                                     │
+│  □ Implement expense API                                                      │
+│  □ Build purchase form UI                                                     │
+│  □ Build expense list and form                                                │
+│  □ Auto-update inventory on purchase                                          │
+│  □ Purchase history with filtering                                            │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 5: CREDIT MANAGEMENT (Week 10)                                         │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Design Udhaar model                                                        │
+│  □ Implement credit CRUD API                                                  │
+│  □ Implement status update API                                                │
+│  □ Build credit list page                                                     │
+│  □ Build credit form                                                          │
+│  □ Add payment recording                                                      │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 6: DASHBOARD & REPORTS (Week 11)                                       │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Design Report model                                                        │
+│  □ Implement report generation API                                            │
+│  □ Build dashboard with metrics                                               │
+│  □ Implement charts using Recharts                                            │
+│  □ Add low stock alerts widget                                                │
+│  □ Build daily/monthly report view                                            │
+│  □ Add data export functionality                                              │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 7: ADMIN MODULE (Week 12)                                              │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Build admin dashboard                                                      │
+│  □ Implement shop management                                                  │
+│  □ Add user suspension feature                                                │
+│  □ Build admin profile page                                                   │
+│  □ Add shop registration by admin                                             │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 8: TESTING & REFINEMENT (Week 13)                                      │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Integration testing                                                        │
+│  □ User acceptance testing                                                    │
+│  □ Bug fixes                                                                  │
+│  □ Performance optimization                                                   │
+│  □ UI/UX improvements                                                         │
+│  □ Mobile responsiveness testing                                              │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────────────────────┐
+│  SPRINT 9: DEPLOYMENT & DOCUMENTATION (Week 14)                                │
+├────────────────────────────────────────────────────────────────────────────────┤
+│  □ Deploy frontend to Vercel                                                  │
+│  □ Deploy backend to Vercel                                                   │
+│  □ Configure production database                                              │
+│  □ Write user documentation                                                   │
+│  □ Create demo video                                                          │
+│  □ Prepare final presentation                                                 │
+│  □ Submit project report                                                      │
+└────────────────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+================================================================================
+                         9. TESTING STRATEGY
+================================================================================
+
+Testing is a critical component of the development process to ensure quality 
+and reliability. The following testing strategies will be employed:
+
+
+--------------------------------------------------------------------------------
+9.1 Unit Testing
+--------------------------------------------------------------------------------
+
+PURPOSE: Test individual components and functions in isolation
+
+TOOLS: Jest, React Testing Library
+
+AREAS COVERED:
+    • API controller functions
+    • Utility functions (report generation, calculations)
+    • React components
+    • Form validation
+
+EXAMPLE TEST CASES:
+    ┌────────────────────────────────────────────────────────────────────┐
+    │  Test Case                                    │ Expected Result    │
+    ├────────────────────────────────────────────────────────────────────┤
+    │  Login with valid credentials                 │ Return JWT token   │
+    │  Login with invalid password                  │ Return 400 error   │
+    │  Create product with valid data               │ Product created    │
+    │  Create sale with insufficient stock          │ Return 400 error   │
+    │  Calculate profit correctly                   │ Correct amount     │
+    └────────────────────────────────────────────────────────────────────┘
+
+
+--------------------------------------------------------------------------------
+9.2 Integration Testing
+--------------------------------------------------------------------------------
+
+PURPOSE: Test interaction between different modules
+
+AREAS COVERED:
+    • API endpoint integration
+    • Database operations
+    • Authentication flow
+    • Complete transaction flows
+
+TEST SCENARIOS:
+    1. Complete sale flow: Select product → Record sale → Verify inventory
+    2. Complete purchase flow: Add items → Record purchase → Check inventory
+    3. Report generation: Create transactions → Generate report → Verify data
+
+
+--------------------------------------------------------------------------------
+9.3 User Acceptance Testing (UAT)
+--------------------------------------------------------------------------------
+
+PURPOSE: Validate that the system meets user requirements
+
+METHODOLOGY:
+    • Invite real shopkeepers as test users
+    • Provide test scenarios
+    • Collect feedback
+    • Iterate based on feedback
+
+TEST SCENARIOS:
+    □ Register a new account
+    □ Add 10 different products
+    □ Record 5 sales transactions
+    □ Record 2 purchase transactions
+    □ Add 3 credit entries
+    □ Mark 1 credit as paid
+    □ Add 3 expenses
+    □ View daily report
+    □ View monthly report
+    □ Generate and print invoice
+
+
+--------------------------------------------------------------------------------
+9.4 Performance Testing
+--------------------------------------------------------------------------------
+
+PURPOSE: Ensure the application performs well under load
+
+TOOLS: Lighthouse, Chrome DevTools
+
+METRICS:
+    • Page load time (target: < 3 seconds)
+    • API response time (target: < 500ms)
+    • Database query time
+    • Memory usage
+
+
+--------------------------------------------------------------------------------
+9.5 Security Testing
+--------------------------------------------------------------------------------
+
+PURPOSE: Identify and fix security vulnerabilities
+
+AREAS TESTED:
+    • SQL/NoSQL injection
+    • Cross-site scripting (XSS)
+    • Authentication bypass
+    • Session management
+    • Data encryption
+
+
+
+
+
+
+
+
+================================================================================
+                        10. EXPECTED OUTCOMES
+================================================================================
+
+Upon successful completion of this project, the following outcomes are expected:
+
+
+--------------------------------------------------------------------------------
+10.1 Technical Deliverables
+--------------------------------------------------------------------------------
+
+    1. PRODUCTION-READY WEB APPLICATION
+       A fully functional, deployed web application accessible via internet
+
+    2. SOURCE CODE
+       Well-documented, clean code following best practices, available on GitHub
+
+    3. DATABASE
+       Properly designed MongoDB database with all required collections
+
+    4. API DOCUMENTATION
+       Complete documentation of all REST API endpoints
+
+    5. USER GUIDE
+       Step-by-step guide for end users to use the application
+
+
+--------------------------------------------------------------------------------
+10.2 Functional Achievements
+--------------------------------------------------------------------------------
+
+    ✓ Complete shop management solution covering all core aspects
+    ✓ Intuitive interface usable by non-technical users
+    ✓ Real-time inventory tracking with alerts
+    ✓ Comprehensive reporting with visual analytics
+    ✓ Digital credit book replacing manual registers
+    ✓ Multi-user support with role-based access
+    ✓ Professional invoice generation
+
+
+--------------------------------------------------------------------------------
+10.3 Business Impact
+--------------------------------------------------------------------------------
+
+For target users (small shopkeepers), the expected benefits include:
+
+    ┌───────────────────────────────────────────────────────────────────────┐
+    │  BENEFIT                               │  EXPECTED IMPROVEMENT         │
+    ├───────────────────────────────────────────────────────────────────────┤
+    │  Time saved on record-keeping          │  50-70% reduction             │
+    │  Errors in calculations                │  90%+ reduction               │
+    │  Inventory stockouts                   │  60-80% reduction             │
+    │  Uncollected credit                    │  30-50% reduction             │
+    │  Business insights availability        │  From 0% to 100%              │
+    └───────────────────────────────────────────────────────────────────────┘
+
+
+--------------------------------------------------------------------------------
+10.4 Learning Outcomes
+--------------------------------------------------------------------------------
+
+As a student project, the following learning outcomes are expected:
+
+    • Proficiency in MERN stack development
+    • Experience in full software development lifecycle
+    • Understanding of database design and optimization
+    • Knowledge of authentication and security practices
+    • Experience in deploying production applications
+    • Skills in UI/UX design for end users
+
+
+
+
+
+
+
+
+================================================================================
+                    11. LIMITATIONS AND FUTURE WORK
+================================================================================
+
+--------------------------------------------------------------------------------
+11.1 Current Limitations
+--------------------------------------------------------------------------------
+
+While Dukaan Digital provides a comprehensive solution, certain limitations 
+exist in the current version:
+
+1. OFFLINE FUNCTIONALITY
+   The current version requires internet connectivity to function. Shopkeepers 
+   in areas with unstable internet may face issues.
+
+2. SINGLE LANGUAGE
+   The interface is currently only in English. Many target users may prefer 
+   local languages (Urdu, Hindi).
+
+3. NO HARDWARE INTEGRATION
+   The system does not integrate with barcode scanners, receipt printers, or 
+   POS hardware that some shops may have.
+
+4. BASIC ANALYTICS
+   While reports are provided, advanced analytics like trend prediction, 
+   demand forecasting are not included.
+
+5. NO MOBILE APP
+   Currently only available as a web application; no dedicated mobile apps 
+   for Android or iOS.
+
+6. LIMITED MULTI-BRANCH SUPPORT
+   The system is designed for single-location shops; multi-branch management 
+   is not fully supported.
+
+
+--------------------------------------------------------------------------------
+11.2 Future Enhancements
+--------------------------------------------------------------------------------
+
+Based on the limitations and user feedback, the following enhancements are 
+planned for future versions:
+
+PRIORITY 1 (Near-term):
+    □ Offline mode with sync capability
+    □ Multi-language support (Urdu, Hindi, English)
+    □ Barcode scanner integration
+    □ Customer management module
+    □ Supplier management module
+
+PRIORITY 2 (Mid-term):
+    □ Native mobile applications (Android, iOS)
+    □ SMS/WhatsApp notifications
+    □ Advanced analytics with AI-powered insights
+    □ Bulk operations (import/export via CSV)
+    □ Point of Sale (POS) mode with quick checkout
+
+PRIORITY 3 (Long-term):
+    □ Multi-branch/franchise support
+    □ Accounting integration
+    □ E-commerce integration
+    □ Payment gateway integration
+    □ Employee management module
+    □ Loyalty program support
+
+
+
+
+
+
+
+
+================================================================================
+                           12. CONCLUSION
+================================================================================
+
+Dukaan Digital represents a significant step towards democratizing technology 
+for small retail businesses. By providing an intuitive, affordable, and 
+comprehensive shop management solution, this project aims to address real 
+challenges faced by millions of small shopkeepers.
+
+The project leverages modern web technologies to create a solution that is:
+
+    • ACCESSIBLE - Works on any device with a browser
+    • AFFORDABLE - Completely free to use
+    • SIMPLE - Designed for users with limited technical knowledge
+    • COMPREHENSIVE - Covers all aspects of shop management
+    • RELIABLE - Secure cloud storage ensures data safety
+
+Through this project, the following objectives will be achieved:
+
+    1. Transform manual record-keeping into a digital system
+    2. Reduce errors and save time in daily operations
+    3. Provide business insights that were previously unavailable
+    4. Create a platform that can scale and evolve with user needs
+
+The development of Dukaan Digital has been a learning journey that combines 
+academic knowledge with real-world problem-solving. The skills gained in 
+full-stack development, database design, user experience, and project 
+management will be valuable throughout future professional endeavors.
+
+This project demonstrates that technology, when applied thoughtfully, can 
+create meaningful impact in the lives of everyday people. By empowering 
+small shopkeepers with digital tools, we contribute to the broader goal 
+of inclusive digital transformation in our society.
+
+
+
+
+
+
+
+
+================================================================================
+                           13. REFERENCES
+================================================================================
+
+[1] React.js Documentation. (2024). Retrieved from https://react.dev/
+
+[2] Node.js Documentation. (2024). Retrieved from https://nodejs.org/
+
+[3] MongoDB Documentation. (2024). Retrieved from https://docs.mongodb.com/
+
+[4] Express.js Documentation. (2024). Retrieved from https://expressjs.com/
+
+[5] JWT.io. (2024). Introduction to JSON Web Tokens. Retrieved from 
+    https://jwt.io/introduction
+
+[6] Kumar, R. (2021). "Impact of Digital Tools on Small Business Efficiency." 
+    Journal of Business Technology, 15(3), 45-67.
+
+[7] Smith, J. et al. (2022). "Barriers to Technology Adoption in Small 
+    Retail Businesses." International Journal of Retail Management, 8(2), 
+    112-128.
+
+[8] Zhang, L. (2023). "User Interface Design Principles for Technology-
+    Averse Users." ACM Computing Surveys, 55(1), 1-35.
+
+[9] Patel, M. (2022). "The Role of Local Language Support in Technology 
+    Adoption in South Asia." Asian Journal of Technology, 12(4), 89-103.
+
+[10] Vercel Documentation. (2024). Deployment Guide. Retrieved from 
+     https://vercel.com/docs
+
+[11] TailwindCSS Documentation. (2024). Retrieved from 
+     https://tailwindcss.com/docs
+
+[12] Recharts Documentation. (2024). Retrieved from https://recharts.org/
+
+
+================================================================================
+                              APPENDICES
+================================================================================
+
+Appendix A: Glossary of Terms
+-----------------------------
+    • CRUD: Create, Read, Update, Delete
+    • JWT: JSON Web Token
+    • API: Application Programming Interface
+    • REST: Representational State Transfer
+    • MERN: MongoDB, Express, React, Node.js
+    • ODM: Object Document Mapper
+    • SPA: Single Page Application
+    • PWA: Progressive Web Application
+    • Udhaar: Credit given to customers (local term)
+
+Appendix B: API Endpoints Summary
+---------------------------------
+    POST   /api/auth/login        - User login
+    POST   /api/auth/register     - User registration
+    GET    /api/products          - Get all products
+    POST   /api/products          - Create product
+    PUT    /api/products/:id      - Update product
+    DELETE /api/products/:id      - Delete product
+    POST   /api/sales             - Create sale
+    POST   /api/sales/get         - Get sales
+    POST   /api/purchase          - Create purchase
+    POST   /api/purchase/get      - Get purchases
+    GET    /api/udhaar            - Get all credit
+    POST   /api/udhaar            - Create credit
+    PUT    /api/udhaar/:id        - Update credit
+    GET    /api/expense           - Get all expenses
+    POST   /api/expense           - Create expense
+    POST   /api/report            - Generate report
+    GET    /api/dashboard         - Get dashboard data
+
+
+================================================================================
+                            END OF PROPOSAL
+================================================================================
