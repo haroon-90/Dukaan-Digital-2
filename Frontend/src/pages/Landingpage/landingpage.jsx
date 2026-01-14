@@ -19,7 +19,7 @@ const LandingPage = () => {
                         <img src={LOGO} alt="Dukaan Digital" className="h-12 w-auto invert-logo transition-all duration-300" />
                     </div>
 
-                    <div className="hidden md:flex items-center gap-8 px-4 py-2 border border-border rounded-full">
+                    <div className="hidden md:flex items-center border border-border rounded-full">
                         {[
                             { name: 'Features', to: '#features' },
                             { name: 'Benefits', to: '#benefits' },
@@ -28,10 +28,9 @@ const LandingPage = () => {
                             <Link
                                 key={link.name}
                                 to={link.to}
-                                className="text-sm font-medium text-muted-foreground hover:text-primary transition-all duration-200 relative group"
+                                className="px-4 py-2 text-sm hover:font-bold rounded-full hover:bg-primary text-muted-foreground hover:text-primary-foreground transition-all duration-200 active:scale-95"
                             >
                                 {link.name}
-                                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
                             </Link>
                         ))}
                     </div>
