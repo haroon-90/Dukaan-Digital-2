@@ -13,7 +13,7 @@ const LandingPage = () => {
     return (
         <div className="min-h-screen bg-background text-foreground transition-colors duration-300 selection:bg-primary/20 selection:text-primary font-sans">
             {/* Navigation */}
-            <nav className="fixed w-full z-50 border-b border-border bg-background/80 backdrop-blur-xl transition-colors duration-300">
+            <nav className="fixed w-full z-50 border-b border-border bg-background/80 backdrop-blur-lg transition-colors duration-300">
                 <div className="container mx-auto px-6 h-16 flex items-center justify-between">
                     <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
                         <img src={LOGO} alt="Dukaan Digital" className="h-8 w-auto invert-logo transition-all duration-300" />
@@ -61,7 +61,7 @@ const LandingPage = () => {
 
                             {/* Content */}
                             <div className="px-2 relative z-10 flex flex-col items-center text-center">
-                                <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 mt-2 text-xs font-bold tracking-wide text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
+                                <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 mt-8 text-xs font-bold tracking-wide text-primary uppercase bg-primary/10 backdrop-blur-sm rounded-full border border-primary/20">
                                     <span className="relative flex h-2 w-2">
                                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                                         <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
@@ -70,9 +70,9 @@ const LandingPage = () => {
                                 </div>
 
                                 <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1] text-foreground">
-                                    Smart Business, <br />
+                                    Smart choice for shopkeepers, <br />
                                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-500 to-indigo-600">
-                                        Digital Future
+                                        Dukaan Digital
                                     </span>
                                 </h1>
 
@@ -189,7 +189,7 @@ const LandingPage = () => {
                                     Your business data is precious. We use bank-grade encryption and automated cloud backups to ensure you never lose a single record. Access your data from any device, anywhere.
                                 </p>
                                 <ul className="space-y-4">
-                                    {['End-to-end encryption', 'Daily cloud backups', 'Multi-device sync'].map((item, i) => (
+                                    {['End-to-end encryption', 'Secure cloud backups', 'Multi-device sync'].map((item, i) => (
                                         <li key={i} className="flex items-center gap-3 text-foreground font-medium">
                                             <CheckCircle2 size={20} className="text-primary" /> {item}
                                         </li>
@@ -240,7 +240,7 @@ const LandingPage = () => {
                                 <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
                                     Time is money. Our interface is designed for speed, allowing you to record sales and check inventory in seconds. No loading screens, no lag.
                                 </p>
-                                <button className="text-primary font-bold hover:text-primary/80 flex items-center gap-2 group">
+                                <button onClick={() => navigate('/aboutus')} className="text-primary font-bold hover:text-primary/80 flex items-center gap-2 group">
                                     Learn about our technology <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
                                 </button>
                             </div>
