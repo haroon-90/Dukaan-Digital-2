@@ -31,12 +31,7 @@ const udhaarSchema = new mongoose.Schema({
     timestamps: true
 });
 
-
-// udhaarSchema.index({ createdAt: -1 });
-// udhaarSchema.index({ userId: 1 });
-// udhaarSchema.index({ customerName: 1 });
-// udhaarSchema.index({ status: 1 });
-
+udhaarSchema.index({ userId: 1, createdAt: -1 });
 
 const Udhaar = mongoose.model("Udhaar", udhaarSchema);
 

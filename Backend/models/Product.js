@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
-    userId:{
+    userId: {
         type: String,
         required: true
     },
@@ -17,12 +17,12 @@ const productSchema = new mongoose.Schema({
     purchasePrice: {
         type: Number,
         required: true,
-        min:0
+        min: 0
     },
     sellingPrice: {
         type: Number,
         required: true,
-        min:0
+        min: 0
     },
     quantity: {
         type: Number,
@@ -38,10 +38,7 @@ const productSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// productSchema.index({ userId: 1 });
-// productSchema.index({ itemname: 1 });
-// productSchema.index({ category: 1 });
-
+productSchema.index({ userId: 1 });
 
 const Product = mongoose.model('Product', productSchema);
 export default Product;
