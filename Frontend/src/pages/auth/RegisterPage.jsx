@@ -26,6 +26,10 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password.length < 8) {
+            setError("Password must be at least 8 characters");
+            return;
+        }
         setLoading(true);
         setError('');
 
@@ -38,8 +42,13 @@ const RegisterPage = () => {
                 }, 200);
             }
         } catch (err) {
+            {/*
+                return res.status(422).json({
+            errors: errors.array().map(err => err.msg)
+        });
+                */}
             toast.error("Registration failed!")
-            setError(err.response?.data?.message || 'Registration failed');
+            setError(err.response?.data?.errors || err.response?.data?.message || err.message || 'Registration failed');
         } finally {
             setLoading(false);
         }

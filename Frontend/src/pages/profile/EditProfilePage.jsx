@@ -54,7 +54,7 @@ const EditProfilePage = () => {
         }, 100);
       }
     } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to update profile");
+      toast.error(err.response?.data?.message || err.response?.data?.errors.join(', ') || err.message || "Failed to update profile");
     } finally {
       setLoading(false);
     }

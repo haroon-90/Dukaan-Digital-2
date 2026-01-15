@@ -22,6 +22,10 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (form.password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
     setLoading(true)
     setError('')
     try {

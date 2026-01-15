@@ -34,10 +34,10 @@ const EditProfile = () => {
                     navigate('/admin');
                 }, 200);
             } else {
-                toast.error(response.msg || "Failed to update profile");
+                toast.error(response.msg || response.message || "Failed to update profile");
             }
         } catch (err) {
-            toast.error("Failed to update profile");
+            toast.error(err.response?.data?.errors.join(', ') || err.response?.data?.message || err.message || "Failed to update profile");
         }
         setLoading(false);
     }
