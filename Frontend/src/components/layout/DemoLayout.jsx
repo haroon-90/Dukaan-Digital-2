@@ -3,6 +3,7 @@ import Footer from '../parts/Footer'
 import Sidebar from '../parts/Sidebar'
 import BottomNavbar from '../parts/BottomNavbar'
 import { Outlet } from 'react-router-dom'
+import Shortcuts from './shortcuts';
 
 const DemoLayout = () => {
     localStorage.setItem("user", JSON.stringify({
@@ -20,19 +21,17 @@ const DemoLayout = () => {
 
     return (
         <div className="flex flex-col h-screen bg-[var(--color-background)] text-[var(--color-foreground)] transition-colors duration-300 overflow-hidden font-sans">
-            {/* Navbar is sticky inside its own container or we just place it top */}
+            <Shortcuts />
             <div className="flex-shrink-0 z-50">
                 <Navbar />
             </div>
 
             <div className="flex flex-1 overflow-hidden relative">
 
-                {/* Sidebar */}
                 <div className={`hidden md:block absolute inset-y-0 left-0 z-50 md:static md:translate-x-0 transform transition-transform duration-300 ease-in-out h-full`}>
                     <Sidebar />
                 </div>
 
-                {/* Main Content Area */}
                 <main className="flex-1 overflow-y-auto relative scroll-smooth pb-20 md:pb-0">
                     <div className="container mx-auto p-1 py-2 pb-24 md:p-2 lg:p-4 max-w-7xl animate-fade-in">
                         <Outlet />
