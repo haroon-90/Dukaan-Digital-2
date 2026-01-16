@@ -17,7 +17,6 @@ const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 transition-transform duration-300">
             <div className="mx-auto px-4 sm:px-6 lg:px-8">
-                {/* shortcuts bar above the whole page by blur effect */}
                 <div className="flex justify-between items-center h-16">
                     <div className="flex items-center gap-4">
                         <div
@@ -30,7 +29,6 @@ const Navbar = () => {
                                 alt="Dukaan Digital"
                             />
                         </div>
-                        {/* separator */}
                         <div className='flex h-6 w-px bg-[var(--glass-border)]'></div>
                         <div className="flex flex-col leading-tight">
                             {role === 'admin' ? (
@@ -49,7 +47,6 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex items-center gap-3 md:gap-5">
-                        {/* button to open shortcuts bar above the whole page by blur effect */}
                         <button
                             onClick={() => { setShowShortcuts(!showShortcuts) }}
                             className="relative hidden md:flex p-2 rounded-full bg-[var(--color-surface)] text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors"
@@ -57,31 +54,25 @@ const Navbar = () => {
                         >
                             <Keyboard size={20} />
                             {showShortcuts && (
-                                <div className="absolute top-10 left-0 w-[200px] p-2 rounded-lg bg-[var(--color-background)] border border-[var(--color-border)]">
-                                    <div className="font-bold w-full text-[var(--color-muted-foreground)]">
+                                <div className="absolute text-sm top-10 left-0 w-[200px] p-2 rounded-lg bg-[var(--color-background)] border border-[var(--color-border)]">
+                                    <div className="font-bold w-full text-[var(--color-muted-foreground)] mb-1">
                                         Shortcuts
                                     </div>
-                                    <div className="flex justify-between w-full rounded-sm px-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors">
-                                        <span className="font-bold">Ctrl + D</span> <span className="text-[var(--color-muted-foreground)]">Dashboard</span>
-                                    </div>
-                                    <div className="flex justify-between w-full rounded-md px-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors">
-                                        <span className="font-bold">Ctrl + P</span> <span className="text-[var(--color-muted-foreground)]">Products</span>
-                                    </div>
-                                    <div className="flex justify-between w-full rounded-md px-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors">
-                                        <span className="font-bold">Ctrl + S</span> <span className="text-[var(--color-muted-foreground)]">Sales</span>
-                                    </div>
-                                    <div className="flex justify-between w-full rounded-md px-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors">
-                                        <span className="font-bold">Ctrl + B</span> <span className="text-[var(--color-muted-foreground)]">Purchase</span>
-                                    </div>
-                                    <div className="flex justify-between w-full rounded-md px-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors">
-                                        <span className="font-bold">Ctrl + E</span> <span className="text-[var(--color-muted-foreground)]">Expenses</span>
-                                    </div>
-                                    <div className="flex justify-between w-full rounded-md px-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors">
-                                        <span className="font-bold">Ctrl + C</span> <span className="text-[var(--color-muted-foreground)]">Credits</span>
-                                    </div>
-                                    <div className="flex justify-between w-full rounded-md px-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors">
-                                        <span className="font-bold">Ctrl + R</span> <span className="text-[var(--color-muted-foreground)]">Reports</span>
-                                    </div>
+                                    {[
+                                        { key: 'Ctrl + D', label: 'Dashboard' },
+                                        { key: 'Ctrl + P', label: 'Products' },
+                                        { key: 'Ctrl + S', label: 'Sales' },
+                                        { key: 'Ctrl + B', label: 'Purchase' },
+                                        { key: 'Ctrl + E', label: 'Expenses' },
+                                        { key: 'Ctrl + C', label: 'Credits' },
+                                        { key: 'Ctrl + R', label: 'Reports' },
+                                        { key: 'Ctrl + U', label: 'Profile' }
+                                    ].map((item) => (
+                                        <div key={item.key} className="flex justify-between w-full rounded-md px-1 text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors">
+                                            <span className="font-bold">{item.key}</span>
+                                            <span className="text-[var(--color-muted-foreground)]">{item.label}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             )}
                         </button>

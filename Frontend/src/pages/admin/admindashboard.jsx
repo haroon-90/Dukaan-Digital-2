@@ -27,13 +27,14 @@ const Admindashboard = () => {
 
     const fetchDashboard = async () => {
         try {
-            // setLoading(true);
             setError("");
             const response = await getAdminDashboard();
-            setManagers((response.data.shops).filter((shop) => shop.role === "manager"));
+            setManagers((response.data.shops).filter((shop) => shop.role === "manager").sort((a, b) => {
+                const order = { active: 1, suspended: 2, inactive: 3 };
+                return (order[a.status] || 4) - (order[b.status] || 4);
+            }));
             setAdmins((response.data.shops).filter((shop) => shop.role === "admin"));
             setLoading(false);
-            // toast.success("Data Refreshed!");
         } catch (err) {
             console.error(err);
             setError(err.msj || "Failed to fetch dashboard data");
@@ -45,17 +46,21 @@ const Admindashboard = () => {
     useEffect(() => {
         setLoading(true);
         fetchDashboard();
-        // setLoading(false);
     }, []);
 
     const filteredManagers = useMemo(() => {
         const q = query.trim().toLowerCase();
         if (!q) return managers;
-        return managers.filter((m) =>
-            [m.name, m.email, m.phone, m.shopname, m.status]
-                .filter(Boolean)
-                .some((f) => String(f).toLowerCase().includes(q))
-        );
+        return managers
+            .sort((a, b) => {
+                const order = { active: 1, suspended: 2, inactive: 3 };
+                return (order[a.status] || 4) - (order[b.status] || 4);
+            })
+            .filter((m) =>
+                [m.name, m.email, m.phone, m.shopname, m.status]
+                    .filter(Boolean)
+                    .some((val) => String(val).toLowerCase().includes(q))
+            )
     }, [query, managers]);
 
     const statusBadge = (status) => {
@@ -233,15 +238,10 @@ const Usertable = ({ filtered, handlestatusupdate, statusBadge, handleDelete, na
                 </thead>
                 <tbody className="divide-y divide-[var(--color-border)]">
                     {filtered.map((m) => (
-                        <tr key={m._id} className="hover:bg-[var(--color-muted)] transition-colors group">
+                        <tr key={m._id} className={`${isYou === m._id && "bg-[var(--color-muted)]"} ${m.status === "active" && !isadmin && "bg-green-500/5 hover:bg-green-500/10"} ${m.status === "inactive" && "bg-yellow-500/5 hover:bg-yellow-500/10"} ${m.status === "suspended" && "bg-red-500/5 hover:bg-red-500/10"} transition-colors group`}>
                             <Td className="font-medium">
                                 <div className="text-[var(--color-foreground)] flex items-center gap-2">
                                     {m.name}
-                                    {isYou === m._id && (
-                                        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-[var(--color-primary)] text-[var(--color-primary-foreground)]">
-                                            You
-                                        </span>
-                                    )}
                                 </div>
                                 <div className="text-xs text-[var(--color-muted-foreground)] md:hidden mt-0.5">{m.email}</div>
                                 <div className="text-xs text-[var(--color-muted-foreground)] md:hidden">{m.phone}</div>

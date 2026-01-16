@@ -77,7 +77,7 @@ const ProfilePage = () => {
         setTimeout(() => {
             setIsLoading(false);
             navigate('/');
-        }, 100);
+        }, 500);
     };
 
     const [showPersonalDetails, setShowPersonalDetails] = useState(false);
@@ -86,7 +86,6 @@ const ProfilePage = () => {
     return (
         <div className="relative min-h-screen bg-[var(--color-background)] font-sans text-[var(--color-foreground)] flex flex-col items-center justify-center py-6 px-4 pb-24 md:pb-6 transition-colors duration-300">
 
-            {/* Confirmation Modal */}
             {confirmDelete && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
                     <div className="w-full max-w-lg transform rounded-3xl glass-panel p-8 text-center shadow-2xl transition-all duration-300 animate-scale-in">
@@ -117,9 +116,7 @@ const ProfilePage = () => {
                 </div>
             )}
 
-            {/* Profile Header Card */}
             <div className="w-full max-w-4xl rounded-2xl glass-panel shadow-lg overflow-hidden animate-fade-in-up mb-6">
-                {/* Header Image */}
                 <div className="bg-blue-600 h-32 relative overflow-hidden">
                     <div className="absolute inset-0 opacity-20 pointer-events-none"
                         style={{
@@ -127,7 +124,6 @@ const ProfilePage = () => {
                             backgroundSize: '14px 14px'
                         }}>
                     </div>
-                    {/* Desktop Back Button */}
                     <button
                         onClick={() => navigate(-1)}
                         className="hidden md:flex absolute top-6 left-6 items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full text-white hover:bg-white/30 transition-colors shadow-sm"

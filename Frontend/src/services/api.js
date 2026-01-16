@@ -6,7 +6,7 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// Request: Har request ke saath token bhejna
+// send token with each request
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -15,14 +15,16 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Response: Agar token expire ho jaye to logout
+// logout if token expires
 api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      window.location.href = "/login";
+      setTimeout(() => {
+        window.location.href = "/login";
+      }, 200);
     }
     return Promise.reject(err);
   }
