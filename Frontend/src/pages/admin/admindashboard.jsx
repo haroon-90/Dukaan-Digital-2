@@ -14,12 +14,13 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import { getAdminDashboard, deleteUserProfile, editUserStatus } from '../../services/adminServices.js';
+import { useLoading } from "../../components/Context/LoadingContext";
 
 const isYou = JSON.parse(localStorage.getItem("user"))?.id || "";
 
 const Admindashboard = () => {
+    const { isLoading, setIsLoading } = useLoading();
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [query, setQuery] = useState("");
     const [managers, setManagers] = useState([]);
@@ -27,6 +28,7 @@ const Admindashboard = () => {
 
     const fetchDashboard = async () => {
         try {
+            setIsLoading(true);
             setError("");
             const response = await getAdminDashboard();
             setManagers((response.data.shops).filter((shop) => shop.role === "manager").sort((a, b) => {
@@ -34,17 +36,16 @@ const Admindashboard = () => {
                 return (order[a.status] || 4) - (order[b.status] || 4);
             }));
             setAdmins((response.data.shops).filter((shop) => shop.role === "admin"));
-            setLoading(false);
+            setIsLoading(false);
         } catch (err) {
             console.error(err);
             setError(err.msj || "Failed to fetch dashboard data");
-            setLoading(false);
+            setIsLoading(false);
             toast.error("Failed to refresh data");
         }
     };
 
     useEffect(() => {
-        setLoading(true);
         fetchDashboard();
     }, []);
 
@@ -74,7 +75,7 @@ const Admindashboard = () => {
     };
 
     const handleDelete = async (e) => {
-        setLoading(true)
+        setIsLoading(true)
         try {
             if (confirm("Are you sure you want to delete this manager? This action cannot be undone.")) {
                 const deleted = await deleteUserProfile(e._id);
@@ -84,12 +85,12 @@ const Admindashboard = () => {
             }
         } catch (err) {
             toast.error('Failed to fetch profile!')
-            setLoading(false)
+            setIsLoading(false)
         }
     }
 
     const handlestatusupdate = async (e) => {
-        setLoading(true);
+        setIsLoading(true);
         try {
             const updated = await editUserStatus(e._id);
             if (updated) {
@@ -99,50 +100,12 @@ const Admindashboard = () => {
         catch (err) {
             toast.error('Failed to fetch profile!')
             console.error('Error fetching profile:', err);
-            setLoading(false);
+            setIsLoading(false);
         }
     }
 
     return (
         <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] transition-colors duration-300">
-            <div className="sticky top-0 z-30 bg-[var(--color-background)]/80 backdrop-blur-md border-b border-[var(--color-border)]">
-                {loading && (
-                    <div className='absolute -bottom-1 left-0 h-[4px] w-full overflow-hidden'>
-                        <div className='loading-line' />
-                    </div>
-                )}
-                <div className="mx-auto max-w-8xl px-2 md:px-4 lg:px-4 py-3 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                        <div
-                            onClick={() => navigate("/adminprofile")}
-                            className="p-2 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
-                            <Shield className="w-6 h-6" />
-                        </div>
-                        <div>
-                            <div className="font-bold text-[var(--color-foreground)] text-lg leading-tight">Admin Dashboard</div>
-                            <span className="text-xs text-[var(--color-muted-foreground)] hidden sm:block">
-                                Manage managers, shops, and system users
-                            </span>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <button
-                            onClick={() => window.location.reload()}
-                            title='Refresh'
-                            className="inline-flex items-center gap-2 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-2 text-sm font-medium hover:bg-[var(--color-muted)] hover:text-[var(--color-foreground)] transition-colors text-[var(--color-muted-foreground)]"
-                        >
-                            <RefreshCw className="w-4 h-4" /> <span className="hidden sm:inline">Refresh</span>
-                        </button>
-                        <button
-                            onClick={() => navigate("/register")}
-                            title='Add User'
-                            className="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] px-4 py-2 text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 hover:brightness-110 active:scale-[0.98] transition-all"
-                        >
-                            <PlusCircle className="w-4 h-4" /> <span className="hidden sm:inline">Add User</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
 
             <div className="mx-auto max-w-8xl p-1 py-4 md:p-4 lg:p-6 space-y-8 animate-fade-in-up">
                 {error && (
@@ -156,8 +119,8 @@ const Admindashboard = () => {
                 )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <StatCard icon={Store} label="Total Shops" value={managers.length} loading={loading} color="blue" />
-                    <StatCard icon={Shield} label="Total Admins" value={admins.length} loading={loading} color="indigo" />
+                    <StatCard icon={Store} label="Total Shops" value={managers.length} loading={isLoading} color="blue" />
+                    <StatCard icon={Shield} label="Total Admins" value={admins.length} loading={isLoading} color="indigo" />
                 </div>
 
                 <div className='glass-panel rounded-2xl overflow-hidden'>
@@ -183,20 +146,14 @@ const Admindashboard = () => {
                         </div>
                     </div>
 
-                    <div className={`${loading && "opacity-60 pointer-events-none"} p-0`}>
-                        {managers.length === 0 && !loading ? (
+                    <div className={`${isLoading && "opacity-60 pointer-events-none"} p-0`}>
+                        {managers.length === 0 && !isLoading ? (
                             <div className="py-12 text-center text-[var(--color-muted-foreground)]">
                                 {error || "No shops found matching your search."}
                             </div>
                         ) : (
-                            //     loading ? (
-                            //     <div className="py-12 flex justify-center">
-                            //         <Loader />
-                            //     </div>
-                            // ) : (
                             <Usertable filtered={filteredManagers} handleDelete={handleDelete} statusBadge={statusBadge} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={false} />
                         )
-                            // )
                         }
                     </div>
                 </div>
@@ -205,14 +162,8 @@ const Admindashboard = () => {
                     <div className="p-4 border-b border-[var(--color-border)] flex items-center gap-2 text-lg font-bold text-[var(--color-foreground)]">
                         <Shield className="text-[var(--color-primary)]" /> Admins
                     </div>
-                    <div className={`${loading && "opacity-60 pointer-events-none"} p-0`}>
-                        {/* {loading ? (
-                            <div className="py-12 flex justify-center">
-                                <Loader />
-                            </div>
-                        ) : ( */}
+                    <div className={`${isLoading && "opacity-60 pointer-events-none"} p-0`}>
                         <Usertable filtered={admins} handleDelete={handleDelete} statusBadge={statusBadge} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={true} />
-                        {/* )} */}
                     </div>
                 </div>
             </div>

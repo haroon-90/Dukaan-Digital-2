@@ -57,7 +57,7 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)] relative overflow-hidden font-sans transition-colors duration-300">
 
-      <div className="glass-panel w-full max-w-lg p-8 md:p-10 rounded-3xl shadow-xl z-10 mx-4">
+      <div className="glass-panel w-full max-w-lg p-8 rounded-3xl shadow-xl z-10 mx-4">
 
         <div className="flex flex-col items-center mb-8">
           <img src={DukaanDigital} alt="Dukaan Digital" className="h-16 my-4 w-auto invert-logo" />

@@ -49,7 +49,7 @@ const Navbar = () => {
                     <div className="flex items-center gap-3 md:gap-5">
                         <button
                             onClick={() => { setShowShortcuts(!showShortcuts) }}
-                            className="relative hidden md:flex p-2 rounded-full bg-[var(--color-surface)] text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors"
+                            className={`relative     ${role === 'admin' ? 'hidden' : 'hidden md:flex'} p-2 rounded-full bg-[var(--color-surface)] text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors`}
                             title="Shortcuts"
                         >
                             <Keyboard size={20} />

@@ -74,6 +74,12 @@ const ProfilePage = () => {
     const handleLogout = () => {
         setIsLoading(true);
         localStorage.clear();
+        sessionStorage.clear();
+        if ('caches' in window) {
+            caches.keys().then((names) => {
+                names.forEach((name) => caches.delete(name));
+            });
+        }
         setTimeout(() => {
             setIsLoading(false);
             navigate('/');

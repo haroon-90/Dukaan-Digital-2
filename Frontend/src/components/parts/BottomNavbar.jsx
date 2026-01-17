@@ -1,8 +1,8 @@
-import { LayoutDashboard, Package, ShoppingCart, User, HandCoins } from "lucide-react"
+import { LayoutDashboard, Package, ShoppingCart, User, HandCoins, PlusCircle } from "lucide-react"
 import { NavLink } from "react-router-dom"
 import { motion } from "framer-motion"
 
-const navItems = [
+const managerNavItems = [
     { icon: Package, label: "Products", path: "/products" },
     { icon: ShoppingCart, label: "Sales", path: "/sales" },
     { icon: LayoutDashboard, label: "Dashboard", path: "/manager", center: true },
@@ -10,11 +10,20 @@ const navItems = [
     { icon: User, label: "Profile", path: "/profile" },
 ]
 
+const adminNavItems = [
+    { icon: PlusCircle, label: "New Shop", path: "/register" },
+    { icon: LayoutDashboard, label: "Dashboard", path: "/admin", center: true },
+    { icon: User, label: "Profile", path: "/adminprofile" },
+]
+
 export default function BottomNavbar() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const role = user?.role;
+    const navItems = role === 'admin' ? adminNavItems : managerNavItems;
     return (
         <div className="fixed md:hidden bottom-0 left-1/2 -translate-x-1/2 z-50 w-full max-w-md">
             <div
-                className="flex items-end justify-between rounded-t-2xl px-4 pt-1 bg-[var(--glass-bg)] border border-[var(--glass-border)] shadow-[var(--glass-shadow)] backdrop-blur-xl"
+                className={`flex items-end ${role === 'admin' ? 'justify-around' : 'justify-between'} rounded-t-2xl px-4 pt-1 bg-[var(--glass-bg)] border border-[var(--glass-border)] shadow-[var(--glass-shadow)] backdrop-blur-xl`}
             >
                 {navItems.map((item) => (
                     <NavLink key={item.label} to={item.path} end>
