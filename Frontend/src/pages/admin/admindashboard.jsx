@@ -3,9 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import {
     Store,
     Shield,
-    PlusCircle,
-    RefreshCw,
-    Search,
     AlertTriangle,
     Edit2,
     Trash2,
@@ -15,6 +12,10 @@ import {
 import toast from "react-hot-toast";
 import { getAdminDashboard, deleteUserProfile, editUserStatus } from '../../services/adminServices.js';
 import { useLoading } from "../../components/Context/LoadingContext";
+import SearchBar from '../../components/UI/SearchBar';
+import StatusBadge from '../../components/UI/StatusBadge';
+import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
+import EmptyState from '../../components/UI/EmptyState';
 
 const isYou = JSON.parse(localStorage.getItem("user"))?.id || "";
 
@@ -63,16 +64,6 @@ const Admindashboard = () => {
                     .some((val) => String(val).toLowerCase().includes(q))
             )
     }, [query, managers]);
-
-    const statusBadge = (status) => {
-        const base = "px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border";
-        if (status === "active")
-            return <span className={`${base} border-[var(--color-success)] bg-[var(--color-success)]/10 text-[var(--color-success)] dark:bg-[var(--color-success)]/20 dark:border-[var(--color-success)]`}>● Active</span>;
-        if (status === "suspended")
-            return <span className={`${base} border-[var(--color-danger)] bg-[var(--color-danger)]/10 text-[var(--color-danger)] dark:bg-[var(--color-danger)]/20 dark:border-[var(--color-danger)]`}>● Suspended</span>;
-        if (status === "inactive")
-            return <span className={`${base} border-[var(--color-warning)] bg-[var(--color-warning)]/10 text-[var(--color-warning)] dark:bg-[var(--color-warning)]/20 dark:border-[var(--color-warning)]`}>● Inactive</span>;
-    };
 
     const handleDelete = async (e) => {
         setIsLoading(true)
@@ -135,24 +126,20 @@ const Admindashboard = () => {
                                 <span className="px-2.5 py-1 text-xs font-medium rounded-full inline-flex items-center gap-1.5 border border-[var(--color-warning)] bg-[var(--color-warning)]/10 text-[var(--color-warning)] dark:bg-[var(--color-warning)]/20 dark:border-[var(--color-warning)]"><span className='hidden md:block'>● </span>Inactive: {managers.filter((m) => m.status === "inactive").length}</span>
                             </div>
                         </div>
-                        <div className="relative w-full sm:w-80">
-                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
-                            <input
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                                placeholder="Search by Shop, manager, phone, email..."
-                                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] py-2 pl-10 pr-4 text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all placeholder:text-[var(--color-muted-foreground)]"
+                        <div className="w-full sm:w-auto">
+                            <SearchBar 
+                                value={query} 
+                                onChange={(e) => setQuery(e.target.value)} 
+                                placeholder="Search by Shop, manager..." 
                             />
                         </div>
                     </div>
 
                     <div className={`${isLoading && "opacity-60 pointer-events-none"} p-0`}>
                         {managers.length === 0 && !isLoading ? (
-                            <div className="py-12 text-center text-[var(--color-muted-foreground)]">
-                                {error || "No shops found matching your search."}
-                            </div>
+                            <EmptyState icon={Store} message="No shops found matching your search." query={query} />
                         ) : (
-                            <Usertable filtered={filteredManagers} handleDelete={handleDelete} statusBadge={statusBadge} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={false} />
+                            <Usertable filtered={filteredManagers} handleDelete={handleDelete} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={false} />
                         )
                         }
                     </div>
@@ -163,7 +150,7 @@ const Admindashboard = () => {
                         <Shield className="text-[var(--color-primary)]" /> Admins
                     </div>
                     <div className={`${isLoading && "opacity-60 pointer-events-none"} p-0`}>
-                        <Usertable filtered={admins} handleDelete={handleDelete} statusBadge={statusBadge} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={true} />
+                        <Usertable filtered={admins} handleDelete={handleDelete} handlestatusupdate={handlestatusupdate} navigate={navigate} isadmin={true} />
                     </div>
                 </div>
             </div>
@@ -171,70 +158,68 @@ const Admindashboard = () => {
     );
 };
 
-const Usertable = ({ filtered, handlestatusupdate, statusBadge, handleDelete, navigate, isadmin }) => {
+const Usertable = ({ filtered, handlestatusupdate, handleDelete, navigate, isadmin }) => {
     return (
-        <div className="overflow-x-auto">
-            <table className="min-w-full text-sm text-left">
-                <thead className="bg-[var(--color-background)] border-b border-[var(--color-border)] text-[var(--color-muted-foreground)]">
-                    <tr>
-                        <Th>{isadmin === true ? "Name" : "Manager"}</Th>
-                        <Th className="hidden md:table-cell">Email</Th>
-                        <Th className="hidden md:table-cell">Phone</Th>
-                        {isadmin === true && <Th>Address</Th>}
-                        {isadmin === false && <Th>Shop</Th>}
-                        <Th>Date Added</Th>
-                        {isadmin === false && <Th>Status</Th>}
-                        {isadmin === false && <Th className="text-right">Actions</Th>}
-                    </tr>
-                </thead>
-                <tbody className="divide-y divide-[var(--color-border)]">
-                    {filtered.map((m) => (
-                        <tr key={m._id} className={`${isYou === m._id && "bg-[var(--color-muted)]"} ${m.status === "active" && !isadmin && "bg-green-500/5 hover:bg-green-500/10"} ${m.status === "inactive" && "bg-yellow-500/5 hover:bg-yellow-500/10"} ${m.status === "suspended" && "bg-red-500/5 hover:bg-red-500/10"} transition-colors group`}>
-                            <Td className="font-medium">
-                                <div className="text-[var(--color-foreground)] flex items-center gap-2">
-                                    {m.name}
+        <Table>
+            <Thead>
+                <Tr>
+                    <Th>{isadmin === true ? "Name" : "Manager"}</Th>
+                    <Th className="hidden md:table-cell">Email</Th>
+                    <Th className="hidden md:table-cell">Phone</Th>
+                    {isadmin === true && <Th>Address</Th>}
+                    {isadmin === false && <Th>Shop</Th>}
+                    <Th>Date Added</Th>
+                    {isadmin === false && <Th>Status</Th>}
+                    {isadmin === false && <Th className="text-right">Actions</Th>}
+                </Tr>
+            </Thead>
+            <Tbody>
+                {filtered.map((m) => (
+                    <Tr key={m._id} className={`${isYou === m._id && "bg-[var(--color-muted)]"} ${m.status === "active" && !isadmin && "bg-green-500/5 hover:bg-green-500/10"} ${m.status === "inactive" && "bg-yellow-500/5 hover:bg-yellow-500/10"} ${m.status === "suspended" && "bg-red-500/5 hover:bg-red-500/10"} transition-colors group`}>
+                        <Td className="font-medium">
+                            <div className="text-[var(--color-foreground)] flex items-center gap-2">
+                                {m.name}
+                            </div>
+                            <div className="text-xs text-[var(--color-muted-foreground)] md:hidden mt-0.5">{m.email}</div>
+                            <div className="text-xs text-[var(--color-muted-foreground)] md:hidden">{m.phone}</div>
+                        </Td>
+                        <Td className="hidden md:table-cell text-[var(--color-muted-foreground)]">{m.email}</Td>
+                        <Td className="hidden md:table-cell text-[var(--color-muted-foreground)]">{m.phone}</Td>
+                        {isadmin === true && <Td className="text-[var(--color-muted-foreground)]">{m.address}</Td>}
+                        {isadmin === false && <Td className="font-medium text-[var(--color-foreground)]">{m.shopname}</Td>}
+                        <Td className="text-[var(--color-muted-foreground)]">{new Date(m.createdAt).toLocaleDateString()}</Td>
+                        {isadmin === false && <Td><StatusBadge status={m.status} /></Td>}
+                        {isadmin === false &&
+                            <Td>
+                                <div className="flex items-center justify-end gap-2 transition-opacity">
+                                    {m.status !== "active" ? (
+                                        <button title="Activate" onClick={() => handlestatusupdate(m)} className="p-2 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors">
+                                            <CheckCircle size={16} />
+                                        </button>
+                                    ) : (
+                                        <button title="Suspend" onClick={() => handlestatusupdate(m)} className="p-2 rounded-lg text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors">
+                                            <Ban size={16} />
+                                        </button>
+                                    )}
+                                    <button onClick={() => navigate('/admin/profile/edit', { state: { data: m } })} title="Edit" className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
+                                        <Edit2 size={16} />
+                                    </button>
+                                    <button onClick={() => handleDelete(m)} title="Delete" className="p-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
+                                        <Trash2 size={16} />
+                                    </button>
                                 </div>
-                                <div className="text-xs text-[var(--color-muted-foreground)] md:hidden mt-0.5">{m.email}</div>
-                                <div className="text-xs text-[var(--color-muted-foreground)] md:hidden">{m.phone}</div>
-                            </Td>
-                            <Td className="hidden md:table-cell text-[var(--color-muted-foreground)]">{m.email}</Td>
-                            <Td className="hidden md:table-cell text-[var(--color-muted-foreground)]">{m.phone}</Td>
-                            {isadmin === true && <Td className="text-[var(--color-muted-foreground)]">{m.address}</Td>}
-                            {isadmin === false && <Td className="font-medium text-[var(--color-foreground)]">{m.shopname}</Td>}
-                            <Td className="text-[var(--color-muted-foreground)]">{new Date(m.createdAt).toLocaleDateString()}</Td>
-                            {isadmin === false && <Td>{statusBadge(m.status)}</Td>}
-                            {isadmin === false &&
-                                <Td>
-                                    <div className="flex items-center justify-end gap-2 transition-opacity">
-                                        {m.status !== "active" ? (
-                                            <button title="Activate" onClick={() => handlestatusupdate(m)} className="p-2 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors">
-                                                <CheckCircle size={16} />
-                                            </button>
-                                        ) : (
-                                            <button title="Suspend" onClick={() => handlestatusupdate(m)} className="p-2 rounded-lg text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 transition-colors">
-                                                <Ban size={16} />
-                                            </button>
-                                        )}
-                                        <button onClick={() => navigate('/admin/profile/edit', { state: { data: m } })} title="Edit" className="p-2 rounded-lg text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors">
-                                            <Edit2 size={16} />
-                                        </button>
-                                        <button onClick={() => handleDelete(m)} title="Delete" className="p-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors">
-                                            <Trash2 size={16} />
-                                        </button>
-                                    </div>
-                                </Td>}
-                        </tr>
-                    ))}
-                    {filtered.length === 0 && (
-                        <tr>
-                            <td colSpan={8} className="px-6 py-12 text-center text-[var(--color-muted-foreground)]">
-                                No results found.
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-        </div>
+                            </Td>}
+                    </Tr>
+                ))}
+                {filtered.length === 0 && (
+                    <Tr>
+                        <td colSpan={8} className="px-6 py-12 text-center text-[var(--color-muted-foreground)]">
+                            No results found.
+                        </td>
+                    </Tr>
+                )}
+            </Tbody>
+        </Table>
     )
 };
 
@@ -251,22 +236,6 @@ function StatCard({ icon: Icon, label, value, loading }) {
                 </p>
             </div>
         </div>
-    );
-}
-
-function Th({ children, className = "" }) {
-    return (
-        <th className={`px-6 py-3 font-semibold text-[var(--color-foreground)] uppercase tracking-wider text-xs ${className}`}>
-            {children}
-        </th>
-    );
-}
-
-function Td({ children, className = "" }) {
-    return (
-        <td className={`px-6 py-4 whitespace-nowrap ${className}`}>
-            {children}
-        </td>
     );
 }
 

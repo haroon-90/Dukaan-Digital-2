@@ -2,11 +2,16 @@ import { useEffect, useState } from "react";
 import { getsales, deletesale } from "../../services/saleService.js";
 import { getPurchases, deletePurchase } from "../../services/purchaseServices.js";
 import SaleInvoice from "./saleInvoice.jsx";
-import { ShoppingCart, Trash2, ShoppingBag, Calendar, ArrowUpRight, ArrowDownLeft, Search } from "lucide-react";
+import { ShoppingCart, Trash2, ShoppingBag, ArrowUpRight, ArrowDownLeft } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx"
 import { useLoading } from "../../components/Context/LoadingContext";
+import PageHeader from '../../components/UI/PageHeader';
+import DateRangeFilter from '../../components/UI/DateRangeFilter';
+import SearchBar from '../../components/UI/SearchBar';
+import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
+import EmptyState from '../../components/UI/EmptyState';
 
 const dummySaleData = [
   {
@@ -50,7 +55,7 @@ const dummySaleData = [
 const dummyPurchaseData = [
   {
     _id: "1",
-    supplierName: "Haroon",
+    suppliername: "Haroon",
     createdAt: "2022-01-01",
     items: [
       {
@@ -68,7 +73,7 @@ const dummyPurchaseData = [
   },
   {
     _id: "2",
-    supplierName: "Fahad",
+    suppliername: "Fahad",
     createdAt: "2022-01-02",
     items: [
       {
@@ -259,143 +264,110 @@ const SalesListPage = () => {
   const RenderTable = ({ data }) => (
     <div>
       {data.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 text-[var(--color-muted-foreground)]">
-          {type === "sale" ? <ShoppingCart size={40} /> : <ShoppingBag size={40} />}
-          <p>No {type === "sale" ? "sales" : "purchases"} found for this period.</p>
-        </div>
+        <EmptyState
+          icon={type === "sale" ? ShoppingCart : ShoppingBag}
+          message={`No ${type === "sale" ? "sales" : "purchases"} found for this period.`}
+          query={search}
+        />
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead className={`bg-[var(--color-background)] text-[var(--color-muted-foreground)] uppercase text-xs border-b border-[var(--color-border)] ${data.length > 0 ? '' : 'hidden'}`}>
-              <tr>
-                <th className="p-4 font-semibold">Invoice ID</th>
-                <th className="p-4 font-semibold">{type == "sale" ? "Customer" : "Supplier"}</th>
-                <th className="p-4 font-semibold">Date</th>
-                <th className="p-4 font-semibold">Total Amount</th>
-                <th className="p-4 text-center font-semibold">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-[var(--color-border)]">
-              {data.map((item) => (
-                <tr
-                  onClick={() => handleViewDetails(item)}
-                  // disabled={isDemo}
-                  key={item._id}
-                  className="hover:bg-[var(--color-muted)] transition-colors duration-200"
-                >
-                  <td className="px-4 py-2 font-medium text-[var(--color-foreground)]">
-                    {item._id.slice(-6)}
-                  </td>
-                  <td className="px-4 py-2 font-medium text-[var(--color-foreground)]">
-                    <div className="flex items-center gap-2">
-                      {type === "sale"
-                        ? <ArrowUpRight size={14} className="text-emerald-500" />
-                        : <ArrowDownLeft size={14} className="text-rose-500" />
-                      }
-                      {item.customerName ? item.customerName : item.suppliername}
-                    </div>
-                  </td>
-                  <td className="px-4 py-2 text-[var(--color-muted-foreground)]">
-                    {new Date(item.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-4 py-2 font-semibold text-[var(--color-foreground)]">
-                    Rs {item.totalAmount ? item.totalAmount.toLocaleString() : item.total.toLocaleString()}
-                  </td>
-                  <td className="px-4 py-2 flex justify-center gap-3">
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Invoice ID</Th>
+              <Th>{type == "sale" ? "Customer" : "Supplier"}</Th>
+              <Th>Date</Th>
+              <Th>Total Amount</Th>
+              <Th className="text-center">Action</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {data.map((item) => (
+              <Tr
+                onClick={() => handleViewDetails(item)}
+                key={item._id}
+                className="cursor-pointer hover:bg-[var(--color-muted)]"
+              >
+                <Td className="font-medium text-[var(--color-foreground)]">
+                  {item._id.slice(-6)}
+                </Td>
+                <Td className="font-medium text-[var(--color-foreground)]">
+                  <div className="flex items-center gap-2">
+                    {type === "sale"
+                      ? <ArrowUpRight size={14} className="text-emerald-500" />
+                      : <ArrowDownLeft size={14} className="text-rose-500" />
+                    }
+                    {item.customerName ? item.customerName : item.suppliername}
+                  </div>
+                </Td>
+                <Td className="text-[var(--color-muted-foreground)]">
+                  {new Date(item.createdAt).toLocaleDateString()}
+                </Td>
+                <Td className="font-semibold text-[var(--color-foreground)]">
+                  Rs {item.totalAmount ? item.totalAmount.toLocaleString() : item.total.toLocaleString()}
+                </Td>
+                <Td>
+                  <div className="flex justify-center transition-opacity">
                     <button
-                      onClick={() => handleDelete(item)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDelete(item);
+                      }}
                       disabled={isDemo}
                       className="p-2 rounded-lg bg-red-500/10 md:bg-red-500/0 text-red-500 hover:bg-red-500 hover:text-white transition-all"
                       title="Delete Record"
                     >
                       <Trash2 size={16} />
                     </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </div>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
       )}
     </div>
   );
 
   return (
-    <div className="relative p-2 md:p-4 space-y-6 min-h-screen bg-[var(--color-background)] transition-colors duration-300">
-      <div className="flex md:justify-between items-center flex-wrap gap-4 w-full glass-panel p-2 md:p-4 rounded-2xl animate-fade-in-down">
-        <div className="flex items-center gap-2">
-          {type === "sale" ? <ShoppingCart className="text-[var(--color-primary)]" size={28} /> : <ShoppingBag className="text-[var(--color-primary)]" size={28} />}
-          <div className="flex flex-col">
-            <h1 className="font-bold text-2xl">{type === "sale" ? "Sales Records" : "Purchase Records"}</h1>
-            <p className="text-[var(--color-muted-foreground)] text-sm">Manage your {type === "sale" ? "sales" : "purchase"} records</p>
-          </div>
-        </div>
-        <button
-          disabled={isDemo}
-          className="px-6 py-2.5 w-full md:w-auto bg-[var(--color-primary)] hover:brightness-110 transition-all text-[var(--color-primary-foreground)] rounded-xl flex items-center justify-center gap-2 font-bold shadow-lg shadow-[var(--color-primary)]/20 active:scale-95"
-          onClick={() => {
-            type === "sale" && navigate("/sales/new")
-            type === "purchase" && navigate("/purchase/new")
-          }}
-        >
-          {
-            type == "sale" ? <ShoppingCart size={18} /> : <ShoppingBag size={18} />
-          }
-          {
-            type == "sale" ? "New Sale" : "New Purchase"
-          }
-        </button>
-      </div>
+    <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] p-2 md:p-4 transition-colors duration-300">
+
+      <PageHeader
+        title={type === "sale" ? "Sales Records" : "Purchase Records"}
+        description={`Manage your ${type === "sale" ? "sales" : "purchase"} records`}
+        icon={type === "sale" ? ShoppingCart : ShoppingBag}
+        actionButtonText={type === "sale" ? "New Sale" : "New Purchase"}
+        actionIcon={type === "sale" ? ShoppingCart : ShoppingBag}
+        onAction={() => {
+          type === "sale" && navigate("/sales/new")
+          type === "purchase" && navigate("/purchase/new")
+        }}
+        actionDisabled={isDemo}
+      />
 
       <div className="relative glass-panel rounded-2xl shadow-xl animate-fade-in-up">
-        <div className="text-md p-2 border-b border-[var(--color-border)] text-[var(--color-foreground)] flex items-center justify-between flex-wrap gap-3">
-          <div className="flex items-center justify-center flex-wrap w-full lg:w-auto gap-4">
-            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-1.5 rounded-xl border border-[var(--color-border)]">
-              <Calendar size={16} className="text-[var(--color-primary)]" />
-              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">From:</span>
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
-              />
-            </div>
-            <div className="flex items-center gap-2 bg-[var(--color-surface)] px-3 py-1.5 rounded-xl border border-[var(--color-border)]">
-              <Calendar size={16} className="text-[var(--color-primary)]" />
-              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">To:</span>
-              <input
-                type="date"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                className="bg-transparent border-none text-[var(--color-foreground)] text-sm focus:ring-0 cursor-pointer outline-none"
-              />
-            </div>
-          </div>
-          <div className="flex justify-center gap-3 flex-wrap w-full lg:w-auto">
-            <div className="relative group flex-1 md:flex-none min-w-40">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--color-muted-foreground)]" />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search ..."
-                className="pl-10 pr-4 py-1 w-full md:w-60 bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all text-[var(--color-foreground)] placeholder:text-[var(--color-muted-foreground)]"
-              />
-            </div>
-            <div className="flex items-center gap-2 px-3  text-xs font-medium border border-[var(--color-border)] rounded-xl bg-[var(--color-surface)] text-[var(--color-muted-foreground)]">
-              <span className="text-[var(--color-foreground)] font-semibold">
-                {type == "sale" ? NoOfSales : NoOfPurchases}
-              </span>
-              {type == "sale" ? "sales" : "purchases"}
-            </div>
-          </div>
+
+        <div className="flex flex-wrap gap-3 items-center justify-between p-2 border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+          <DateRangeFilter
+            startDate={startDate}
+            endDate={endDate}
+            onStartDateChange={(e) => setStartDate(e.target.value)}
+            onEndDateChange={(e) => setEndDate(e.target.value)}
+          />
+
+          <SearchBar
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search ..."
+            stats={type == "sale" ? NoOfSales : NoOfPurchases}
+            statsLabel={type == "sale" ? "sales" : "purchases"}
+          />
         </div>
 
-        {isLoading &&
+        {isLoading ? (
           <div className="flex justify-center py-12">
             <Loader />
           </div>
-        }
-        {!isLoading && (
+        ) : (
           <>
             {type === "sale" && (
               <RenderTable data={filteredSales} />
