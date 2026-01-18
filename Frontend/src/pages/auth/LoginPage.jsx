@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUserContext } from '../../components/Context/UserContext.jsx';
 import DukaanDigital from '../../assets/Dukaan_Digital.svg'
 import { toast } from 'react-hot-toast';
-import { Mail, Lock, Loader2 } from 'lucide-react';
+import { Mail, Lock, Loader2, X } from 'lucide-react';
 import InputField from '../../components/UI/inputFields.jsx';
 
 const LoginPage = () => {
@@ -57,7 +57,14 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)] relative overflow-hidden font-sans transition-colors duration-300">
 
-      <div className="glass-panel w-full max-w-lg p-8 rounded-3xl shadow-xl z-10 mx-4">
+      <div className="relative glass-panel w-full max-w-lg p-8 rounded-3xl shadow-xl z-10 mx-4">
+
+        <div
+          className="absolute top-0 right-0 p-4"
+          onClick={() => navigate('/')}
+        >
+          <X size={20} className="text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] cursor-pointer" />
+        </div>
 
         <div className="flex flex-col items-center mb-8">
           <img src={DukaanDigital} alt="Dukaan Digital" className="h-16 my-4 w-auto invert-logo" />
@@ -74,6 +81,7 @@ const LoginPage = () => {
           <div className="space-y-1">
             <InputField
               label="Email"
+              id="email"
               icon={Mail}
               type="email"
               name="email"
@@ -88,6 +96,7 @@ const LoginPage = () => {
           <div className="space-y-1">
             <InputField
               label="Password"
+              id="password"
               icon={Lock}
               type="password"
               name="password"

@@ -11,6 +11,7 @@ import SearchBar from '../../components/UI/SearchBar';
 import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
 import EmptyState from '../../components/UI/EmptyState';
 import StatusBadge from '../../components/UI/StatusBadge';
+import { useConfirm } from '../../components/UI/Confirm';
 
 const dummyUdhaarData = [
   {
@@ -32,6 +33,7 @@ const dummyUdhaarData = [
 ];
 
 const UdhaarListPage = () => {
+  const Confirm = useConfirm();
   const navigate = useNavigate();
   const { isLoading, setIsLoading } = useLoading();
   const [udhaarList, setUdhaarList] = useState([]);
@@ -75,7 +77,8 @@ const UdhaarListPage = () => {
 
   const handleDelete = async (e) => {
     try {
-      if (confirm("Are you really want to delete this credit record?")) {
+      const isConfirmed = await Confirm("Are you really want to delete this credit record?");
+      if (isConfirmed) {
         const res = await deleteUdhaar(e._id);
         if (res.status == 200 || res.status == 201) {
           toast.success("Deleted successfully");

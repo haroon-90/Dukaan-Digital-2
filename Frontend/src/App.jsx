@@ -5,6 +5,7 @@ import { UserProvider } from './components/Context/UserContext.jsx'
 import { ThemeProvider } from './components/Context/ThemeContext.jsx'
 import { LoadingProvider } from './components/Context/LoadingContext.jsx'
 import { Toaster } from 'react-hot-toast';
+import { ConfirmProvider } from './components/UI/Confirm';
 
 function App() {
 
@@ -21,7 +22,9 @@ function App() {
             }} />
           <BrowserRouter>
             <UserProvider>
-              <AppRouter />
+              <ConfirmProvider>
+                <AppRouter />
+              </ConfirmProvider>
             </UserProvider>
           </BrowserRouter>
         </LoadingProvider>

@@ -11,6 +11,7 @@ import {
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx";
 import { useLoading } from "../../components/Context/LoadingContext";
+import { useConfirm } from '../../components/UI/Confirm';
 
 const DUMMY_PRODUCTS = [
     { _id: '1', itemname: 'Sample Product A', sellingPrice: 100, purchasePrice: 50, quantity: 50, category: 'Electronics', unit: 'pcs', createdAt: '2022-01-01' },
@@ -19,6 +20,7 @@ const DUMMY_PRODUCTS = [
 ];
 
 const ProductListPage = () => {
+    const Confirm = useConfirm();
     const navigate = useNavigate();
     const location = useLocation();
     const { isLoading, setIsLoading } = useLoading();
@@ -208,7 +210,8 @@ const ProductListPage = () => {
     }, [isDemo, setIsLoading]);
 
     const handleDelete = async (e) => {
-        if (confirm(`Are you sure you want to delete "${e.itemname}"?`)) {
+        const isConfirmed = await Confirm(`Are you sure you want to delete "${e.itemname}"?`);
+        if (isConfirmed) {
             if (isDemo) {
                 setProducts(prev => prev.filter(item => item._id !== e._id));
                 toast.success('Demo Mode: Product deleted successfully!');

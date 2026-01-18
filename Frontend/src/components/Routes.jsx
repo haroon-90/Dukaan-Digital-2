@@ -62,8 +62,13 @@ import Invoice from "../pages/invoice/invoice.jsx"
 import { Navigate } from "react-router-dom"
 import DemoLayout from "./layout/DemoLayout.jsx"
 
+import { useMemo } from 'react';
+
 export default function AppRouter() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = useMemo(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  }, []);
 
   return (
     <Routes path="/">

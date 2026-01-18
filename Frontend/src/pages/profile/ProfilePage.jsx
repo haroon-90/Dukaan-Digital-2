@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useTheme } from '../../components/Context/ThemeContext';
 import { useLoading } from "../../components/Context/LoadingContext";
+import { useUserContext } from '../../components/Context/UserContext.jsx';
 
 const ProfileDetail = ({ icon, label, value }) => (
     <div className="flex items-center gap-4 rounded-2xl bg-[var(--color-surface)] px-5 py-4 shadow-sm border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition-colors">
@@ -34,6 +35,7 @@ const MenuLink = ({ icon, label, onClick, danger, value }) => (
 );
 
 const ProfilePage = () => {
+    const { setUser } = useUserContext();
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
     const [confirmDelete, setConfirmDelete] = useState(false);
@@ -75,14 +77,15 @@ const ProfilePage = () => {
         setIsLoading(true);
         localStorage.clear();
         sessionStorage.clear();
-        if ('caches' in window) {
-            caches.keys().then((names) => {
-                names.forEach((name) => caches.delete(name));
-            });
-        }
+        // if ('caches' in window) {
+        //     caches.keys().then((names) => {
+        //         names.forEach((name) => caches.delete(name));
+        //     });
+        // }
+        setUser(null);
         setTimeout(() => {
             setIsLoading(false);
-            navigate('/');
+            navigate('/login', { replace: true });
         }, 500);
     };
 

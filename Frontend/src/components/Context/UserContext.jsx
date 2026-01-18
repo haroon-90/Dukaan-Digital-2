@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
 
     // jab bhi user change hoga, storage me save karo
     useEffect(() => {
-        if (user && user.id) {
+        if (user && user.id && user.id !== "") {
             localStorage.setItem("user", JSON.stringify(user));
         }
     }, [user]);

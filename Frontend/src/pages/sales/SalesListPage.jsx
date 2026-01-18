@@ -12,6 +12,7 @@ import DateRangeFilter from '../../components/UI/DateRangeFilter';
 import SearchBar from '../../components/UI/SearchBar';
 import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
 import EmptyState from '../../components/UI/EmptyState';
+import { useConfirm } from '../../components/UI/Confirm';
 
 const dummySaleData = [
   {
@@ -92,6 +93,7 @@ const dummyPurchaseData = [
 ];
 
 const SalesListPage = () => {
+  const Confirm = useConfirm();
   const navigate = useNavigate();
   const location = useLocation();
   const { isLoading, setIsLoading } = useLoading();
@@ -207,7 +209,8 @@ const SalesListPage = () => {
 
   const handleDelete = async (item) => {
     try {
-      if (confirm("Are you really want to delete this?")) {
+      const isConfirmed = await Confirm("Are you really want to delete this?");
+      if (isConfirmed) {
         if (type == "sale") {
           const res = await deletesale(selectedSale?._id || item._id);
           if (res.status == 200 || res.status == 201) {

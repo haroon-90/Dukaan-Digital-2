@@ -10,8 +10,10 @@ import DateRangeFilter from '../../components/UI/DateRangeFilter';
 import SearchBar from '../../components/UI/SearchBar';
 import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
 import EmptyState from '../../components/UI/EmptyState';
+import { useConfirm } from '../../components/UI/Confirm';
 
 const ExpenseListPage = () => {
+  const Confirm = useConfirm();
   const demoData = [
     { _id: 1, title: "Demo Expense 1", amount: 100, description: "Demo Expense", createdAt: new Date() },
     { _id: 2, title: "Demo Expense 2", amount: 200, description: "Demo Expense", createdAt: new Date() },
@@ -66,7 +68,8 @@ const ExpenseListPage = () => {
       return;
     }
     try {
-      if (confirm("Are you really want to delete this?")) {
+      const isConfirmed = await Confirm("Are you really want to delete this?");
+      if (isConfirmed) {
         const res = await deleteExpense(e._id);
         if (res.status == 200) {
           toast.success("Expense deleted successfully!")
