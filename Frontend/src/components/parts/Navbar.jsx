@@ -1,13 +1,15 @@
 import Dukaan_Digital from '../../assets/Dukaan_Digital.svg';
 import { useNavigate } from 'react-router-dom';
-import { Sun, Moon, Keyboard } from 'lucide-react';
+import { Sun, Moon, Keyboard, Calculator } from 'lucide-react';
 import { useTheme } from '../Context/ThemeContext';
 import { useLoading } from '../Context/LoadingContext';
+import { useCalculator } from '../Context/CalculatorContext';
 import { useState } from 'react';
 
 const Navbar = () => {
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
+    const { toggleCalculator } = useCalculator();
     const user = JSON.parse(localStorage.getItem('user'));
     const role = user?.role;
     const shopName = user?.shopname;
@@ -47,6 +49,13 @@ const Navbar = () => {
                     </div>
 
                     <div className="flex items-center gap-3 md:gap-5">
+                        <button
+                            onClick={toggleCalculator}
+                            className="flex p-2 rounded-full bg-[var(--color-surface)] text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors"
+                            title="Calculator"
+                        >
+                            <Calculator size={20} />
+                        </button>
                         <button
                             onClick={() => { setShowShortcuts(!showShortcuts) }}
                             className={`relative     ${role === 'admin' ? 'hidden' : 'hidden md:flex'} p-2 rounded-full bg-[var(--color-surface)] text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/10 transition-colors`}
