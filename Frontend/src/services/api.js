@@ -2,8 +2,8 @@ import axios from "axios";
 import { useUserContext } from "../components/Context/UserContext";
 
 const api = axios.create({
-  // baseURL: "https://dukaan-digital-backend.vercel.app/api",
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://dukaan-digital-backend.vercel.app/api",
+  // baseURL: "http://localhost:5000/api",
   headers: { "Content-Type": "application/json" },
 });
 
