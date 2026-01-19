@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useUserContext } from "../components/Context/UserContext";
 
 const api = axios.create({
   baseURL: "https://dukaan-digital-backend.vercel.app/api",
@@ -22,6 +23,7 @@ api.interceptors.response.use(
     if (err.response?.status === 401) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      useUserContext().setUser(null);
       setTimeout(() => {
         window.location.href = "/login";
       }, 200);

@@ -11,7 +11,9 @@ import {
 import toast from "react-hot-toast";
 import Loader from "../loader/loader.jsx";
 import { useLoading } from "../../components/Context/LoadingContext";
-import { useConfirm } from '../../components/UI/Confirm';
+import { useConfirm } from '../../components/Context/Confirm';
+import ProductCard from "../../components/UI/ProductCard";
+import QuickSaleCard from "../../components/UI/QuickSaleCard";
 
 const DUMMY_PRODUCTS = [
     { _id: '1', itemname: 'Sample Product A', sellingPrice: 100, purchasePrice: 50, quantity: 50, category: 'Electronics', unit: 'pcs', createdAt: '2022-01-01' },
@@ -263,179 +265,6 @@ const ProductListPage = () => {
         }
         loadProducts();
     }, [location.pathname]);
-
-    // Grid Card Component
-    const ProductCard = ({ product }) => {
-        const quantity = saleQuantities[product._id] || 0;
-        const isLowStock = product.quantity < 3;
-
-        return (
-            <div className="group relative bg-[var(--color-surface)] rounded-2xl p-4 border border-[var(--color-border)] hover:shadow-xl hover:shadow-[var(--color-primary)]/10 transition-all duration-300 hover:-translate-y-1">
-                {/* Stock Badge */}
-                {isLowStock && (
-                    <div className="absolute group top-2 right-2 z-10">
-                        <span className="inline-flex items-center gap-1 px-2 py-1 text-xs font-bold bg-red-500 text-white rounded-full">
-                            <MessageCircleWarning size={12} />
-                            <span className="text-xs font-medium hidden group-hover:block">Low Stock</span>
-                        </span>
-                    </div>
-                )}
-
-                {/* Product Image Placeholder */}
-                {/* <div className="relative w-full h-40 bg-gradient-to-br from-[var(--color-primary)]/10 to-[var(--color-primary)]/5 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
-          <Package size={48} className="text-[var(--color-primary)] opacity-30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-        </div> */}
-
-                {/* Product Info */}
-                <div className="space-y-2">
-                    <div>
-                        <h3 className="font-bold text-[var(--color-foreground)] text-lg truncate group-hover:text-[var(--color-primary)] transition-colors">
-                            {product.itemname}
-                        </h3>
-                        <p className="text-xs text-[var(--color-muted-foreground)] font-medium">
-                            {product.category}
-                        </p>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <div>
-                            <p className="text-xl font-bold text-[var(--color-foreground)]">
-                                Rs {product.sellingPrice.toLocaleString()}
-                            </p>
-                        </div>
-                        <div className="text-right">
-                            <p className="text-sm font-bold text-[var(--color-muted-foreground)]">
-                                {product.quantity} {product.unit}
-                            </p>
-                            <p className="text-xs text-[var(--color-muted-foreground)]">
-                                in stock
-                            </p>
-                        </div>
-                    </div>
-
-                    {/* Sale Actions */}
-                    {isSale && (
-                        <div className="pt-3 border-t border-[var(--color-border)] space-y-2">
-                            <div className="flex items-center gap-2">
-                                <button
-                                    onClick={() => decrementQuantity(product._id)}
-                                    className="p-2 py-3 rounded-lg bg-[var(--color-muted)] hover:bg-[var(--color-border)] transition-colors"
-                                >
-                                    <Minus size={16} />
-                                </button>
-                                <input
-                                    type="number"
-                                    min="0"
-                                    value={quantity}
-                                    onChange={(e) => handleSaleChange(product, e.target.value)}
-                                    className="min-w-12 text-center p-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] focus:ring-2 focus:ring-[var(--color-primary)] outline-none font-bold"
-                                />
-                                <button
-                                    onClick={() => incrementQuantity(product._id)}
-                                    className="p-2 py-3 rounded-lg bg-[var(--color-muted)] hover:bg-[var(--color-border)] transition-colors"
-                                >
-                                    <Plus size={16} />
-                                </button>
-                            </div>
-                            <button
-                                onClick={() => handleCartAdd(product)}
-                                disabled={quantity <= 0}
-                                className="w-full py-2.5 rounded-xl bg-[var(--color-primary)] text-[var(--color-primary-foreground)] font-bold hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-[var(--color-primary)]/20"
-                            >
-                                <ShoppingCart size={18} />
-                                Add to Cart
-                            </button>
-                        </div>
-                    )}
-
-                    {/* Product Actions */}
-                    {!isSale && (
-                        <div className="flex gap-2 pt-3 border-t border-[var(--color-border)]">
-                            <button
-                                onClick={() => navigate("/products/edit/" + product._id)}
-                                className="flex-1 py-2 bg-blue-500/10 text-blue-600 rounded-lg hover:bg-blue-500/20 transition-colors font-medium flex items-center justify-center gap-2"
-                            >
-                                <Edit2 size={16} />
-                                Edit
-                            </button>
-                            <button
-                                onClick={() => handleDelete(product)}
-                                className="flex-1 py-2 bg-red-500/10 text-red-600 rounded-lg hover:bg-red-500/20 transition-colors font-medium flex items-center justify-center gap-2"
-                            >
-                                <Trash2 size={16} />
-                                Delete
-                            </button>
-                        </div>
-                    )}
-                </div>
-            </div>
-        );
-    };
-
-    // Quick Sale Card Component
-    const QuickSaleCard = ({ product }) => {
-        const quantity = saleQuantities[product._id] || 0;
-
-        return (
-            <div className="group bg-[var(--color-surface)] rounded-xl p-3 border border-[var(--color-border)] hover:shadow-lg transition-all duration-200 hover:border-[var(--color-primary)]">
-                <div className="flex items-center gap-3">
-                    {/* Icon */}
-                    <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[var(--color-primary)]/20 to-[var(--color-primary)]/5 hidden md:flex items-center justify-center flex-shrink-0">
-                        <Package size={24} className="text-[var(--color-primary)]" />
-                    </div>
-
-                    {/* Info */}
-                    <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-[var(--color-foreground)] truncate">
-                            {product.itemname}
-                        </h3>
-                        <div className="flex items-center gap-2 text-sm">
-                            <span className="font-bold text-[var(--color-primary)]">
-                                Rs {product.sellingPrice.toLocaleString()}
-                            </span>
-                            <span className="text-[var(--color-muted-foreground)]">•</span>
-                            <span className="text-[var(--color-muted-foreground)]">
-                                {product.quantity} {product.unit}
-                            </span>
-                        </div>
-                    </div>
-
-                    {/* Quick Actions */}
-                    <div className="flex items-center gap-2 flex-shrink-0">
-                        <div className="flex items-center gap-1 bg-[var(--color-muted)] rounded-lg p-1">
-                            <button
-                                onClick={() => decrementQuantity(product._id)}
-                                className="p-1 hover:bg-[var(--color-background)] rounded transition-colors"
-                            >
-                                <Minus size={14} />
-                            </button>
-                            <input
-                                type="number"
-                                min="0"
-                                value={quantity}
-                                onChange={(e) => handleSaleChange(product, e.target.value)}
-                                className="w-12 text-center bg-transparent font-bold text-sm outline-none"
-                            />
-                            <button
-                                onClick={() => incrementQuantity(product._id)}
-                                className="p-1 hover:bg-[var(--color-background)] rounded transition-colors"
-                            >
-                                <Plus size={14} />
-                            </button>
-                        </div>
-                        <button
-                            onClick={() => handleCartAdd(product)}
-                            disabled={quantity <= 0}
-                            className="p-2 rounded-lg bg-[var(--color-primary)] text-[var(--color-primary-foreground)] hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                            <ShoppingCart size={18} />
-                        </button>
-                    </div>
-                </div>
-            </div>
-        );
-    };
 
     return (
         <div className="min-h-screen w-full bg-[var(--color-background)] text-[var(--color-foreground)] p-2 md:p-4 transition-colors duration-300">
@@ -734,7 +563,7 @@ const ProductListPage = () => {
                         {(viewMode === 'grid' && isSale) && (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                                 {filteredProduct.map((product) => (
-                                    <ProductCard key={product._id} product={product} />
+                                    <ProductCard key={product._id} product={product} isSale={isSale} handleCartAdd={handleCartAdd} handleSaleChange={handleSaleChange} saleQuantities={saleQuantities} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} />
                                 ))}
                             </div>
                         )}
@@ -743,7 +572,7 @@ const ProductListPage = () => {
                         {(viewMode === 'quick' && isSale) && (
                             <div className="glass-panel rounded-2xl p-4 space-y-3">
                                 {filteredProduct.map((product) => (
-                                    <QuickSaleCard key={product._id} product={product} />
+                                    <QuickSaleCard key={product._id} product={product} saleQuantities={saleQuantities} incrementQuantity={incrementQuantity} decrementQuantity={decrementQuantity} handleSaleChange={handleSaleChange} handleCartAdd={handleCartAdd} />
                                 ))}
                             </div>
                         )}

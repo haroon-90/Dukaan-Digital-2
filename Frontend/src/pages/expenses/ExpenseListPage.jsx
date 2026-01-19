@@ -10,7 +10,7 @@ import DateRangeFilter from '../../components/UI/DateRangeFilter';
 import SearchBar from '../../components/UI/SearchBar';
 import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
 import EmptyState from '../../components/UI/EmptyState';
-import { useConfirm } from '../../components/UI/Confirm';
+import { useConfirm } from '../../components/Context/Confirm';
 
 const ExpenseListPage = () => {
   const Confirm = useConfirm();

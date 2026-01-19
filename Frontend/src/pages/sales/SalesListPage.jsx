@@ -12,7 +12,7 @@ import DateRangeFilter from '../../components/UI/DateRangeFilter';
 import SearchBar from '../../components/UI/SearchBar';
 import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
 import EmptyState from '../../components/UI/EmptyState';
-import { useConfirm } from '../../components/UI/Confirm';
+import { useConfirm } from '../../components/Context/Confirm';
 
 const dummySaleData = [
   {
@@ -306,7 +306,7 @@ const SalesListPage = () => {
                   {new Date(item.createdAt).toLocaleDateString()}
                 </Td>
                 <Td className="font-semibold text-[var(--color-foreground)]">
-                  Rs {item.totalAmount ? item.totalAmount.toLocaleString() : item.total.toLocaleString()}
+                  Rs {item.totalAmount ? item.totalAmount?.toLocaleString() : item.total?.toLocaleString() || 0}
                 </Td>
                 <Td>
                   <div className="flex justify-center transition-opacity">

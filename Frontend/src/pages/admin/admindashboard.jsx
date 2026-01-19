@@ -16,10 +16,12 @@ import SearchBar from '../../components/UI/SearchBar';
 import StatusBadge from '../../components/UI/StatusBadge';
 import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
 import EmptyState from '../../components/UI/EmptyState';
+import { useConfirm } from '../../components/Context/Confirm';
 
 const isYou = JSON.parse(localStorage.getItem("user"))?.id || "";
 
 const Admindashboard = () => {
+    const Confirm = useConfirm();
     const { isLoading, setIsLoading } = useLoading();
     const navigate = useNavigate();
     const [error, setError] = useState("");
@@ -66,9 +68,10 @@ const Admindashboard = () => {
     }, [query, managers]);
 
     const handleDelete = async (e) => {
-        setIsLoading(true)
         try {
-            if (confirm("Are you sure you want to delete this manager? This action cannot be undone.")) {
+            const confirmed = await Confirm(`Are you sure you want to delete this "${e.shopname}"? This action cannot be undone.`);
+            if (confirmed) {
+                setIsLoading(true)
                 const deleted = await deleteUserProfile(e._id);
                 if (deleted) {
                     fetchDashboard();
@@ -76,6 +79,7 @@ const Admindashboard = () => {
             }
         } catch (err) {
             toast.error('Failed to fetch profile!')
+            console.error('Error fetching profile:', err);
             setIsLoading(false)
         }
     }
@@ -127,10 +131,10 @@ const Admindashboard = () => {
                             </div>
                         </div>
                         <div className="w-full sm:w-auto">
-                            <SearchBar 
-                                value={query} 
-                                onChange={(e) => setQuery(e.target.value)} 
-                                placeholder="Search by Shop, manager..." 
+                            <SearchBar
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                placeholder="Search by Shop, manager..."
                             />
                         </div>
                     </div>

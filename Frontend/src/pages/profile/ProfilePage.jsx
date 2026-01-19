@@ -6,40 +6,42 @@ import toast from 'react-hot-toast';
 import { useTheme } from '../../components/Context/ThemeContext';
 import { useLoading } from "../../components/Context/LoadingContext";
 import { useUserContext } from '../../components/Context/UserContext.jsx';
+import { useConfirm } from '../../components/Context/Confirm.jsx';
+import { ProfileDetail, MenuLink } from '../../components/UI/ProfileComp.jsx';
 
-const ProfileDetail = ({ icon, label, value }) => (
-    <div className="flex items-center gap-4 rounded-2xl bg-[var(--color-surface)] px-5 py-4 shadow-sm border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition-colors">
-        <div className="flex h-12 min-w-12 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
-            {icon}
-        </div>
-        <div className="flex flex-col">
-            <span className="text-xs font-medium text-[var(--color-muted-foreground)] uppercase tracking-wider">{label}</span>
-            <span className="text-base font-semibold text-[var(--color-foreground)] break-words">{value || "Not Provided"}</span>
-        </div>
-    </div>
-);
+// const ProfileDetail = ({ icon, label, value }) => (
+//     <div className="flex items-center gap-4 rounded-2xl bg-[var(--color-surface)] px-5 py-4 shadow-sm border border-[var(--color-border)] hover:bg-[var(--color-muted)] transition-colors">
+//         <div className="flex h-12 min-w-12 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+//             {icon}
+//         </div>
+//         <div className="flex flex-col">
+//             <span className="text-xs font-medium text-[var(--color-muted-foreground)] uppercase tracking-wider">{label}</span>
+//             <span className="text-base font-semibold text-[var(--color-foreground)] break-words">{value || "Not Provided"}</span>
+//         </div>
+//     </div>
+// );
 
-const MenuLink = ({ icon, label, onClick, danger, value }) => (
-    <button onClick={onClick} className={`w-full flex items-center justify-between p-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-muted)] transition-all active:scale-[0.99] ${danger ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10' : 'text-[var(--color-foreground)]'}`}>
-        <div className="flex items-center gap-4">
-            <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${danger ? 'bg-red-100 dark:bg-red-900/20' : 'bg-[var(--color-primary)]/10'} ${danger ? 'text-red-500' : 'text-[var(--color-primary)]'}`}>
-                {icon}
-            </div>
-            <span className="font-medium text-base">{label}</span>
-        </div>
-        <div className="flex items-center gap-2">
-            {value && <span className="text-sm text-[var(--color-muted-foreground)]">{value}</span>}
-            <ChevronRight size={18} className="text-[var(--color-muted-foreground)]" />
-        </div>
-    </button>
-);
+// const MenuLink = ({ icon, label, onClick, danger, value }) => (
+//     <button onClick={onClick} className={`w-full flex items-center justify-between p-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] hover:bg-[var(--color-muted)] transition-all active:scale-[0.99] ${danger ? 'text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10' : 'text-[var(--color-foreground)]'}`}>
+//         <div className="flex items-center gap-4">
+//             <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${danger ? 'bg-red-100 dark:bg-red-900/20' : 'bg-[var(--color-primary)]/10'} ${danger ? 'text-red-500' : 'text-[var(--color-primary)]'}`}>
+//                 {icon}
+//             </div>
+//             <span className="font-medium text-base">{label}</span>
+//         </div>
+//         <div className="flex items-center gap-2">
+//             {value && <span className="text-sm text-[var(--color-muted-foreground)]">{value}</span>}
+//             <ChevronRight size={18} className="text-[var(--color-muted-foreground)]" />
+//         </div>
+//     </button>
+// );
 
 const ProfilePage = () => {
+    const Confirm = useConfirm();
     const { setUser } = useUserContext();
     const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
-    const [confirmDelete, setConfirmDelete] = useState(false);
-    const { isLoading, setIsLoading } = useLoading();
+    const { setIsLoading } = useLoading();
     const user = JSON.parse(localStorage.getItem("user")) || {};
 
     const isDemo = user?.isdemo === true;
@@ -49,19 +51,21 @@ const ProfilePage = () => {
             toast.success("Demo Mode: Profile deleted successfully!");
             return;
         }
-        setIsLoading(true);
         try {
-            const deleted = await deleteProfile();
-            if (deleted) {
-                toast.success('Profile deleted successfully!');
-                localStorage.clear();
-                navigate('/login');
+            const confirmed = await Confirm(`Are you sure you want to delete this "${user.shopname}"? This action cannot be undone.`);
+            if (confirmed) {
+                setIsLoading(true);
+                const deleted = await deleteProfile();
+                if (deleted) {
+                    toast.success('Profile deleted successfully!');
+                    localStorage.clear();
+                    navigate('/login');
+                }
             }
         } catch (err) {
             toast.error('Failed to delete profile!');
         } finally {
             setIsLoading(false);
-            setConfirmDelete(false);
         }
     };
 
@@ -77,11 +81,6 @@ const ProfilePage = () => {
         setIsLoading(true);
         localStorage.clear();
         sessionStorage.clear();
-        // if ('caches' in window) {
-        //     caches.keys().then((names) => {
-        //         names.forEach((name) => caches.delete(name));
-        //     });
-        // }
         setUser(null);
         setTimeout(() => {
             setIsLoading(false);
@@ -95,7 +94,7 @@ const ProfilePage = () => {
     return (
         <div className="relative min-h-screen bg-[var(--color-background)] font-sans text-[var(--color-foreground)] flex flex-col items-center justify-center py-6 px-4 pb-24 md:pb-6 transition-colors duration-300">
 
-            {confirmDelete && (
+            {/* {confirmDelete && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
                     <div className="w-full max-w-lg transform rounded-3xl glass-panel p-8 text-center shadow-2xl transition-all duration-300 animate-scale-in">
                         <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-400">
@@ -123,7 +122,7 @@ const ProfilePage = () => {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
 
             <div className="w-full max-w-4xl rounded-2xl glass-panel shadow-lg overflow-hidden animate-fade-in-up mb-6">
                 <div className="bg-blue-600 h-32 relative overflow-hidden">
@@ -252,7 +251,7 @@ const ProfilePage = () => {
                                 icon={<Trash2 size={20} />}
                                 label="Delete Account"
                                 danger={true}
-                                onClick={() => setConfirmDelete(true)}
+                                onClick={handleDelete}
                             />
                             <div className="flex items-center justify-center mt-2 text-sm">
                                 Made with <Heart size={12} className="text-red-500 fill-red-500 mx-1" /> by &nbsp; <span onClick={() => window.open('https://github.com/haroon-90', '_blank')} className="font-bold text-[var(--color-primary)] cursor-pointer underline"> Haroon</span>

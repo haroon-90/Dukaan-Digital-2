@@ -5,7 +5,7 @@ import { UserProvider } from './components/Context/UserContext.jsx'
 import { ThemeProvider } from './components/Context/ThemeContext.jsx'
 import { LoadingProvider } from './components/Context/LoadingContext.jsx'
 import { Toaster } from 'react-hot-toast';
-import { ConfirmProvider } from './components/UI/Confirm';
+import { ConfirmProvider } from './components/Context/Confirm.jsx';
 
 function App() {
 

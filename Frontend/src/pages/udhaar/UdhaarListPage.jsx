@@ -11,7 +11,7 @@ import SearchBar from '../../components/UI/SearchBar';
 import { Table, Thead, Tbody, Tr, Th, Td } from '../../components/UI/TableComponents';
 import EmptyState from '../../components/UI/EmptyState';
 import StatusBadge from '../../components/UI/StatusBadge';
-import { useConfirm } from '../../components/UI/Confirm';
+import { useConfirm } from '../../components/Context/Confirm';
 
 const dummyUdhaarData = [
   {
